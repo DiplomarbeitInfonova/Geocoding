@@ -78,7 +78,7 @@
                     <Property name="text" type="java.lang.String" value="Ortsname"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="tf_OrtsnameA">
                 </Component>
               </SubComponents>
             </Container>
@@ -101,14 +101,14 @@
                     <Property name="text" type="java.lang.String" value="X"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField2">
+                <Component class="javax.swing.JTextField" name="tf_XKoordA">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Y"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField3">
+                <Component class="javax.swing.JTextField" name="tf_YKoordA">
                 </Component>
               </SubComponents>
             </Container>
@@ -140,7 +140,7 @@
                     <Property name="text" type="java.lang.String" value="Ortsname"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField4">
+                <Component class="javax.swing.JTextField" name="tf_OrtsnameB">
                 </Component>
               </SubComponents>
             </Container>
@@ -163,14 +163,14 @@
                     <Property name="text" type="java.lang.String" value="X"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField5">
+                <Component class="javax.swing.JTextField" name="tf_XKoordB">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Y"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField6">
+                <Component class="javax.swing.JTextField" name="tf_YKoordB">
                 </Component>
               </SubComponents>
             </Container>
@@ -224,12 +224,12 @@
             <Property name="rows" type="int" value="2"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+            <Component class="javax.swing.JRadioButton" name="rb_2D">
               <Properties>
                 <Property name="text" type="java.lang.String" value="2D"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+            <Component class="javax.swing.JRadioButton" name="rb_3D">
               <Properties>
                 <Property name="text" type="java.lang.String" value="3D"/>
               </Properties>
@@ -248,7 +248,7 @@
                 <Property name="text" type="java.lang.String" value="Distanz"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel8">
+            <Component class="javax.swing.JLabel" name="lab_Distance">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0000"/>
               </Properties>
@@ -267,7 +267,7 @@
                 <Property name="text" type="java.lang.String" value="Dauer"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel10">
+            <Component class="javax.swing.JLabel" name="lab_Duration">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0h 00min"/>
               </Properties>

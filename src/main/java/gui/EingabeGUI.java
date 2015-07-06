@@ -31,32 +31,32 @@ public class EingabeGUI extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tf_OrtsnameA = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_XKoordA = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tf_YKoordA = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        tf_OrtsnameB = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        tf_XKoordB = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        tf_YKoordB = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rb_2D = new javax.swing.JRadioButton();
+        rb_3D = new javax.swing.JRadioButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lab_Distance = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lab_Duration = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -72,7 +72,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jLabel1.setText("Ortsname");
         jPanel7.add(jLabel1);
-        jPanel7.add(jTextField1);
+        jPanel7.add(tf_OrtsnameA);
 
         jPanel4.add(jPanel7);
 
@@ -81,11 +81,11 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jLabel2.setText("X");
         jPanel8.add(jLabel2);
-        jPanel8.add(jTextField2);
+        jPanel8.add(tf_XKoordA);
 
         jLabel3.setText("Y");
         jPanel8.add(jLabel3);
-        jPanel8.add(jTextField3);
+        jPanel8.add(tf_YKoordA);
 
         jPanel4.add(jPanel8);
 
@@ -98,7 +98,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Ortsname");
         jPanel6.add(jLabel4);
-        jPanel6.add(jTextField4);
+        jPanel6.add(tf_OrtsnameB);
 
         jPanel5.add(jPanel6);
 
@@ -107,11 +107,11 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jLabel5.setText("X");
         jPanel9.add(jLabel5);
-        jPanel9.add(jTextField5);
+        jPanel9.add(tf_XKoordB);
 
         jLabel6.setText("Y");
         jPanel9.add(jLabel6);
-        jPanel9.add(jTextField6);
+        jPanel9.add(tf_YKoordB);
 
         jPanel5.add(jPanel9);
 
@@ -138,11 +138,11 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jPanel10.setLayout(new java.awt.GridLayout(2, 1));
 
-        jRadioButton1.setText("2D");
-        jPanel10.add(jRadioButton1);
+        rb_2D.setText("2D");
+        jPanel10.add(rb_2D);
 
-        jRadioButton2.setText("3D");
-        jPanel10.add(jRadioButton2);
+        rb_3D.setText("3D");
+        jPanel10.add(rb_3D);
 
         jPanel3.add(jPanel10);
 
@@ -151,8 +151,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         jLabel7.setText("Distanz");
         jPanel11.add(jLabel7);
 
-        jLabel8.setText("0000");
-        jPanel11.add(jLabel8);
+        lab_Distance.setText("0000");
+        jPanel11.add(lab_Distance);
 
         jPanel3.add(jPanel11);
 
@@ -161,8 +161,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         jLabel9.setText("Dauer");
         jPanel12.add(jLabel9);
 
-        jLabel10.setText("0h 00min");
-        jPanel12.add(jLabel10);
+        lab_Duration.setText("0h 00min");
+        jPanel12.add(lab_Duration);
 
         jPanel3.add(jPanel12);
 
@@ -216,14 +216,12 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -240,13 +238,15 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JLabel lab_Distance;
+    private javax.swing.JLabel lab_Duration;
+    private javax.swing.JRadioButton rb_2D;
+    private javax.swing.JRadioButton rb_3D;
+    private javax.swing.JTextField tf_OrtsnameA;
+    private javax.swing.JTextField tf_OrtsnameB;
+    private javax.swing.JTextField tf_XKoordA;
+    private javax.swing.JTextField tf_XKoordB;
+    private javax.swing.JTextField tf_YKoordA;
+    private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
 }
