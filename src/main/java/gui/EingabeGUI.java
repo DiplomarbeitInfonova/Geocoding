@@ -27,18 +27,154 @@ public class EingabeGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort A"));
+        jPanel4.setLayout(new java.awt.GridLayout(2, 2));
+
+        jPanel7.setLayout(new java.awt.GridLayout());
+
+        jLabel1.setText("Ortsname");
+        jPanel7.add(jLabel1);
+        jPanel7.add(jTextField1);
+
+        jPanel4.add(jPanel7);
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Koordinaten"));
+        jPanel8.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel2.setText("X");
+        jPanel8.add(jLabel2);
+        jPanel8.add(jTextField2);
+
+        jLabel3.setText("Y");
+        jPanel8.add(jLabel3);
+        jPanel8.add(jTextField3);
+
+        jPanel4.add(jPanel8);
+
+        jPanel1.add(jPanel4);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort B"));
+        jPanel5.setLayout(new java.awt.GridLayout(2, 1));
+
+        jPanel6.setLayout(new java.awt.GridLayout());
+
+        jLabel4.setText("Ortsname");
+        jPanel6.add(jLabel4);
+        jPanel6.add(jTextField4);
+
+        jPanel5.add(jPanel6);
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Koordinaten"));
+        jPanel9.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel5.setText("X");
+        jPanel9.add(jLabel5);
+        jPanel9.add(jTextField5);
+
+        jLabel6.setText("Y");
+        jPanel9.add(jLabel6);
+        jPanel9.add(jTextField6);
+
+        jPanel5.add(jPanel9);
+
+        jPanel1.add(jPanel5);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 613, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 461, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setLayout(new java.awt.GridLayout(1, 3));
+
+        jPanel10.setLayout(new java.awt.GridLayout(2, 1));
+
+        jRadioButton1.setText("2D");
+        jPanel10.add(jRadioButton1);
+
+        jRadioButton2.setText("3D");
+        jPanel10.add(jRadioButton2);
+
+        jPanel3.add(jPanel10);
+
+        jPanel11.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel7.setText("Distanz");
+        jPanel11.add(jLabel7);
+
+        jLabel8.setText("0000");
+        jPanel11.add(jLabel8);
+
+        jPanel3.add(jPanel11);
+
+        jPanel12.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel9.setText("Dauer");
+        jPanel12.add(jLabel9);
+
+        jLabel10.setText("0h 00min");
+        jPanel12.add(jLabel10);
+
+        jPanel3.add(jPanel12);
+
+        getContentPane().add(jPanel3, java.awt.BorderLayout.SOUTH);
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,5 +215,38 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }
