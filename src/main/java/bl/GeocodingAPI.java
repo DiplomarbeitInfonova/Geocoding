@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author David
  */
 public class GeocodingAPI {
-    
+    private XMLParse xmlp;
     final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
     
     /*
@@ -33,19 +33,21 @@ public class GeocodingAPI {
     public Location OrtToKoord(String name)
     {
         double[] koordinaten = new double[2];
-        Location ort;
+        Location ort=null;
         
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address="+name+"&key="+apiKey;
+        String answer="";
         
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
-            String answer = sendObject.read();
+            answer = sendObject.read();
             System.out.println(answer);
+            xmlp = new XMLParse(answer);
+            ort = xmlp.xmlToLocation();
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
         
-        ort = new Location(name, 0.0, 0.0);
         
         return ort;
     }
@@ -57,8 +59,9 @@ public class GeocodingAPI {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
             System.out.println(answer);
+            
         } catch (MalformedURLException ex) {
-            JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
+            JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
         }
         return "";
     }
@@ -67,6 +70,6 @@ public class GeocodingAPI {
         GeocodingAPI api = new GeocodingAPI();
         api.OrtToKoord("Ligist");
         double[] k = {46.9917246, 15.2107184};
-        api.KoordToOrt(k);
+        //api.KoordToOrt(k);
     }
 }
