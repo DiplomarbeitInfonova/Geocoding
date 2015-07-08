@@ -6,6 +6,7 @@
 
 package bl;
 
+import beans.Location;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,9 +30,10 @@ public class GeocodingAPI {
     
        
     */
-    public double[] OrtToKoord(String name)
+    public Location OrtToKoord(String name)
     {
         double[] koordinaten = new double[2];
+        Location ort;
         
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address="+name+"&key="+apiKey;
         
@@ -43,7 +45,9 @@ public class GeocodingAPI {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
         
-        return koordinaten;
+        ort = new Location(name, 0.0, 0.0);
+        
+        return ort;
     }
     public String KoordToOrt(double[] koordinaten)
     {
