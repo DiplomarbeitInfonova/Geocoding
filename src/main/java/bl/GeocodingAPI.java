@@ -6,6 +6,10 @@
 
 package bl;
 
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author David
@@ -34,9 +38,13 @@ public class GeocodingAPI {
     }
     public String KoordToOrt(double[] koordinaten)
     {
-        //https://maps.googleapis.com/maps/api/geocode/json?address=Ligist&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo
-        
-        
+        try {
+            //https://maps.googleapis.com/maps/api/geocode/json?address=Ligist&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo
+
+            SendToMapsAPI texturl = new SendToMapsAPI("https://maps.googleapis.com/maps/api/geocode/json?address=Ligist&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo");
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "";
     }
 }
