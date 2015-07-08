@@ -10,13 +10,13 @@ package beans;
  *
  * @author David
  */
-public class Ort {
+public class Location {
     
     private String name;
     private double xKoord;
     private double yKoord;
 
-    public Ort(String name, double xKoord, double yKoord) {
+    public Location(String name, double xKoord, double yKoord) {
         this.name = name;
         this.xKoord = xKoord;
         this.yKoord = yKoord;
