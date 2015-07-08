@@ -17,14 +17,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     public EingabeGUI() 
     {
         initComponents();
-        URLConnection con = new URL("http://maps...").
-        InputStream is = con.getInputStream();
-        byte bytes[] = new byte[con.getContentLength()];
-        is.read(bytes);
-        is.close();
-        Toolkit tk = getToolkit();
-        map = tk.createImage(bytes);
-        tk.prepareImage(map, -1, -1, null);
     }
 
     /**
