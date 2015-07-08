@@ -9,6 +9,7 @@ package bl;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
  */
 public class GeocodingAPI {
     
+    final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
     
     /*
         Die Methode findet zum eingegeben Ort die passenden
@@ -31,8 +33,15 @@ public class GeocodingAPI {
     {
         double[] koordinaten = new double[2];
         
+        String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address="+name+"&key="+apiKey;
         
-        
+        try {
+            SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
+            String answer = sendObject.read();
+            System.out.println(answer);
+        } catch (MalformedURLException ex) {
+            JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
+        }
         
         return koordinaten;
     }
@@ -46,5 +55,10 @@ public class GeocodingAPI {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
+    }
+    
+    public static void main(String[] args) {
+        GeocodingAPI api = new GeocodingAPI();
+        api.OrtToKoord("Ligist");
     }
 }
