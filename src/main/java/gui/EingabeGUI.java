@@ -16,6 +16,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     public EingabeGUI() {
         initComponents();
+        epMap.setText("<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21853.307835360207!2d15.52686!3d46.79123505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476faccf16d963f3%3A0x905de91330e072c5!2sGemeinde+Kaindorf+an+der+Sulm%2C+8430!5e0!3m2!1sde!2sat!4v1436340826502" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>");
     }
 
     /**
@@ -25,7 +26,8 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -47,6 +49,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         tf_YKoordB = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        epMap = new javax.swing.JEditorPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         rb_2D = new javax.swing.JRadioButton();
@@ -68,7 +72,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort A"));
         jPanel4.setLayout(new java.awt.GridLayout(2, 2));
 
-        jPanel7.setLayout(new java.awt.GridLayout());
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setText("Ortsname");
         jPanel7.add(jLabel1);
@@ -94,7 +98,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort B"));
         jPanel5.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel4.setText("Ortsname");
         jPanel6.add(jLabel4);
@@ -120,17 +124,12 @@ public class EingabeGUI extends javax.swing.JFrame {
         getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
-        );
+        epMap.setContentType("text/html"); // NOI18N
+        jScrollPane1.setViewportView(epMap);
+
+        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -215,6 +214,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JEditorPane epMap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -238,6 +238,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JRadioButton rb_2D;
