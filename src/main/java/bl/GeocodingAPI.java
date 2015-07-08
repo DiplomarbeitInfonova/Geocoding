@@ -18,6 +18,8 @@ public class GeocodingAPI {
         x- und y- Koordinaten und liefert diese in einem 
         double-Feld zurück
         Beispiel-Link: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY
+    
+        Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo
     */
     public double[] OrtToKoord(String name)
     {
@@ -28,5 +30,9 @@ public class GeocodingAPI {
         
         return koordinaten;
     }
-    
+    public String KoordToOrt(double[] koordinaten)
+    {
+        
+        return "";
+    }
 }
