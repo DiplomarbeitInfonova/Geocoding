@@ -20,6 +20,8 @@ public class GeocodingAPI {
         Beispiel-Link: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY
     
         Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo
+    
+       
     */
     public double[] OrtToKoord(String name)
     {
@@ -32,6 +34,8 @@ public class GeocodingAPI {
     }
     public String KoordToOrt(double[] koordinaten)
     {
+        //https://maps.googleapis.com/maps/api/geocode/json?address=Ligist&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo
+        
         
         return "";
     }
