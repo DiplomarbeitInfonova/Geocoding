@@ -8,9 +8,14 @@ package gui;
 import beans.Location;
 import bl.GeocodingAPI;
 import java.text.ParseException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import org.jxmapviewer.JXMapKit;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.Waypoint;
+import org.jxmapviewer.viewer.WaypointPainter;
 
 /**
  *
@@ -30,7 +35,9 @@ public class EingabeGUI extends javax.swing.JFrame {
         geo = new GeocodingAPI();
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
-                
+        MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
+        
+            
     }
 
     @SuppressWarnings("unchecked")
@@ -248,6 +255,16 @@ public class EingabeGUI extends javax.swing.JFrame {
         String[] spl = dur.split("-");
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
+//        Set<Waypoint> waypoints = new HashSet<Waypoint>();
+//    waypoints.add(new Waypoint(41.881944,-87.627778);
+//    waypoints.add(new Waypoint(40.716667,-74));
+//    
+//    //crate a WaypointPainter to draw the points
+//    WaypointPainter painter = new WaypointPainter();
+//    painter.setWaypoints(waypoints);
+//    MainMap.getMainMap().setOverlayPainter(painter);
+       
+         this.MainMap.setAddressLocation(new GeoPosition(a.getxKoord(),a.getyKoord()));
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
@@ -322,4 +339,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField tf_YKoordA;
     private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
+
+    
 }
