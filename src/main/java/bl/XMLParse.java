@@ -79,4 +79,8 @@ public class XMLParse {
         
         
     }
+
+    String xmlToDistanceAndDuration() {
+        return "";
+    }
 }
