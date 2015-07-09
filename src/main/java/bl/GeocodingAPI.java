@@ -51,19 +51,19 @@ public class GeocodingAPI {
         
         return ort;
     }
-    public String KoordToOrt(double[] koordinaten)
+    public Location KoordToOrt(double[] koordinaten)
     {
         String requestUrl="https://maps.googleapis.com/maps/api/geocode/xml?latlng="+koordinaten[0]+","+koordinaten[1]+"&key="+apiKey;
-        
+        Location ort = null;
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
             System.out.println(answer);
-            
+            ort=xmlp.xmlToLocation();
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
         }
-        return "";
+        return ort;
     }
     
     public static void main(String[] args) {
