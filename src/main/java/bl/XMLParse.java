@@ -58,18 +58,12 @@ public class XMLParse {
                     for (int l = 0; l < split.length; l++)
                     {
                         String string = split[l];
-                        if(l==0||l==3)
-                        {
-                            if(l==1)
-                            {
-                                x = Double.parseDouble(string.trim());
-                            }
-                            else if(l==2)
-                            {
-                                y = Double.parseDouble(string.trim());
-                            }
+              
+                        if (l == 1) {
+                            x = Double.parseDouble(string.trim());
+                        } else if (l == 2) {
+                            y = Double.parseDouble(string.trim());
                         }
-                        System.out.println(l+" "+string);
                     }
                 }
             }
@@ -78,16 +72,10 @@ public class XMLParse {
         }
         return null;
     }
-
-    
-
-    
     
     public static void main(String[] args)
     {
         XMLParse xml = new XMLParse("");
-        
-        
         
         
     }
