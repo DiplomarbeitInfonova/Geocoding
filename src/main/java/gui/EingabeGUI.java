@@ -9,6 +9,8 @@ import beans.Location;
 import bl.GeocodingAPI;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
+import org.jxmapviewer.JXMapKit;
+import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
 
 /**
  *
@@ -27,7 +29,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         initComponents();
         geo = new GeocodingAPI();
         this.rb_2D.setEnabled(true);
-                
+        this.MainMap.setDefaultProvider(OpenStreetMaps);
                 
     }
 
@@ -55,8 +57,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         tf_YKoordB = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        epMap = new javax.swing.JEditorPane();
+        MainMap = new org.jxmapviewer.JXMapKit();
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         rb_2D = new javax.swing.JRadioButton();
@@ -132,11 +133,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new java.awt.BorderLayout());
-
-        epMap.setContentType("text/html"); // NOI18N
-        jScrollPane1.setViewportView(epMap);
-
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(MainMap, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -289,7 +286,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JEditorPane epMap;
+    private org.jxmapviewer.JXMapKit MainMap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -313,7 +310,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JMenuItem mi_Start;
