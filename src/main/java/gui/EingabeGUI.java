@@ -26,6 +26,9 @@ public class EingabeGUI extends javax.swing.JFrame {
     {
         initComponents();
         geo = new GeocodingAPI();
+        this.rb_2D.setEnabled(true);
+                
+                
     }
 
     /**
