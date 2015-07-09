@@ -26,9 +26,7 @@ public class GeocodingAPI {
         double-Feld zurück
         Beispiel-Link: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY
     
-        Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo
-    
-       
+        Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo   
     */
     public Location OrtToKoord(String name)
     {
@@ -65,6 +63,24 @@ public class GeocodingAPI {
         }
         return ort;
     }
+    
+    public String LocationToDistance(Location a, Location b)
+    {
+        String request="http://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord() ;
+        String response="";
+        try {
+            SendToMapsAPI sendObject = new SendToMapsAPI(request);
+            String answer = sendObject.read();
+            System.out.println(answer);
+            response= xmlp.xmlToDistanceAndDuration();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return response;
+    }
+    
     
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
