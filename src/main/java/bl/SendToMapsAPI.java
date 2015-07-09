@@ -3,6 +3,13 @@ package bl;
 import java.io.*;
 import java.net.*;
 
+// Author Veronika Gößler
+
+/*
+    Wird der URL als HTML Request an die Google Maps API gesendet und 
+    die Response zurückgegeben.
+*/
+
 public final class SendToMapsAPI
 {
 

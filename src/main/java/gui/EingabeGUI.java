@@ -199,9 +199,14 @@ public class EingabeGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+    Es wird von den Textfeldern der Input geholt und in Locations umgewandelt
+    danach wird von den Locations die Distanz und die Dauer einer Fahrt berechnet.
+    */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
         Location a=null;
         Location b= null;
+        // Prüfen
         if(!this.tf_OrtsnameA.getText().equals(""))
         {
             a=geo.OrtToKoord(this.tf_OrtsnameA.getText());
@@ -242,8 +247,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         
         String dur = geo.LocationToDistance(a, b);
         String[] spl = dur.split("-");
-        this.lab_Distance.setText(spl[0]);
-        this.lab_Duration.setText(spl[1]);
+        this.lab_Distance.setText(spl[1]);
+        this.lab_Duration.setText(spl[0]);
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**

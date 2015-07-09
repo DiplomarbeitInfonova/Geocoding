@@ -72,7 +72,9 @@ public class GeocodingAPI {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             System.out.println(answer);
+            xmlp = new XMLParse(answer);
             response= xmlp.xmlToDistanceAndDuration();
+            
         } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
