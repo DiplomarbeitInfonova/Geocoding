@@ -31,34 +31,64 @@ public class XMLParse {
             xmlDoc = this.loadXMLFromString();
         } catch (Exception ex) {
             Logger.getLogger(XMLParse.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("                      Fehler im Constructor XMLParse");
         }
     }
 
     public Location xmlToLocation() {
-        double x=0;
-        double y=0;
+        double x = 0;
+        double y = 0;
         Location loc = null;
-        
+
         Element root = xmlDoc.getDocumentElement();
+
         NodeList results = root.getElementsByTagName("result");
         for (int i = 0; i < results.getLength(); i++) {
             Element e = (Element) results.item(i);
-            
+
             NodeList geometry = e.getElementsByTagName("geometry");
             for (int j = 0; j < geometry.getLength(); j++) {
                 Element e2 = (Element) geometry.item(i);
                 NodeList locations = e.getElementsByTagName("location");
                 for (int k = 0; k < locations.getLength(); k++) {
-                    Element e3= (Element) locations.item(i);
-                    x= Double.parseDouble(e3.getAttribute("lat"));
-                    y= Double.parseDouble(e3.getAttribute("lng"));
+                    Element e3 = (Element) locations.item(i);
+                    String responseKoord = e3.getTextContent();
+                    String[] split = responseKoord.split("\n");
                     
+                    for (int l = 0; l < split.length; l++)
+                    {
+                        String string = split[l];
+                        if(l==0||l==3)
+                        {
+                            if(l==1)
+                            {
+                                x = Double.parseDouble(string.trim());
+                            }
+                            else if(l==2)
+                            {
+                                y = Double.parseDouble(string.trim());
+                            }
+                        }
+                        System.out.println(l+" "+string);
+                    }
                 }
-                
             }
-            
+            loc = new Location("", x, y);
+            return loc;
         }
-        return loc;
+        return null;
     }
 
+    
+
+    
+    
+    public static void main(String[] args)
+    {
+        XMLParse xml = new XMLParse("");
+        
+        
+        
+        
+    }
 }
