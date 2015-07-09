@@ -5,6 +5,11 @@
  */
 package gui;
 
+import beans.Location;
+import bl.GeocodingAPI;
+import java.text.ParseException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Veronika
@@ -14,9 +19,13 @@ public class EingabeGUI extends javax.swing.JFrame {
     /**
      * Creates new form EingabeGUI
      */
+    private GeocodingAPI geo;
+    private Location A;
+    private Location B;
     public EingabeGUI() 
     {
         initComponents();
+        geo = new GeocodingAPI();
     }
 
     /**
@@ -188,6 +197,48 @@ public class EingabeGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
+        Location a=null;
+        Location b= null;
+        if(!this.tf_OrtsnameA.getText().equals(""))
+        {
+            a=geo.OrtToKoord(this.tf_OrtsnameA.getText());
+        }
+        else if(!this.tf_XKoordA.getText().equals("")&&!this.tf_YKoordA.getText().equals(""))
+        {
+           
+            String xS = this.tf_XKoordA.getText();
+            
+            String yS = this.tf_YKoordA.getText();
+            double x = Double.parseDouble(xS);
+            double y = Double.parseDouble(yS);
+            double[] dfeld = {x,y};
+            a=geo.KoordToOrt(dfeld);
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
+        }
+        
+        
+        
+        if(!this.tf_OrtsnameB.getText().equals(""))
+        {
+            b=geo.OrtToKoord(this.tf_OrtsnameB.getText());
+        }
+        else if(!this.tf_XKoordB.getText().equals("")&&!this.tf_YKoordB.getText().equals(""))
+        {
+            String xS = this.tf_XKoordB.getText();
+            double x = Double.parseDouble(xS);
+            String yS = this.tf_YKoordB.getText();
+            double y = Double.parseDouble(yS);
+            double[] dfeld = {x,y};
+            b=geo.KoordToOrt(dfeld);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
+        }
         
     }//GEN-LAST:event_mi_StartActionPerformed
 
