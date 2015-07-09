@@ -26,8 +26,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -63,6 +62,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         lab_Duration = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mi_Start = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -168,6 +168,15 @@ public class EingabeGUI extends javax.swing.JFrame {
         getContentPane().add(jPanel3, java.awt.BorderLayout.SOUTH);
 
         jMenu1.setText("File");
+
+        mi_Start.setText("Start");
+        mi_Start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_StartActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mi_Start);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -177,6 +186,10 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
+        
+    }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,6 +254,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
+    private javax.swing.JMenuItem mi_Start;
     private javax.swing.JRadioButton rb_2D;
     private javax.swing.JRadioButton rb_3D;
     private javax.swing.JTextField tf_OrtsnameA;
