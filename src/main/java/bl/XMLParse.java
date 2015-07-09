@@ -73,14 +73,67 @@ public class XMLParse {
         return null;
     }
     
+    public String xmlToDistanceAndDuration()
+    {
+        String duration="";
+        String distance="";
+        
+        Element root = xmlDoc.getDocumentElement();
+        NodeList row = root.getElementsByTagName("row");
+        for (int i = 0; i < row.getLength(); i++)
+        {
+            Element e = (Element) row.item(i);
+            NodeList elementList = e.getElementsByTagName("element");
+            for (int j = 0; j < elementList.getLength(); j++) {
+                Element e1 = (Element)elementList.item(j);
+                NodeList durationList = e1.getElementsByTagName("duration");
+                for (int k = 0; k < durationList.getLength(); k++)
+                {
+                    Element eDuration = (Element)durationList.item(i);
+                    NodeList durationText = eDuration.getElementsByTagName("text");
+                    Element dText = (Element)durationText.item(0);
+                    duration = dText.getTextContent();
+                    System.out.println(duration);                    
+                }
+                NodeList distanceList = e1.getElementsByTagName("distance");
+                for (int k = 0; k < distanceList.getLength(); k++)
+                {
+                    Element eDistance = (Element)distanceList.item(i);
+                    NodeList distanceText = eDistance.getElementsByTagName("text");
+                    Element dText = (Element)distanceText.item(0);
+                    distance = dText.getTextContent();
+                    System.out.println(distance);                    
+                }
+            }
+        }
+        
+        return duration+"-"+distance;
+    }
+    
     public static void main(String[] args)
     {
-        XMLParse xml = new XMLParse("");
+        XMLParse xml = new XMLParse("<DistanceMatrixResponse>\n"
+                + "<status>OK</status>\n"
+                + "<origin_address>Hauptstraße 5, 2100 Leobendorf, Österreich</origin_address>\n"
+                + "<destination_address>\n"
+                + "Kalsdorf b.Graz Walther-Kamschal-Platz, 8401 Kalsdorf bei Graz, Österreich\n"
+                + "</destination_address>\n"
+                + "<row>\n"
+                + "<element>\n"
+                + "<status>OK</status>\n"
+                + "<duration>\n"
+                + "<value>7781</value>\n"
+                + "<text>2 Stunden, 10 Minuten</text>\n"
+                + "</duration>\n"
+                + "<distance>\n"
+                + "<value>223976</value>\n"
+                + "<text>224 km</text>\n"
+                + "</distance>\n"
+                + "</element>\n"
+                + "</row>\n"
+                + "</DistanceMatrixResponse>");
+        xml.xmlToDistanceAndDuration();
         
         
-    }
-
-    String xmlToDistanceAndDuration() {
-        return "";
     }
 }
