@@ -44,10 +44,10 @@ public class GeocodingAPI {
             System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
+            ort.setName(name);
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
-        
         
         return ort;
     }
@@ -68,7 +68,7 @@ public class GeocodingAPI {
     
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
-        api.OrtToKoord("Ligist");
+        System.out.println(api.OrtToKoord("Ligist").toString());
         double[] k = {46.9917246, 15.2107184};
         //api.KoordToOrt(k);
     }
