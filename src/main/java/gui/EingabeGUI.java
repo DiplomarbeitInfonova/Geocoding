@@ -28,7 +28,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     {
         initComponents();
         geo = new GeocodingAPI();
-        this.rb_2D.setEnabled(true);
+        this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
                 
     }
@@ -205,7 +205,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         {
             a=geo.OrtToKoord(this.tf_OrtsnameA.getText());
             this.tf_XKoordA.setText(a.getxKoord()+"");
-            this.tf_YKoordA.setText(a.getxKoord()+"");
+            this.tf_YKoordA.setText(a.getyKoord()+"");
         }
         else if(!this.tf_XKoordA.getText().equals("")&&!this.tf_YKoordA.getText().equals(""))
         {
@@ -227,7 +227,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         {
             b=geo.OrtToKoord(this.tf_OrtsnameB.getText());
             this.tf_XKoordB.setText(b.getxKoord()+"");
-            this.tf_YKoordB.setText(b.getxKoord()+"");
+            this.tf_YKoordB.setText(b.getyKoord()+"");
         }
         else if(!this.tf_XKoordB.getText().equals("")&&!this.tf_YKoordB.getText().equals(""))
         {
