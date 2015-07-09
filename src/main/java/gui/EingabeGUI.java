@@ -210,6 +210,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         if(!this.tf_OrtsnameA.getText().equals(""))
         {
             a=geo.OrtToKoord(this.tf_OrtsnameA.getText());
+            this.tf_XKoordA.setText(a.getxKoord()+"");
+            this.tf_YKoordA.setText(a.getxKoord()+"");
         }
         else if(!this.tf_XKoordA.getText().equals("")&&!this.tf_YKoordA.getText().equals(""))
         {
@@ -221,7 +223,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             double y = Double.parseDouble(yS);
             double[] dfeld = {x,y};
             a=geo.KoordToOrt(dfeld);
-            
+            this.tf_OrtsnameA.setText(a.getName());
         }
         else
         {
@@ -230,6 +232,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         if(!this.tf_OrtsnameB.getText().equals(""))
         {
             b=geo.OrtToKoord(this.tf_OrtsnameB.getText());
+            this.tf_XKoordB.setText(b.getxKoord()+"");
+            this.tf_YKoordB.setText(b.getxKoord()+"");
         }
         else if(!this.tf_XKoordB.getText().equals("")&&!this.tf_YKoordB.getText().equals(""))
         {
@@ -239,6 +243,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             double y = Double.parseDouble(yS);
             double[] dfeld = {x,y};
             b=geo.KoordToOrt(dfeld);
+            this.tf_OrtsnameB.setText(b.getName());
         }
         else
         {
