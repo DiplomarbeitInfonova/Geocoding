@@ -219,9 +219,6 @@ public class EingabeGUI extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
         }
-        
-        
-        
         if(!this.tf_OrtsnameB.getText().equals(""))
         {
             b=geo.OrtToKoord(this.tf_OrtsnameB.getText());
@@ -240,6 +237,10 @@ public class EingabeGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
         }
         
+        String dur = geo.LocationToDistance(a, b);
+        String[] spl = dur.split("-");
+        this.lab_Distance.setText(spl[0]);
+        this.lab_Duration.setText(spl[1]);
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
