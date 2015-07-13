@@ -83,6 +83,20 @@ public class GeocodingAPI {
         return response;
     }
     
+    public String getElevationInformation(Location l)
+    {
+        String request = "//maps.googleapis.com/maps/api/elevation/json?locations="+l.getxKoord()+","+l.getyKoord()+"&key="+apiKey;
+        String response ="";
+        try {
+            SendToMapsAPI sendObject = new SendToMapsAPI(request);
+            String answer = sendObject.read();
+            xmlp = new XMLParse(answer);
+            response = xmlp.xmlElevationInformation();           
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return response;
+    }
     
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
