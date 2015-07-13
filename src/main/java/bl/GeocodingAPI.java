@@ -32,7 +32,7 @@ public class GeocodingAPI {
     {
         double[] koordinaten = new double[2];
         Location ort=null;
-        name = name.replaceAll("", ";");
+        name = name.replaceAll(" ", ";");
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address="+name+"&key="+apiKey;
         String answer="";
         
