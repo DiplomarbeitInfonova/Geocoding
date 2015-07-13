@@ -73,6 +73,25 @@ public class XMLParse {
         return null;
     }
     
+    public String xmlElevationInformation()
+    {
+        double elevation;
+        
+        Element root = xmlDoc.getDocumentElement();
+        
+        NodeList results = root.getElementsByTagName("result");
+        for (int i = 0; i < results.getLength(); i++)
+        {
+            Element e = (Element) results.item(i);
+            NodeList elevationList = e.getElementsByTagName("elevation");
+            Element eElevation = (Element) elevationList.item(0);
+            elevation = Double.parseDouble(eElevation.getTextContent());
+            System.out.println(elevation);
+        }
+        
+        return null;
+    }
+    
     public String xmlToDistanceAndDuration()
     {
         String duration="";
@@ -112,27 +131,21 @@ public class XMLParse {
     
     public static void main(String[] args)
     {
-        XMLParse xml = new XMLParse("<DistanceMatrixResponse>\n"
+        XMLParse xml = new XMLParse("ElevationResponse>\n"
                 + "<status>OK</status>\n"
-                + "<origin_address>Hauptstraße 5, 2100 Leobendorf, Österreich</origin_address>\n"
-                + "<destination_address>\n"
-                + "Kalsdorf b.Graz Walther-Kamschal-Platz, 8401 Kalsdorf bei Graz, Österreich\n"
-                + "</destination_address>\n"
-                + "<row>\n"
-                + "<element>\n"
-                + "<status>OK</status>\n"
-                + "<duration>\n"
-                + "<value>7781</value>\n"
-                + "<text>2 Stunden, 10 Minuten</text>\n"
-                + "</duration>\n"
-                + "<distance>\n"
-                + "<value>223976</value>\n"
-                + "<text>224 km</text>\n"
-                + "</distance>\n"
-                + "</element>\n"
-                + "</row>\n"
-                + "</DistanceMatrixResponse>");
-        xml.xmlToDistanceAndDuration();
+                + "<result>\n"
+                + "<location>\n"
+                + "<lat>39.7391536</lat>\n"
+                + "<lng>-104.9847034</lng>\n"
+                + "</location>\n"
+                + "<elevation>1608.6379395</elevation>\n"
+                + "<resolution>4.7719760</resolution>\n"
+                + "</result>\n"
+                + "</ElevationResponse>");
+        
+        xml.xmlElevationInformation();
+        
+        
         
         
     }
