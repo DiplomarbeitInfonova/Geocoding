@@ -131,7 +131,7 @@ public class XMLParse {
     
     public static void main(String[] args)
     {
-        XMLParse xml = new XMLParse("ElevationResponse>\n"
+        XMLParse xml = new XMLParse("<ElevationResponse>\n"
                 + "<status>OK</status>\n"
                 + "<result>\n"
                 + "<location>\n"
