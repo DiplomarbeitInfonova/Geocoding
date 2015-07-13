@@ -14,6 +14,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import org.jxmapviewer.*;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
+import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
@@ -22,7 +23,8 @@ import org.jxmapviewer.viewer.WaypointPainter;
  *
  * @author Veronika
  */
-public class EingabeGUI extends javax.swing.JFrame {
+public class EingabeGUI extends javax.swing.JFrame
+{
 
     /**
      * Creates new form EingabeGUI
@@ -30,7 +32,8 @@ public class EingabeGUI extends javax.swing.JFrame {
     private GeocodingAPI geo;
     private Location A;
     private Location B;
-    public EingabeGUI() 
+
+    public EingabeGUI()
     {
         initComponents();
         geo = new GeocodingAPI();
@@ -40,13 +43,28 @@ public class EingabeGUI extends javax.swing.JFrame {
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
-            
+        addWaypoint();
+    }
+
+    public void addWaypoint()
+    {
+        //create a Set of waypoints
+        Set<Waypoint> waypoints = new HashSet<Waypoint>();
+        waypoints.add(new DefaultWaypoint(new GeoPosition(41.881944, -87.627778));
+        waypoints.add(new DefaultWaypoint(new GeoPosition(40.716667, -74));
+        //crate a WaypointPainter to draw the points
+        WaypointPainter painter = new WaypointPainter();
+        painter.setWaypoints(waypoints);
+        MainMap.getMainMap().setOverlayPainter(painter);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -82,6 +100,9 @@ public class EingabeGUI extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         mi_Start = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+
+        jMenuItem1.setText("Nach Hier");
+        jPopupMenu1.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -184,8 +205,10 @@ public class EingabeGUI extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         mi_Start.setText("Start");
-        mi_Start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        mi_Start.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 mi_StartActionPerformed(evt);
             }
         });
@@ -202,63 +225,63 @@ public class EingabeGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /*
-    Es wird von den Textfeldern der Input geholt und in Locations umgewandelt
-    danach wird von den Locations die Distanz und die Dauer einer Fahrt berechnet.
-    Wenn ein Ortsname eingegeben wurde, werden die Textfelder nun mit den Koordinaten befüllt
-    und vice versa.
-    */
+     Es wird von den Textfeldern der Input geholt und in Locations umgewandelt
+     danach wird von den Locations die Distanz und die Dauer einer Fahrt berechnet.
+     Wenn ein Ortsname eingegeben wurde, werden die Textfelder nun mit den Koordinaten befüllt
+     und vice versa.
+     */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
-        Location a=null;
-        Location b= null;
+        Location a = null;
+        Location b = null;
         // Prüfen
-        if(!this.tf_OrtsnameA.getText().equals(""))
+        if (!this.tf_OrtsnameA.getText().equals(""))
         {
-            a=geo.OrtToKoord(this.tf_OrtsnameA.getText());
-            this.tf_XKoordA.setText(a.getxKoord()+"");
-            this.tf_YKoordA.setText(a.getyKoord()+"");
-        }
-        else if(!this.tf_XKoordA.getText().equals("")&&!this.tf_YKoordA.getText().equals(""))
+            a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
+            this.tf_XKoordA.setText(a.getxKoord() + "");
+            this.tf_YKoordA.setText(a.getyKoord() + "");
+        } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals(""))
         {
-           
             String xS = this.tf_XKoordA.getText();
-            
             String yS = this.tf_YKoordA.getText();
             double x = Double.parseDouble(xS);
             double y = Double.parseDouble(yS);
-            double[] dfeld = {x,y};
-            a=geo.KoordToOrt(dfeld);
+            double[] dfeld =
+            {
+                x, y
+            };
+            a = geo.KoordToOrt(dfeld);
             this.tf_OrtsnameA.setText(a.getName());
-        }
-        else
+        } else
         {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
         }
-        if(!this.tf_OrtsnameB.getText().equals(""))
+        if (!this.tf_OrtsnameB.getText().equals(""))
         {
-            b=geo.OrtToKoord(this.tf_OrtsnameB.getText());
-            this.tf_XKoordB.setText(b.getxKoord()+"");
-            this.tf_YKoordB.setText(b.getyKoord()+"");
-        }
-        else if(!this.tf_XKoordB.getText().equals("")&&!this.tf_YKoordB.getText().equals(""))
+            b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
+            this.tf_XKoordB.setText(b.getxKoord() + "");
+            this.tf_YKoordB.setText(b.getyKoord() + "");
+        } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals(""))
         {
             String xS = this.tf_XKoordB.getText();
             double x = Double.parseDouble(xS);
             String yS = this.tf_YKoordB.getText();
             double y = Double.parseDouble(yS);
-            double[] dfeld = {x,y};
-            b=geo.KoordToOrt(dfeld);
+            double[] dfeld =
+            {
+                x, y
+            };
+            b = geo.KoordToOrt(dfeld);
             this.tf_OrtsnameB.setText(b.getName());
-        }
-        else
+        } else
         {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
         }
-        
+
         String dur = geo.LocationToDistance(a, b);
         String[] spl = dur.split("-");
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
-//        Set<Waypoint> waypoints = new HashSet<Waypoint>();
+//    Set<Waypoint> waypoints = new HashSet<Waypoint>();
 //    waypoints.add(new Waypoint(41.881944,-87.627778);
 //    waypoints.add(new Waypoint(40.716667,-74));
 //    
@@ -266,40 +289,50 @@ public class EingabeGUI extends javax.swing.JFrame {
 //    WaypointPainter painter = new WaypointPainter();
 //    painter.setWaypoints(waypoints);
 //    MainMap.getMainMap().setOverlayPainter(painter);
-       
-         this.MainMap.setAddressLocation(new GeoPosition(a.getxKoord(),a.getyKoord()));
+        this.MainMap.setAddressLocation(new GeoPosition(a.getxKoord(), a.getyKoord()));
+
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new EingabeGUI().setVisible(true);
             }
         });
@@ -318,6 +351,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -330,6 +364,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JMenuItem mi_Start;
@@ -343,5 +378,4 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
 
-    
 }
