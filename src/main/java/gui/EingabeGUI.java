@@ -52,6 +52,7 @@ public class EingabeGUI extends javax.swing.JFrame
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
         waypoints.add(new DefaultWaypoint(new GeoPosition(41.881944, -87.627778));
         waypoints.add(new DefaultWaypoint(new GeoPosition(40.716667, -74));
+        
         //crate a WaypointPainter to draw the points
         WaypointPainter painter = new WaypointPainter();
         painter.setWaypoints(waypoints);
