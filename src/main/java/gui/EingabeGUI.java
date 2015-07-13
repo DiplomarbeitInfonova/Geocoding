@@ -10,6 +10,7 @@ import bl.GeocodingAPI;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import org.jxmapviewer.*;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
@@ -36,7 +37,9 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
         MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
-        
+        ButtonGroup rbgroup = new ButtonGroup();
+        rbgroup.add(rb_2D);
+        rbgroup.add(rb_3D);
             
     }
 
