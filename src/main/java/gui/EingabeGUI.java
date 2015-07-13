@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.*;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.Waypoint;
@@ -64,6 +64,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         tf_YKoordB = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        MainMap = new org.jxmapviewer.JXMapKit();
         jPanel3 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         rb_2D = new javax.swing.JRadioButton();
@@ -139,6 +140,8 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(MainMap, java.awt.BorderLayout.CENTER);
+
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 3));
@@ -300,6 +303,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jxmapviewer.JXMapKit MainMap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
