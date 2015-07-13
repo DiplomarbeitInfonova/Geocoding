@@ -1,79 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Draggable directions</title>
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    <script>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Waypoints Geocoding</title>
+        <style>
+            html, body, #map-canvas {
+                height: 100%;
+                margin: 0px;
+                padding: 0px
+            }
+        </style>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+        <script type="text/javascript">
+            var text;
+            var index;
+            var rendererOptions = {
+                draggable: true
+            };
 
-var rendererOptions = {
-  draggable: true
-};
-var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);;
-var directionsService = new google.maps.DirectionsService();
-var map;
+            var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+            ;
+            var directionsService = new google.maps.DirectionsService();
+            var map;
 
-var australia = new google.maps.LatLng(-25.274398, 133.775136);
+            var australia = new google.maps.LatLng(-25.274398, 133.775136);
 
-function initialize() {
+            function initialize() {
 
-  var mapOptions = {
-    zoom: 7,
-    center: australia
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  directionsDisplay.setMap(map);
-  directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+                var mapOptions = {
+                    zoom: 7
+                };
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                directionsDisplay.setMap(map);
+                directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
-  google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
-    computeTotalDistance(directionsDisplay.getDirections());
-  });
+                google.maps.event.addListener(directionsDisplay, 'directions_changed', function () {
+                    computeTotalDistance(directionsDisplay.getDirections());
+                });
 
-  calcRoute();
-}
+                calcRoute();
+            }
 
-function calcRoute() {
+            function calcRoute() {
 
-  var request = {
-    origin: 'Sydney, NSW',
-    destination: 'Bourke, NSW',
-    
-    travelMode: google.maps.TravelMode.DRIVING
-  };
-  directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
-    }
-  });
-}
+                var request = {
+                    origin: 'Sydney, NSW',
+                    destination: 'Bourke, NSW',
+                    travelMode: google.maps.TravelMode.DRIVING
+                };
 
-function computeTotalDistance(result) {
-  var total = 0;
-  var myroute = result.routes[0];
-  for (var i = 0; i < myroute.legs.length; i++) {
-    total += myroute.legs[i].distance.value;
-  }
-  total = total / 1000.0;
-  document.getElementById('total').innerHTML = total + ' km';
-}
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                    }
+                });
+            }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+            google.maps.event.addDomListener(window, 'load', initialize);
+            var waypoints;
+            google.maps.event.addListener(displayer, 'directions_changed', function () {
+                waypoints = displayer.getDirections().routes[0].legs[0].via_waypoints;
+            });
 
-    </script>
-  </head>
-  <body>
-    <div id="map-canvas" style="float:left;width:70%; height:100%"></div>
-    <div id="directionsPanel" style="float:right;width:30%;height:100%">
-    <p>Total Distance: <span id="total"></span></p>
-    </div>
-  </body>
+            
+            
+            for (index = 0; index < waypoints.length; index++) {
+                text += waypoints[index];
+            }
+
+            
+
+        </script>
+        
+    </head>
+    <body>
+        <div id="map-canvas" style="float:left;width:70%; height:100%"></div>
+        <div id="directionsPanel" style="float:right;width:30%;height:100%">
+        </div>
+    </body>
 </html>
+
+
 
