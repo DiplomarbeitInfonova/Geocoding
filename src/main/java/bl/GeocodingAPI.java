@@ -98,24 +98,17 @@ public class GeocodingAPI {
         return response;
     }
     
-    public String getWaypoints(Location a, Location b)
+    public String getWaypoints()
     {
-        String request = "https://maps.googleapis.com/maps/api/directions/json?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord() +"&key="+apiKey;
-        String response ="";
-        try {
-            SendToMapsAPI sendObject = new SendToMapsAPI(request);
-            String answer = sendObject.read();
-            xmlp = new XMLParse(answer);
-            response = xmlp.xmlElevationInformation();           
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String request = "https://maps.googleapis.com/maps/api/directions/json?origins=Mureck&destinations=Ligist&key="+apiKey;
+        System.out.println(request);
+        String response ="asdfsf";
         return response;
     }
     
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
-        System.out.println(api.getWaypoints(api.OrtToKoord("Mureck"),api.OrtToKoord("Los Anegeles")).toString());
+        System.out.println(api.getWaypoints().toString());
         //System.out.println(api.OrtToKoord("Ligist").toString());
         //double[] k = {46.9917246, 15.2107184};
         //api.KoordToOrt(k);
