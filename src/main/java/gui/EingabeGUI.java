@@ -63,33 +63,32 @@ public class EingabeGUI extends javax.swing.JFrame
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        panControls = new javax.swing.JPanel();
+        panA = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tf_OrtsnameA = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         tf_XKoordA = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         tf_YKoordA = new javax.swing.JTextField();
-        jPanel5 = new javax.swing.JPanel();
+        panB = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         tf_OrtsnameB = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         tf_XKoordB = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         tf_YKoordB = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        MainMap = new org.jxmapviewer.JXMapKit();
-        jPanel3 = new javax.swing.JPanel();
+        panInfos = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         rb_2D = new javax.swing.JRadioButton();
         rb_3D = new javax.swing.JRadioButton();
@@ -99,6 +98,9 @@ public class EingabeGUI extends javax.swing.JFrame
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         lab_Duration = new javax.swing.JLabel();
+        panhoehe = new javax.swing.JPanel();
+        panMap = new javax.swing.JPanel();
+        MainMap = new org.jxmapviewer.JXMapKit();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_Start = new javax.swing.JMenuItem();
@@ -108,19 +110,26 @@ public class EingabeGUI extends javax.swing.JFrame
         jPopupMenu1.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1280, 900));
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
+        panControls.setMinimumSize(new java.awt.Dimension(300, 298));
+        panControls.setPreferredSize(new java.awt.Dimension(300, 100));
+        panControls.setLayout(new java.awt.GridLayout(4, 1));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort A"));
-        jPanel4.setLayout(new java.awt.GridLayout(2, 2));
+        panA.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort A"));
+        panA.setLayout(new java.awt.GridLayout(2, 2));
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel7.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel1.setText("Ortsname");
+        jLabel1.setPreferredSize(new java.awt.Dimension(47, 7));
         jPanel7.add(jLabel1);
-        jPanel7.add(tf_OrtsnameA);
 
-        jPanel4.add(jPanel7);
+        tf_OrtsnameA.setPreferredSize(new java.awt.Dimension(6, 10));
+        jPanel7.add(tf_OrtsnameA);
+        jPanel7.add(jLabel8);
+
+        panA.add(jPanel7);
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Koordinaten"));
         jPanel8.setLayout(new java.awt.GridLayout(2, 2));
@@ -133,20 +142,21 @@ public class EingabeGUI extends javax.swing.JFrame
         jPanel8.add(jLabel3);
         jPanel8.add(tf_YKoordA);
 
-        jPanel4.add(jPanel8);
+        panA.add(jPanel8);
 
-        jPanel1.add(jPanel4);
+        panControls.add(panA);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort B"));
-        jPanel5.setLayout(new java.awt.GridLayout(2, 1));
+        panB.setBorder(javax.swing.BorderFactory.createTitledBorder("Ort B"));
+        panB.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel6.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel4.setText("Ortsname");
         jPanel6.add(jLabel4);
         jPanel6.add(tf_OrtsnameB);
+        jPanel6.add(jLabel10);
 
-        jPanel5.add(jPanel6);
+        panB.add(jPanel6);
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Koordinaten"));
         jPanel9.setLayout(new java.awt.GridLayout(2, 2));
@@ -159,21 +169,13 @@ public class EingabeGUI extends javax.swing.JFrame
         jPanel9.add(jLabel6);
         jPanel9.add(tf_YKoordB);
 
-        jPanel5.add(jPanel9);
+        panB.add(jPanel9);
 
-        jPanel1.add(jPanel5);
+        panControls.add(panB);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
+        panInfos.setLayout(new java.awt.GridLayout(3, 1));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setLayout(new java.awt.BorderLayout());
-        jPanel2.add(MainMap, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        jPanel3.setLayout(new java.awt.GridLayout(1, 3));
-
-        jPanel10.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel10.setLayout(new java.awt.GridLayout(1, 2));
 
         rb_2D.setText("2D");
         jPanel10.add(rb_2D);
@@ -181,7 +183,7 @@ public class EingabeGUI extends javax.swing.JFrame
         rb_3D.setText("3D");
         jPanel10.add(rb_3D);
 
-        jPanel3.add(jPanel10);
+        panInfos.add(jPanel10);
 
         jPanel11.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -191,7 +193,7 @@ public class EingabeGUI extends javax.swing.JFrame
         lab_Distance.setText("0000");
         jPanel11.add(lab_Distance);
 
-        jPanel3.add(jPanel11);
+        panInfos.add(jPanel11);
 
         jPanel12.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -201,17 +203,24 @@ public class EingabeGUI extends javax.swing.JFrame
         lab_Duration.setText("0h 00min");
         jPanel12.add(lab_Duration);
 
-        jPanel3.add(jPanel12);
+        panInfos.add(jPanel12);
 
-        getContentPane().add(jPanel3, java.awt.BorderLayout.SOUTH);
+        panControls.add(panInfos);
+        panControls.add(panhoehe);
+
+        getContentPane().add(panControls, java.awt.BorderLayout.WEST);
+
+        panMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panMap.setLayout(new java.awt.BorderLayout());
+        panMap.add(MainMap, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panMap, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("File");
 
         mi_Start.setText("Start");
-        mi_Start.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        mi_Start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mi_StartActionPerformed(evt);
             }
         });
@@ -345,25 +354,22 @@ public class EingabeGUI extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jxmapviewer.JXMapKit MainMap;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -372,6 +378,12 @@ public class EingabeGUI extends javax.swing.JFrame
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JMenuItem mi_Start;
+    private javax.swing.JPanel panA;
+    private javax.swing.JPanel panB;
+    private javax.swing.JPanel panControls;
+    private javax.swing.JPanel panInfos;
+    private javax.swing.JPanel panMap;
+    private javax.swing.JPanel panhoehe;
     private javax.swing.JRadioButton rb_2D;
     private javax.swing.JRadioButton rb_3D;
     private javax.swing.JTextField tf_OrtsnameA;
