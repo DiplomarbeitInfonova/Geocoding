@@ -6,6 +6,7 @@
 package gui;
 
 import beans.Location;
+
 import bl.GeocodingAPI;
 import java.text.ParseException;
 import java.util.HashSet;
@@ -43,20 +44,21 @@ public class EingabeGUI extends javax.swing.JFrame
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
-        addWaypoint();
+       
     }
 
-    public void addWaypoint()
+    public void addWaypoint(Location a, Location b)
     {
         //create a Set of waypoints
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
-        waypoints.add(new DefaultWaypoint(new GeoPosition(41.881944, -87.627778));
-        waypoints.add(new DefaultWaypoint(new GeoPosition(40.716667, -74));
+        waypoints.add(new DefaultWaypoint(new GeoPosition(a.getxKoord(),a.getyKoord())));
+        waypoints.add(new DefaultWaypoint(new GeoPosition(b.getxKoord(),b.getyKoord())));
         
         //crate a WaypointPainter to draw the points
         WaypointPainter painter = new WaypointPainter();
         painter.setWaypoints(waypoints);
         MainMap.getMainMap().setOverlayPainter(painter);
+        repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -290,8 +292,9 @@ public class EingabeGUI extends javax.swing.JFrame
 //    WaypointPainter painter = new WaypointPainter();
 //    painter.setWaypoints(waypoints);
 //    MainMap.getMainMap().setOverlayPainter(painter);
-        this.MainMap.setAddressLocation(new GeoPosition(a.getxKoord(), a.getyKoord()));
+      this.addWaypoint(a,b);
 
+        
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
