@@ -140,13 +140,11 @@ public class XMLParse {
             Element elem = (Element) namenList.item(i);
 
             NodeList end_loc = elem.getElementsByTagName("end_location");
-            NodeList travel_mode = elem.getElementsByTagName("travel_mode");
             NodeList duration = elem.getElementsByTagName("duration");
             NodeList distance = elem.getElementsByTagName("distance");
             NodeList html_instruction = elem.getElementsByTagName("html_instructions");
    
             for (int k = 0; k < distance.getLength(); k++) {
-
                 //
                 Element elem_end_loc = (Element) end_loc.item(k);
                 Element elem_distance = (Element) distance.item(k);
@@ -178,8 +176,7 @@ public class XMLParse {
                 //             
                 String str_html_instruction = html_instr.getTextContent();
                 //
-                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction));
-//                
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction));              
             }
         }
 
