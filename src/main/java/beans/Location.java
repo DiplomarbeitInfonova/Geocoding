@@ -6,6 +6,8 @@
 
 package beans;
 
+import bl.StringUtils;
+
 /**
  *
  * @author David
@@ -26,14 +28,14 @@ public class Location {
     }
 
     public Location(String name, double xKoord, double yKoord, double hoehe) {
-        this.name = this.correctLettersForAPI(name);
+        this.name = StringUtils.correctLettersForAPI(name);
         this.xKoord = xKoord;
         this.yKoord = yKoord;
         this.hoehe = hoehe;
     }
     
     public Location(String name, double xKoord, double yKoord) {
-        this.name = this.correctLettersForAPI(name);
+        this.name = StringUtils.correctLettersForAPI(name);
         this.xKoord = xKoord;
         this.yKoord = yKoord;
     }
@@ -65,18 +67,6 @@ public class Location {
     @Override
     public String toString() {
         return String.format("Location=\n\tName: %s\n\t x-Koord: %f \n\t y-Koord: %f", this.name, this.xKoord, this.yKoord);
-    }
-    
-    public String correctLettersForAPI(String nameToCorrect)
-    {
-        String correctName=nameToCorrect;
-        
-        correctName = correctName.replace("ä", "ae");
-        correctName = correctName.replace("ü", "ue");
-        correctName = correctName.replace("ö", "oe");
-        correctName = correctName.replace("ß", "ss");
-        
-        return correctName;
     }
     
 }
