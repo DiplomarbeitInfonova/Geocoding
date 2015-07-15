@@ -3,30 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bl;
 
 /**
  *
  * @author David
  */
-public class StringUtils {
-    
+public class StringUtils
+{
+
     public static String correctLettersForAPI(String name)
     {
-        String correctName=name;
-        
-        correctName = correctName.replaceAll("ä", "ae");
-        correctName = correctName.replaceAll("ü", "ue");
-        correctName = correctName.replaceAll("ö", "oe");
-        correctName = correctName.replaceAll("ß", "ss");
-        
+        String correctName;
+        correctName = name.replaceAll("Ä", "Ae");
+        correctName = name.replaceAll("Ü", "Ue");
+        correctName = name.replaceAll("Ö", "Oe");
+        correctName = name.replaceAll("ä", "ae");
+        correctName = name.replaceAll("ü", "ue");
+        correctName = name.replaceAll("ö", "oe");
+        correctName = name.replaceAll("ß", "ss");
         return correctName;
     }
-    
+
     public static String deleteSpaces(String name)
     {
         return name.replaceAll(" ", ";");
     }
-    
+
 }
