@@ -26,11 +26,7 @@ public class StringUtils {
     
     public static String deleteSpaces(String name)
     {
-        String correctName=name;
-        
-        name = name.replaceAll(" ", ";");
-        
-        return correctName;
+        return name.replaceAll(" ", ";");
     }
     
 }

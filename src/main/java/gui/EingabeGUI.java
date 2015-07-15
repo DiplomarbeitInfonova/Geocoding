@@ -47,14 +47,14 @@ public class EingabeGUI extends javax.swing.JFrame
 
     public void addWaypoint(LinkedList<Location> locations)
     {
-        //Ein Set von Waypoints wird erstellt
+        //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
         for (Location l : locations)
         {
             waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
         }
 
-        //Ein Waypoitnpainer wird erstellt, um die Punkte an der Karte anzuzeigen
+        //Ein Waypoitnpainter wird erstellt um die Punkte an der Karte anzuzeigen
         WaypointPainter painter = new WaypointPainter();
         painter.setWaypoints(waypoints);
         MainMap.getMainMap().setOverlayPainter(painter);
