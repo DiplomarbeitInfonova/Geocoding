@@ -36,6 +36,7 @@ public class EingabeGUI extends javax.swing.JFrame
     public EingabeGUI()
     {
         initComponents();
+        this.setLocationRelativeTo(null);
         geo = new GeocodingAPI();
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
@@ -54,7 +55,7 @@ public class EingabeGUI extends javax.swing.JFrame
             waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
         }
 
-        //Ein Waypoitnpainter wird erstellt um die Punkte an der Karte anzuzeigen
+        //Ein Waypointpainter wird erstellt um die Punkte an der Karte anzuzeigen
         WaypointPainter painter = new WaypointPainter();
         painter.setWaypoints(waypoints);
         MainMap.getMainMap().setOverlayPainter(painter);
@@ -295,6 +296,7 @@ public class EingabeGUI extends javax.swing.JFrame
         String[] spl = dur.split("-");
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
+        locations.clear();
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
