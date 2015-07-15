@@ -10,7 +10,7 @@ public class Leg {
 
     @Override
     public String toString() {
-        return "Leg{" + "distance=" + distance + ", duration=" + duration + ", end_loc_lat=" + end_loc_lat + ", end_loc_lng=" + end_loc_lng + ", html_instruction=" + html_instruction + ", polylinge_point=" + polylinge_point + ", start_loc_lat=" + start_loc_lat + ", start_loc_lng=" + start_loc_lng + ", travel_mode=" + travel_mode + '}';
+        return "Leg{" + "distance=" + distance + "km, duration=" + duration + "s, end_loc_lat=" + end_loc_lat + ", end_loc_lng=" + end_loc_lng + ", html_instruction=" + html_instruction + ", polylinge_point=" + polylinge_point + ", start_loc_lat=" + start_loc_lat + ", start_loc_lng=" + start_loc_lng + ", travel_mode=" + travel_mode + '}';
     }
 
     private float distance;

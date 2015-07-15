@@ -123,7 +123,7 @@ public class GeocodingAPI {
         LinkedList<Leg> test = api.getWaypoints("Mureck","Ligist");
         for(int i = 0; i < test.size(); i++)
             {
-                System.out.println(test.get(i).toString());
+                System.out.println(test.get(i).toString()+"\n");
             }
         //System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
