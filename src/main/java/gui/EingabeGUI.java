@@ -64,8 +64,7 @@ public class EingabeGUI extends javax.swing.JFrame
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -221,10 +220,8 @@ public class EingabeGUI extends javax.swing.JFrame
         jMenu1.setText("File");
 
         mi_Start.setText("Start");
-        mi_Start.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        mi_Start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mi_StartActionPerformed(evt);
             }
         });
