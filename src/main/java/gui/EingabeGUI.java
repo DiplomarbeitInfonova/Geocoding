@@ -54,7 +54,7 @@ public class EingabeGUI extends javax.swing.JFrame
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
         for (Location l : locations)
         {
-            waypoints.add(new DefaultWaypoint(new GeoPosition(a.getxKoord(), a.getyKoord())));
+            waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
         }
 
         //Ein Waypoitnpainer wird erstellt, um die Punkte an der Karte anzuzeigen
