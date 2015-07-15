@@ -32,8 +32,8 @@ public class EingabeGUI extends javax.swing.JFrame
      * Creates new form EingabeGUI
      */
     private GeocodingAPI geo;
-    private Location A;
-    private Location B;
+    private Location a;
+    private Location b;
     private LinkedList<Location> locations = new LinkedList<>();
 
     public EingabeGUI()
@@ -50,14 +50,14 @@ public class EingabeGUI extends javax.swing.JFrame
 
     public void addWaypoint(LinkedList<Location> locations)
     {
-        //create a Set of waypoints
+        //Ein Set von Waypoints wird erstellt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
-        for(Location l:locations)
+        for (Location l : locations)
         {
-            waypoints.add(new DefaultWaypoint(new GeoPosition(a.getxKoord(),a.getyKoord())));
+            waypoints.add(new DefaultWaypoint(new GeoPosition(a.getxKoord(), a.getyKoord())));
         }
-        
-        //crate a WaypointPainter to draw the points
+
+        //Ein Waypoitnpainer wird erstellt, um die Punkte an der Karte anzuzeigen
         WaypointPainter painter = new WaypointPainter();
         painter.setWaypoints(waypoints);
         MainMap.getMainMap().setOverlayPainter(painter);
@@ -249,8 +249,6 @@ public class EingabeGUI extends javax.swing.JFrame
      und vice versa.
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
-        Location a = null;
-        Location b = null;
         // Prüfen
         if (!this.tf_OrtsnameA.getText().equals(""))
         {
@@ -296,19 +294,10 @@ public class EingabeGUI extends javax.swing.JFrame
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
             return;
         }
-
         String dur = geo.LocationToDistance(a, b);
         String[] spl = dur.split("-");
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
-//    Set<Waypoint> waypoints = new HashSet<Waypoint>();
-//    waypoints.add(new Waypoint(41.881944,-87.627778);
-//    waypoints.add(new Waypoint(40.716667,-74));
-//    
-//    //crate a WaypointPainter to draw the points
-//    WaypointPainter painter = new WaypointPainter();
-//    painter.setWaypoints(waypoints);
-//    MainMap.getMainMap().setOverlayPainter(painter);
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
