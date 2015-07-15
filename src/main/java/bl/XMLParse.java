@@ -54,11 +54,10 @@ public class XMLParse {
                     Element e3 = (Element) locations.item(i);
                     String responseKoord = e3.getTextContent();
                     String[] split = responseKoord.split("\n");
-                    
-                    for (int l = 0; l < split.length; l++)
-                    {
+
+                    for (int l = 0; l < split.length; l++) {
                         String string = split[l];
-              
+
                         if (l == 1) {
                             x = Double.parseDouble(string.trim());
                         } else if (l == 2) {
@@ -72,67 +71,63 @@ public class XMLParse {
         }
         return null;
     }
-    
-    public String xmlElevationInformation()
-    {
+
+    public String xmlElevationInformation() {
         double elevation;
-        
+
         Element root = xmlDoc.getDocumentElement();
-        
+
         NodeList results = root.getElementsByTagName("result");
-        for (int i = 0; i < results.getLength(); i++)
-        {
+        for (int i = 0; i < results.getLength(); i++) {
             Element e = (Element) results.item(i);
             NodeList elevationList = e.getElementsByTagName("elevation");
             Element eElevation = (Element) elevationList.item(0);
             elevation = Double.parseDouble(eElevation.getTextContent());
             System.out.println(elevation);
         }
-        
+
         return null;
     }
-    
-    public String xmlToDistanceAndDuration()
-    {
-        String duration="";
-        String distance="";
-        
+
+    public String xmlToDistanceAndDuration() {
+        String duration = "";
+        String distance = "";
+
         Element root = xmlDoc.getDocumentElement();
         NodeList row = root.getElementsByTagName("row");
-        for (int i = 0; i < row.getLength(); i++)
-        {
+        for (int i = 0; i < row.getLength(); i++) {
             Element e = (Element) row.item(i);
             NodeList elementList = e.getElementsByTagName("element");
             for (int j = 0; j < elementList.getLength(); j++) {
-                Element e1 = (Element)elementList.item(j);
+                Element e1 = (Element) elementList.item(j);
                 NodeList durationList = e1.getElementsByTagName("duration");
-                for (int k = 0; k < durationList.getLength(); k++)
-                {
-                    Element eDuration = (Element)durationList.item(i);
+                for (int k = 0; k < durationList.getLength(); k++) {
+                    Element eDuration = (Element) durationList.item(i);
                     NodeList durationText = eDuration.getElementsByTagName("text");
-                    Element dText = (Element)durationText.item(0);
+                    Element dText = (Element) durationText.item(0);
                     duration = dText.getTextContent();
-                    System.out.println(duration);                    
+                    System.out.println(duration);
                 }
                 NodeList distanceList = e1.getElementsByTagName("distance");
-                for (int k = 0; k < distanceList.getLength(); k++)
-                {
-                    Element eDistance = (Element)distanceList.item(i);
+                for (int k = 0; k < distanceList.getLength(); k++) {
+                    Element eDistance = (Element) distanceList.item(i);
                     NodeList distanceText = eDistance.getElementsByTagName("text");
-                    Element dText = (Element)distanceText.item(0);
+                    Element dText = (Element) distanceText.item(0);
                     distance = dText.getTextContent();
-                    System.out.println(distance);                    
+                    System.out.println(distance);
                 }
             }
         }
-        
-        return duration+"-"+distance;
+
+        return duration + "-" + distance;
     }
-    
-    
-    
-    public static void main(String[] args)
+
+    public String xmlFromDistanceAPItoLocations() 
     {
+        return "";
+    }
+
+    public static void main(String[] args) {
         XMLParse xml = new XMLParse("<ElevationResponse>\n"
                 + "<status>OK</status>\n"
                 + "<result>\n"
@@ -144,11 +139,8 @@ public class XMLParse {
                 + "<resolution>4.7719760</resolution>\n"
                 + "</result>\n"
                 + "</ElevationResponse>");
-        
+
         xml.xmlElevationInformation();
-        
-        
-        
-        
+
     }
 }

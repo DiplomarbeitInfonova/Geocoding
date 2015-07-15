@@ -101,13 +101,13 @@ public class GeocodingAPI {
     public String getWaypoints(String l1, String l2)
     {
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin="+l1+"&destination="+l2+"&key="+apiKey;
-            String response ="";
+        String response ="";
         try {
             
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
-            response = sendObject.read();
-            System.out.println(response);
-          
+            String answer = sendObject.read();
+            xmlp = new XMLParse(answer);
+            response = xmlp.xmlFromDistanceAPItoLocations();
         } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -117,8 +117,7 @@ public class GeocodingAPI {
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
         String test = api.getWaypoints("Mureck","Ligist");
-        //System.out.println("Test: "+test);
-        //System.out.println(test);
+        System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
         //double[] k = {46.9917246, 15.2107184};
         //api.KoordToOrt(k);
