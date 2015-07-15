@@ -6,15 +6,12 @@
 package gui;
 
 import beans.Location;
-
 import bl.GeocodingAPI;
-import java.text.ParseException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-import org.jxmapviewer.*;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
