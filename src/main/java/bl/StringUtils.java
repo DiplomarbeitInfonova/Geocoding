@@ -16,10 +16,10 @@ public class StringUtils {
     {
         String correctName=name;
         
-        correctName = correctName.replace("ä", "ae");
-        correctName = correctName.replace("ü", "ue");
-        correctName = correctName.replace("ö", "oe");
-        correctName = correctName.replace("ß", "ss");
+        correctName = correctName.replaceAll("ä", "ae");
+        correctName = correctName.replaceAll("ü", "ue");
+        correctName = correctName.replaceAll("ö", "oe");
+        correctName = correctName.replaceAll("ß", "ss");
         
         return correctName;
     }
