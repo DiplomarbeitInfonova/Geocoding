@@ -129,6 +129,8 @@ public class XMLParse {
         return duration+"-"+distance;
     }
     
+    
+    
     public static void main(String[] args)
     {
         XMLParse xml = new XMLParse("<ElevationResponse>\n"

@@ -50,7 +50,9 @@ public final class SendToMapsAPI
     {
         try
         {
-            SendToMapsAPI url = new SendToMapsAPI("http://maps.googleapis.com/maps/api/distancematrix/json?origins=48.37735,16.32328&destinations=46.9644,15.47922");
+            //SendToMapsAPI url = new SendToMapsAPI("http://maps.googleapis.com/maps/api/distancematrix/json?origins=48.37735,16.32328&destinations=46.9644,15.47922");
+            SendToMapsAPI url = new SendToMapsAPI("https://maps.googleapis.com/maps/api/directions/xml?origin=Ligist&destination=Mureck&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo");
+
             String contents = url.read();
 
             if (contents != null)
