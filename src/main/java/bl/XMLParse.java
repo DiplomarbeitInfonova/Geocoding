@@ -1,8 +1,13 @@
 // author Veronika Gößler
 package bl;
 
+import beans.Leg;
 import beans.Location;
+import java.awt.List;
 import java.io.StringReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -122,9 +127,36 @@ public class XMLParse {
         return duration + "-" + distance;
     }
 
-    public String xmlFromDistanceAPItoLocations() 
+    public LinkedList<Leg> xmlFromDistanceAPItoLocations() 
     {
-        return "";
+        
+        LinkedList<Leg> list = new LinkedList<Leg>();
+        Element root = xmlDoc.getDocumentElement();
+        NodeList namenList = root.getElementsByTagName("steps");
+
+        for (int i = 0; i < namenList.getLength(); i++) {
+
+            Element elem = (Element) namenList.item(i);
+
+                NodeList distance = elem.getElementsByTagName("distance");
+                NodeList duration = elem.getElementsByTagName("duration");
+                NodeList end_loc = elem.getElementsByTagName("end_location");
+                for (int k = 0; k < distance.getLength(); k++) {
+                  
+                        Element dis = (Element) distance.item(k);
+                        Element dur = (Element) duration.item(k);
+                        Element el = (Element) end_loc.item(k);
+                        String strdistance = dis.getTextContent();
+                        String strduration = dur.getTextContent();
+                        String strend_loc = el.getTextContent();
+                        System.out.println(strdistance);
+                        //list.add(new Leg(distance, duration, sdf.parse(strg),abt));
+                    
+                }
+            }
+        
+        return list;
+    
     }
 
     public static void main(String[] args) {

@@ -6,8 +6,10 @@
 
 package bl;
 
+import beans.Leg;
 import beans.Location;
 import java.net.MalformedURLException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -98,10 +100,10 @@ public class GeocodingAPI {
         return response;
     }
     
-    public String getWaypoints(String l1, String l2)
+    public LinkedList<Leg> getWaypoints(String l1, String l2)
     {
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin="+l1+"&destination="+l2+"&key="+apiKey;
-        String response ="";
+        LinkedList<Leg> response = new LinkedList<Leg>();
         try {
             
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
@@ -116,7 +118,7 @@ public class GeocodingAPI {
     
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
-        String test = api.getWaypoints("Mureck","Ligist");
+        LinkedList<Leg> test = api.getWaypoints("Mureck","Ligist");
         System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
         //double[] k = {46.9917246, 15.2107184};
