@@ -10,6 +10,7 @@ import beans.Location;
 import bl.GeocodingAPI;
 import java.text.ParseException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
@@ -33,6 +34,7 @@ public class EingabeGUI extends javax.swing.JFrame
     private GeocodingAPI geo;
     private Location A;
     private Location B;
+    private LinkedList<Location> locations = new LinkedList<>();
 
     public EingabeGUI()
     {
@@ -44,15 +46,16 @@ public class EingabeGUI extends javax.swing.JFrame
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
-       
     }
 
-    public void addWaypoint(Location a, Location b)
+    public void addWaypoint(LinkedList<Location> locations)
     {
         //create a Set of waypoints
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
-        waypoints.add(new DefaultWaypoint(new GeoPosition(a.getxKoord(),a.getyKoord())));
-        waypoints.add(new DefaultWaypoint(new GeoPosition(b.getxKoord(),b.getyKoord())));
+        for(Location l:locations)
+        {
+            waypoints.add(new DefaultWaypoint(new GeoPosition(a.getxKoord(),a.getyKoord())));
+        }
         
         //crate a WaypointPainter to draw the points
         WaypointPainter painter = new WaypointPainter();
@@ -63,7 +66,8 @@ public class EingabeGUI extends javax.swing.JFrame
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -219,8 +223,10 @@ public class EingabeGUI extends javax.swing.JFrame
         jMenu1.setText("File");
 
         mi_Start.setText("Start");
-        mi_Start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        mi_Start.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 mi_StartActionPerformed(evt);
             }
         });
@@ -266,6 +272,7 @@ public class EingabeGUI extends javax.swing.JFrame
         } else
         {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
+            return;
         }
         if (!this.tf_OrtsnameB.getText().equals(""))
         {
@@ -287,6 +294,7 @@ public class EingabeGUI extends javax.swing.JFrame
         } else
         {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
+            return;
         }
 
         String dur = geo.LocationToDistance(a, b);
@@ -301,9 +309,9 @@ public class EingabeGUI extends javax.swing.JFrame
 //    WaypointPainter painter = new WaypointPainter();
 //    painter.setWaypoints(waypoints);
 //    MainMap.getMainMap().setOverlayPainter(painter);
-      this.addWaypoint(a,b);
-
-        
+        locations.add(a);
+        locations.add(b);
+        this.addWaypoint(locations);
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
