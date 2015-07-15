@@ -34,7 +34,8 @@ public class GeocodingAPI {
     {
         double[] koordinaten = new double[2];
         Location ort=null;
-        name = name.replaceAll(" ", ";");
+        name = StringUtils.deleteSpaces(name);
+        name = StringUtils.correctLettersForAPI(name);
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address="+name+"&key="+apiKey;
         String answer="";
         
@@ -87,7 +88,7 @@ public class GeocodingAPI {
     
     public String getElevationInformation(Location l)
     {
-        String request = "//maps.googleapis.com/maps/api/elevation/json?locations="+l.getxKoord()+","+l.getyKoord()+"&key="+apiKey;
+        String request = "//maps.googleapis.com/maps/api/elevation/xml?locations="+l.getxKoord()+","+l.getyKoord()+"&key="+apiKey;
         String response ="";
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
