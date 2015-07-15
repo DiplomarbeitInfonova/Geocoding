@@ -7,6 +7,7 @@ import java.awt.List;
 import java.io.StringReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
@@ -127,36 +129,68 @@ public class XMLParse {
         return duration + "-" + distance;
     }
 
-    public LinkedList<Leg> xmlFromDistanceAPItoLocations() 
-    {
-        
+    public LinkedList<Leg> xmlFromDistanceAPItoLocations() {
+
         LinkedList<Leg> list = new LinkedList<Leg>();
         Element root = xmlDoc.getDocumentElement();
-        NodeList namenList = root.getElementsByTagName("steps");
+        NodeList namenList = root.getElementsByTagName("step");
 
         for (int i = 0; i < namenList.getLength(); i++) {
 
             Element elem = (Element) namenList.item(i);
 
-                NodeList distance = elem.getElementsByTagName("distance");
-                NodeList duration = elem.getElementsByTagName("duration");
-                NodeList end_loc = elem.getElementsByTagName("end_location");
-                for (int k = 0; k < distance.getLength(); k++) {
-                  
-                        Element dis = (Element) distance.item(k);
-                        Element dur = (Element) duration.item(k);
-                        Element el = (Element) end_loc.item(k);
-                        String strdistance = dis.getTextContent();
-                        String strduration = dur.getTextContent();
-                        String strend_loc = el.getTextContent();
-                        System.out.println(strdistance);
-                        //list.add(new Leg(distance, duration, sdf.parse(strg),abt));
-                    
-                }
+            NodeList end_loc = elem.getElementsByTagName("end_location");
+            NodeList travel_mode = elem.getElementsByTagName("travel_mode");
+            NodeList duration = elem.getElementsByTagName("duration");
+            NodeList distance = elem.getElementsByTagName("distance");
+            NodeList start_loc = elem.getElementsByTagName("start_location");
+            NodeList html_instruction = elem.getElementsByTagName("html_instruction");
+            NodeList polyline = elem.getElementsByTagName("polyline");
+   
+            for (int k = 0; k < distance.getLength(); k++) {
+
+                Element elem_end_loc = (Element) end_loc.item(k);
+                Element elem_distance = (Element) distance.item(k);
+                Element elem_duration = (Element) duration.item(k);
+                Element elem_start_loc = (Element) start_loc.item(k);
+                Element travmode = (Element) travel_mode.item(k);
+                NodeList end_loc_lat = elem_end_loc.getElementsByTagName("lat");
+                NodeList end_loc_lng = elem_end_loc.getElementsByTagName("lng");
+                Element endloclat = (Element) end_loc_lat.item(k);
+                Element endloclng = (Element) end_loc_lng.item(k);
+                NodeList distance_value = elem_distance.getElementsByTagName("value");
+                Element elem_distance_value = (Element) distance_value.item(k);
+                NodeList duration_value = elem_duration.getElementsByTagName("value");
+                Element elem_duration_value = (Element) duration_value.item(k);
+                NodeList start_loc_lat = elem_start_loc.getElementsByTagName("lat");
+                NodeList start_loc_lng = elem_start_loc.getElementsByTagName("lng");
+                Element startloclat = (Element) start_loc_lat.item(k);
+                Element startloclng = (Element) start_loc_lng.item(k);
+                Element html_instr = (Element) html_instruction.item(k);
+                Element polylinepoint = (Element) polyline.item(k);
+                String str_distance = elem_distance_value.getTextContent();
+                float f_distance = Float.parseFloat(str_distance);
+                String str_duration = elem_duration_value.getTextContent();
+                int i_duration = Integer.parseInt(str_duration);
+                String str_endloclat = endloclat.getTextContent();
+                float f_endloclat = Float.parseFloat(str_endloclat);
+                String str_endloclng = endloclng.getTextContent();
+                float f_endloclng = Float.parseFloat(str_endloclng);
+                String str_travelmode = travmode.getTextContent();
+                String str_startloclat = startloclat.getTextContent();
+                float f_startloclat = Float.parseFloat(str_startloclat);
+                String str_strloclng = startloclng.getTextContent();
+                float f_strloclng = Float.parseFloat(str_strloclng);
+                String str_html_instruction = html_instr.getTextContent();
+                String str_polylinepoint = polylinepoint.getTextContent();
+                
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, str_polylinepoint,f_startloclat,f_strloclng,str_travelmode));
+                
             }
-        
+        }
+
         return list;
-    
+
     }
 
     public static void main(String[] args) {

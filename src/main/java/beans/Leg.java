@@ -8,8 +8,13 @@ import java.util.Date;
  */
 public class Leg {
 
+    @Override
+    public String toString() {
+        return "Leg{" + "distance=" + distance + ", duration=" + duration + ", end_loc_lat=" + end_loc_lat + ", end_loc_lng=" + end_loc_lng + ", html_instruction=" + html_instruction + ", polylinge_point=" + polylinge_point + ", start_loc_lat=" + start_loc_lat + ", start_loc_lng=" + start_loc_lng + ", travel_mode=" + travel_mode + '}';
+    }
+
     private float distance;
-    private Date duration;
+    private int duration;
     private float end_loc_lat;
     private float end_loc_lng;
     private String html_instruction;
@@ -18,7 +23,7 @@ public class Leg {
     private float start_loc_lng;
     private String travel_mode;
 
-    public Leg(float distance, Date duration, float end_loc_lat, float end_loc_lng, String html_instruction, String polylinge_point, float start_loc_lat, float start_loc_lng, String travel_mode) {
+    public Leg(float distance, int duration, float end_loc_lat, float end_loc_lng, String html_instruction, String polylinge_point, float start_loc_lat, float start_loc_lng, String travel_mode) {
         this.distance = distance;
         this.duration = duration;
         this.end_loc_lat = end_loc_lat;
@@ -38,11 +43,11 @@ public class Leg {
         this.distance = distance;
     }
 
-    public Date getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Date duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

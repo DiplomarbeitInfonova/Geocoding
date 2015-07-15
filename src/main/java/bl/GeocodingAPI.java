@@ -108,8 +108,10 @@ public class GeocodingAPI {
             
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
+            System.out.println(answer);
             xmlp = new XMLParse(answer);
-            response = xmlp.xmlFromDistanceAPItoLocations();
+            response = xmlp.xmlFromDistanceAPItoLocations();     
+            
         } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,7 +121,11 @@ public class GeocodingAPI {
     public static void main(String[] args) {
         GeocodingAPI api = new GeocodingAPI();
         LinkedList<Leg> test = api.getWaypoints("Mureck","Ligist");
-        System.out.println("Test: "+test);
+        for(int i = 0; i < test.size(); i++)
+            {
+                System.out.println(test.get(i).toString());
+            }
+        //System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
         //double[] k = {46.9917246, 15.2107184};
         //api.KoordToOrt(k);
