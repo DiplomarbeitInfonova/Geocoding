@@ -179,12 +179,20 @@ public class XMLParse {
                 GeocodingAPI a = new GeocodingAPI();
                 double[] koordinaten = {f_endloclat,f_endloclng};
                 //
-                //Location l = a.KoordToOrt(koordinaten);
+                Location l = a.KoordToOrt(koordinaten);
+                System.out.println(l.toString());
                 //
-                //String str_elevation = a.getElevationInformation(l);
-                //double d_elevation = Double.parseDouble(str_elevation);
+                
+                /*
+                *       Bitte die Methode xmlToLocation noch einmal anschauen! 
+                *       Funktioniert nicht ganz. Wenn diese Methode funktioniert, geht meins.
+                */
+                
+                String str_elevation = a.getElevationInformation(l);
+                double d_elevation = Double.parseDouble(str_elevation);
+                System.out.println("el: "+str_elevation);
                 //
-                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, 123));              
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));              
             }
         }
 

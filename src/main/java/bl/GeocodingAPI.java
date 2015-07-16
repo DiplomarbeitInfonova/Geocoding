@@ -116,7 +116,6 @@ public class GeocodingAPI
         LinkedList<Leg> response = new LinkedList<Leg>();
         try
         {
-
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             System.out.println(answer);
@@ -136,11 +135,11 @@ public class GeocodingAPI
         LinkedList<Leg> test = api.getWaypoints("Mureck", "Ligist");
         for (int i = 0; i < test.size(); i++)
         {
-            //System.out.println(test.get(i).toString() + "\n");
+            System.out.println("ag: "+test.get(i).toString() + "\n");
         }
         
-        String s = api.getElevationInformation(api.OrtToKoord("Mureck"));
-        System.out.println("help: "+s);
+        //String s = api.getElevationInformation(api.OrtToKoord("Mureck"));
+        //System.out.println("help: "+s);
         //System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
         //double[] k = {46.9917246, 15.2107184};
