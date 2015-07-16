@@ -176,7 +176,15 @@ public class XMLParse {
                 //             
                 String str_html_instruction = html_instr.getTextContent();
                 //
-                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction));              
+                GeocodingAPI a = new GeocodingAPI();
+                double[] koordinaten = {f_endloclat,f_endloclng};
+                //
+                //Location l = a.KoordToOrt(koordinaten);
+                //
+                //String str_elevation = a.getElevationInformation(l);
+                //double d_elevation = Double.parseDouble(str_elevation);
+                //
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, 123));              
             }
         }
 
