@@ -7,6 +7,9 @@ package gui;
 
 import beans.Location;
 import bl.GeocodingAPI;
+import bl.GraphingData;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -207,6 +210,8 @@ public class EingabeGUI extends javax.swing.JFrame
         panInfos.add(jPanel12);
 
         panControls.add(panInfos);
+
+        panhoehe.setLayout(new java.awt.BorderLayout());
         panControls.add(panhoehe);
 
         getContentPane().add(panControls, java.awt.BorderLayout.WEST);
@@ -267,6 +272,7 @@ public class EingabeGUI extends javax.swing.JFrame
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
             return;
         }
+        
         if (!this.tf_OrtsnameB.getText().equals(""))
         {
             b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
@@ -297,6 +303,10 @@ public class EingabeGUI extends javax.swing.JFrame
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
+        GraphingData diagramm = new GraphingData();
+        
+        this.panhoehe.add(diagramm,BorderLayout.CENTER);
+        panhoehe.repaint();
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
