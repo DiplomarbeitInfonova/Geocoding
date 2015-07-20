@@ -66,7 +66,7 @@ public class EingabeGUI extends javax.swing.JFrame
         WaypointPainter painter = new WaypointPainter();
         //painter.setWaypoints(new HashSet<Waypoint>());
         //repaint();
-      painter.clearCache();
+        painter.clearCache();
         painter.setWaypoints(waypoints);
         
         MainMap.getMainMap().setOverlayPainter(painter);
@@ -316,8 +316,11 @@ public class EingabeGUI extends javax.swing.JFrame
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
-        GraphingData diagramm = new GraphingData();
         
+        
+        // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
+        GraphingData diagramm = new GraphingData();
+        double[] hoehen = this.locationsToDouble();
         this.panhoehe.add(diagramm,BorderLayout.CENTER);
         panhoehe.repaint();
     }//GEN-LAST:event_mi_StartActionPerformed
@@ -409,5 +412,13 @@ public class EingabeGUI extends javax.swing.JFrame
     private javax.swing.JTextField tf_YKoordA;
     private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
+
+    private double[] locationsToDouble() {
+        double[] dfeld = new double[locations.size()];
+        for (int i = 0; i < locations.size(); i++) {
+            dfeld[i]=locations.get(i).getHoehe();
+        }
+        return dfeld;
+    }
 
 }
