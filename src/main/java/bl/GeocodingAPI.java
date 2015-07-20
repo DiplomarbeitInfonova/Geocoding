@@ -67,6 +67,7 @@ public class GeocodingAPI
             System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
+            System.out.println("koordtoOrt\n"+ort.toString());
         } catch (MalformedURLException ex)
         {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
@@ -132,19 +133,26 @@ public class GeocodingAPI
 
     public static void main(String[] args)
     {
+        
+        
+        
+        
         GeocodingAPI api = new GeocodingAPI();
-        LinkedList<Leg> test = api.getWaypoints("Mureck", "Ligist");
-        for (int i = 0; i < test.size(); i++)
-        {
-            System.out.println("ag: "+test.get(i).toString() + "\n");
-        }
+//        LinkedList<Leg> test = api.getWaypoints("Mureck", "Ligist");
+//        for (int i = 0; i < test.size(); i++)
+//        {
+//            System.out.println("ag: "+test.get(i).toString() + "\n");
+//        }
         
         //String s = api.getElevationInformation(api.OrtToKoord("Mureck"));
         //System.out.println("help: "+s);
         //System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
-        //double[] k = {46.9917246, 15.2107184};
-        //api.KoordToOrt(k);
+        double[] k = {47.066667, 15.433333};
+      Location l=  api.KoordToOrt(k);
+        System.out.println(l.toString());
+      
+      
     }
 
    

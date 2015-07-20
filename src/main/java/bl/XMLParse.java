@@ -38,7 +38,7 @@ public class XMLParse {
             xmlDoc = this.loadXMLFromString();
         } catch (Exception ex) {
             Logger.getLogger(XMLParse.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("                      Fehler im Constructor XMLParse");
+            System.out.println("Fehler im Constructor XMLParse");
         }
     }
 
@@ -61,7 +61,8 @@ public class XMLParse {
                 String responseName = eName.getTextContent();
                 String name = responseName.split("\n")[1];
                 String type = responseName.split("\n")[3];
-                if(type.equals("locality"))
+                System.out.println("Name: "+name+"|Type: "+type);
+                if(type.trim().equals("locality")||type.trim()=="locality")
                 {
                     locName = name;
                 }
@@ -89,6 +90,7 @@ public class XMLParse {
             }
             System.out.println(locName + " sdfajpfsadpjfsdpj");
             loc = new Location(locName, x, y);
+            System.out.println("xmltoLocation\n"+loc.toString());
             return loc;
         }
         return null;
@@ -204,7 +206,11 @@ public class XMLParse {
                 */
                 
                 String str_elevation = a.getElevationInformation(l);
-                double d_elevation = Double.parseDouble(str_elevation);
+            double d_elevation=0;
+                if(str_elevation!=null){
+                  d_elevation = Double.parseDouble(str_elevation);   
+                }
+                
                 System.out.println("el: "+str_elevation);
                 //
                 list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));              
@@ -281,7 +287,7 @@ public class XMLParse {
                 + "</GeocodeResponse>");
         Location l = xml.xmlToLocation();
         
-        System.out.println(l.toString());
+       
 //        
         
         // Test Elevation Information
