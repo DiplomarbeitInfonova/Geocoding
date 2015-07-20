@@ -96,7 +96,7 @@ public class GeocodingAPI
 
     public String getElevationInformation(Location l)
     {
-        String request = "//maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
+        String request = "http://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         String response = "";
         try
         {
@@ -146,4 +146,6 @@ public class GeocodingAPI
         //double[] k = {46.9917246, 15.2107184};
         //api.KoordToOrt(k);
     }
+
+   
 }

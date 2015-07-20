@@ -5,9 +5,11 @@
  */
 package gui;
 
+import beans.Leg;
 import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData;
+import bl.LocationParser;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.util.HashSet;
@@ -35,6 +37,7 @@ public class EingabeGUI extends javax.swing.JFrame
     private Location a;
     private Location b;
     private LinkedList<Location> locations = new LinkedList<>();
+    private LocationParser locparser;
 
     public EingabeGUI()
     {
@@ -44,6 +47,7 @@ public class EingabeGUI extends javax.swing.JFrame
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
         MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
+        locparser=new LocationParser();
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
@@ -60,7 +64,11 @@ public class EingabeGUI extends javax.swing.JFrame
 
         //Ein Waypointpainter wird erstellt um die Punkte an der Karte anzuzeigen
         WaypointPainter painter = new WaypointPainter();
+        //painter.setWaypoints(new HashSet<Waypoint>());
+        //repaint();
+      painter.clearCache();
         painter.setWaypoints(waypoints);
+        
         MainMap.getMainMap().setOverlayPainter(painter);
         repaint();
     }
@@ -300,6 +308,11 @@ public class EingabeGUI extends javax.swing.JFrame
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
         locations.clear();
+        LinkedList<Leg> leglist=geo.getWaypoints(a.getName(),b.getName());
+        locations=locparser.LegtoLocation(leglist);
+        
+        
+        
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
