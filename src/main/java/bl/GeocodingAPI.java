@@ -65,6 +65,7 @@ public class GeocodingAPI
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
             System.out.println(answer);
+            xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
         } catch (MalformedURLException ex)
         {
