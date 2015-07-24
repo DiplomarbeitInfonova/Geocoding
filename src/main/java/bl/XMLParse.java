@@ -216,11 +216,14 @@ public class XMLParse {
                 //
                 list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
              //   return list;
+                
             }
-            return list;
+            
         }
-
-        return null;
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getElevation());
+        }
+      return list;
 
     }
 

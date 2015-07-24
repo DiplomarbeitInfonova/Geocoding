@@ -414,7 +414,7 @@ public class EingabeGUI extends javax.swing.JFrame
     private double[] locationsToDouble() {
         // Double Feld von Höhen wird erstellt für das Diagramm
         double[] dfeld = new double[locations.size()];
-        for (int i = 0; i < locations.size(); i++) {
+        for (int i = 0; i < locations.size()-1; i++) {
             dfeld[i]=locations.get(i).getHoehe();
             System.out.print(dfeld[i]+" ");
         }
