@@ -77,7 +77,7 @@ public class GeocodingAPI
 
     public String LocationToDistance(Location a, Location b)
     {
-        String request = "http://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord();
+        String request = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord();
         String response = "";
         try
         {
@@ -97,7 +97,7 @@ public class GeocodingAPI
 
     public void getElevationInformation(Location l)
     {
-        String request = "http://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
+        String request = "https://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         double response = 0;
         try
         {
