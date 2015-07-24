@@ -311,12 +311,10 @@ public class EingabeGUI extends javax.swing.JFrame
         LinkedList<Leg> leglist=geo.getWaypoints(a.getName(),b.getName());
         locations=locparser.LegtoLocation(leglist);
         
-        
-        
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
-        
+    
         
         // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
         GraphingData diagramm = new GraphingData();
@@ -415,11 +413,15 @@ public class EingabeGUI extends javax.swing.JFrame
     // End of variables declaration//GEN-END:variables
 
     private double[] locationsToDouble() {
+        // Double Feld von Höhen wird erstellt für das Diagramm
         double[] dfeld = new double[locations.size()];
         for (int i = 0; i < locations.size(); i++) {
             dfeld[i]=locations.get(i).getHoehe();
+            System.out.print(dfeld[i]+" ");
         }
         return dfeld;
     }
+
+   
 
 }
