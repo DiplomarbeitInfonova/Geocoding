@@ -200,19 +200,9 @@ public class XMLParse {
                 double[] koordinaten = {f_endloclat,f_endloclng};
                 //
                 Location l = a.KoordToOrt(koordinaten);
-//                System.out.println(l.toString());
                 //
-                
-                /*
-                *       Bitte die Methode xmlToLocation noch einmal anschauen! 
-                *       Funktioniert nicht ganz. Wenn diese Methode funktioniert, geht meins.
-                */
-                
                 a.getElevationInformation(l);
                 double d_elevation =l.getHoehe();
-                
-                
-//                System.out.println("el: "+str_elevation);
                 //
                 list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
              //   return list;
