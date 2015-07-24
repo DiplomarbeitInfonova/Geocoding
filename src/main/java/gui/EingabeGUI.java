@@ -27,8 +27,7 @@ import org.jxmapviewer.viewer.WaypointPainter;
  *
  * @author Veronika
  */
-public class EingabeGUI extends javax.swing.JFrame
-{
+public class EingabeGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form EingabeGUI
@@ -38,26 +37,23 @@ public class EingabeGUI extends javax.swing.JFrame
     private Location b;
     private LinkedList<Location> locations = new LinkedList<>();
 
-    public EingabeGUI()
-    {
+    public EingabeGUI() {
         initComponents();
         this.setLocationRelativeTo(null);
         geo = new GeocodingAPI();
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
         MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
-        
+
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
     }
 
-    public void addWaypoint(LinkedList<Location> locations)
-    {
+    public void addWaypoint(LinkedList<Location> locations) {
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
-        for (Location l : locations)
-        {
+        for (Location l : locations) {
             waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
         }
 
@@ -67,7 +63,7 @@ public class EingabeGUI extends javax.swing.JFrame
         //repaint();
         painter.clearCache();
         painter.setWaypoints(waypoints);
-        
+
         MainMap.getMainMap().setOverlayPainter(painter);
         repaint();
     }
@@ -257,48 +253,42 @@ public class EingabeGUI extends javax.swing.JFrame
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
         // Prüfen
-        if (!this.tf_OrtsnameA.getText().equals(""))
-        {
+        if (!this.tf_OrtsnameA.getText().equals("")) {
             a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
             this.tf_XKoordA.setText(a.getxKoord() + "");
             this.tf_YKoordA.setText(a.getyKoord() + "");
-        } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals(""))
-        {
+        } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals("")) {
             String xS = this.tf_XKoordA.getText();
             String yS = this.tf_YKoordA.getText();
             double x = Double.parseDouble(xS);
             double y = Double.parseDouble(yS);
-            double[] dfeld =
-            {
-                x, y
-            };
+            double[] dfeld
+                    = {
+                        x, y
+                    };
             a = geo.KoordToOrt(dfeld);
             this.tf_OrtsnameA.setText(a.getName());
-        } else
-        {
+        } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
             return;
         }
-        
-        if (!this.tf_OrtsnameB.getText().equals(""))
-        {
+
+        if (!this.tf_OrtsnameB.getText().equals("")) {
             b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
             this.tf_XKoordB.setText(b.getxKoord() + "");
             this.tf_YKoordB.setText(b.getyKoord() + "");
-        } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals(""))
-        {
+        } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
             String xS = this.tf_XKoordB.getText();
             double x = Double.parseDouble(xS);
             String yS = this.tf_YKoordB.getText();
             double y = Double.parseDouble(yS);
-            double[] dfeld =
-            {
-                x, y
-            };
+            double[] dfeld
+                    = {
+                        x, y
+                    };
             b = geo.KoordToOrt(dfeld);
             this.tf_OrtsnameB.setText(b.getName());
-        } else
-        {
+        } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
             return;
         }
@@ -307,62 +297,50 @@ public class EingabeGUI extends javax.swing.JFrame
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
         locations.clear();
-        locations=geo.getWaypoints(a.getName(),b.getName());
-       
-        
+        locations = geo.getWaypoints(a.getName(), b.getName());
+
         locations.add(a);
         locations.add(b);
         this.addWaypoint(locations);
-    
-        
+
         // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
         GraphingData diagramm = new GraphingData();
         double[] hoehen = this.locationsToDouble();
         diagramm.setData(hoehen);
-        this.panhoehe.add(diagramm,BorderLayout.CENTER);
+        this.panhoehe.add(diagramm, BorderLayout.CENTER);
         panhoehe.repaint();
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 new EingabeGUI().setVisible(true);
             }
         });
@@ -415,12 +393,9 @@ public class EingabeGUI extends javax.swing.JFrame
         // Double Feld von Höhen wird erstellt für das Diagramm
         double[] dfeld = new double[locations.size()];
         for (int i = 0; i < locations.size(); i++) {
-            dfeld[i]=locations.get(i).getHoehe();
+            dfeld[i] = locations.get(i).getHoehe();
             //System.out.print(dfeld[i]+" ");
         }
         return dfeld;
     }
-
-   
-
 }
