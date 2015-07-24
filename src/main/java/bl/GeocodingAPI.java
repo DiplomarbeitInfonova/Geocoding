@@ -98,7 +98,7 @@ public class GeocodingAPI
     public void getElevationInformation(Location l)
     {
         String request = "http://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
-        String response = "";
+        double response = 0;
         try
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
@@ -107,9 +107,11 @@ public class GeocodingAPI
             response = xmlp.xmlElevationInformation();
         } catch (MalformedURLException ex)
         {
+            System.out.println(ex);
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        l.setHoehe(Double.parseDouble(response));
+        System.out.println(response);
+        l.setHoehe(response);
     }
 
     public LinkedList<Location> getWaypoints(String l1, String l2)
