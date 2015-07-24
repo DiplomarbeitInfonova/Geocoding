@@ -209,11 +209,8 @@ public class XMLParse {
                 */
                 
                 a.getElevationInformation(l);
-                String str_elevation =""+ l.getHoehe();
-                double d_elevation=0;
-                if(str_elevation!=null){
-                  d_elevation = Double.parseDouble(str_elevation);   
-                }
+                double d_elevation =l.getHoehe();
+                
                 
 //                System.out.println("el: "+str_elevation);
                 //
