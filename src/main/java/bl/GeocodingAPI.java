@@ -44,7 +44,7 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             answer = sendObject.read();
-            System.out.println(answer);
+//            System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
             ort.setName(name);
@@ -64,10 +64,10 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
-            System.out.println(answer);
+//            System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
-            System.out.println("koordtoOrt\n"+ort.toString());
+//            System.out.println("koordtoOrt\n"+ort.toString());
         } catch (MalformedURLException ex)
         {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
@@ -83,7 +83,7 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
-            System.out.println(answer);
+//            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlToDistanceAndDuration();
 
@@ -107,10 +107,10 @@ public class GeocodingAPI
             response = xmlp.xmlElevationInformation();
         } catch (MalformedURLException ex)
         {
-            System.out.println(ex);
+//            System.out.println(ex);
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(response);
+//        System.out.println(response);
         l.setHoehe(response);
     }
 
@@ -122,9 +122,13 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
-            System.out.println(answer);
+//            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
+            for (int i = 0; i < response.size(); i++)
+            {
+                System.out.println(response.toString());
+            }
             LocationParser parser = new LocationParser();
             return parser.LegtoLocation(response);
 
