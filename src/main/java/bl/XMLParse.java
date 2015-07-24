@@ -88,9 +88,9 @@ public class XMLParse {
                     }
                 }
             }
-//            System.out.println(locName + " sdfajpfsadpjfsdpj");
+        
             loc = new Location(locName, x, y);
-//            System.out.println("xmltoLocation\n"+loc.toString());
+          
             return loc;
         }
         return null;

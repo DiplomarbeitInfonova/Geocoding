@@ -10,14 +10,27 @@ import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData;
 import bl.LocationParser;
+import bl.RoutePainter;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+
 import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import org.jxmapviewer.JXMapKit;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.Waypoint;
@@ -36,6 +49,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private Location a;
     private Location b;
     private LinkedList<Location> locations = new LinkedList<>();
+    private RoutePainter routepainter;
 
     public EingabeGUI() {
         initComponents();
@@ -44,7 +58,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
         MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
-
+        
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
@@ -66,6 +80,46 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         MainMap.getMainMap().setOverlayPainter(painter);
         repaint();
+    }
+
+    public void paintRoute(LinkedList<Location> locations) {
+        //JXMapKit mp, LinkedList<GeoPosition> points
+//        routepainter=new RoutePainter(this.MainMap,locations );
+//        MainMap.getMainMap().setOverlayPainter(routepainter.getPainter());
+//        repaint();
+        final List<GeoPosition> region = new ArrayList<GeoPosition>();
+
+        for (int i = 0; i < locations.size(); i++) {
+            region.add(new GeoPosition(locations.get(i).getxKoord(), locations.get(i).getyKoord()));
+        }
+        Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
+
+            @Override
+            public void paint(Graphics2D g, JXMapViewer object, int width, int height) {
+                g = (Graphics2D) g.create();
+                //convert from viewport to world bitmap
+                Rectangle rect = EingabeGUI.MainMap.getMainMap().getViewportBounds();
+                g.translate(-rect.x, -rect.y);
+
+                //do the drawing
+                g.setColor(Color.RED);
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g.setStroke(new BasicStroke(2));
+
+                int lastX = -1;
+                int lastY = -1;
+                for (GeoPosition gp : region) {
+                    //convert geo to world bitmap pixel
+                    Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
+                    if (lastX != -1 && lastY != -1) {
+                        g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
+                    }
+                    lastX = (int) pt.getX();
+                    lastY = (int) pt.getY();
+                }
+            }
+        };
+     MainMap.getMainMap().setOverlayPainter(lineOverlay);
     }
 
     @SuppressWarnings("unchecked")
@@ -107,7 +161,6 @@ public class EingabeGUI extends javax.swing.JFrame {
         lab_Duration = new javax.swing.JLabel();
         panhoehe = new javax.swing.JPanel();
         panMap = new javax.swing.JPanel();
-        MainMap = new org.jxmapviewer.JXMapKit();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_Start = new javax.swing.JMenuItem();
@@ -301,7 +354,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         locations.add(a);
         locations.add(b);
-        this.addWaypoint(locations);
+        //this.addWaypoint(locations);
 
         // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
         GraphingData diagramm = new GraphingData();
@@ -309,6 +362,9 @@ public class EingabeGUI extends javax.swing.JFrame {
         diagramm.setData(hoehen);
         this.panhoehe.add(diagramm, BorderLayout.CENTER);
         panhoehe.repaint();
+        
+        
+        paintRoute(locations);
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**
@@ -347,7 +403,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.jxmapviewer.JXMapKit MainMap;
+    public static final org.jxmapviewer.JXMapKit MainMap = new org.jxmapviewer.JXMapKit();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
