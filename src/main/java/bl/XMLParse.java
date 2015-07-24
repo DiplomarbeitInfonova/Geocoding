@@ -55,19 +55,17 @@ public class XMLParse {
             Element e = (Element) results.item(i);
 
             NodeList addressComponent = e.getElementsByTagName("address_component");
-            for (int j = 0; j < addressComponent.getLength(); j++)
-            {
-                Element eName = (Element)addressComponent.item(j);
+            for (int j = 0; j < addressComponent.getLength(); j++) {
+                Element eName = (Element) addressComponent.item(j);
                 String responseName = eName.getTextContent();
                 String name = responseName.split("\n")[1];
                 String type = responseName.split("\n")[3];
 //                System.out.println("Name: "+name+"|Type: "+type);
-                if(type.trim().equals("locality")||type.trim()=="locality")
-                {
+                if (type.trim().equals("locality") || type.trim() == "locality") {
                     locName = name;
                 }
             }
-            
+
             NodeList geometry = e.getElementsByTagName("geometry");
             for (int j = 0; j < geometry.getLength(); j++) {
                 Element e2 = (Element) geometry.item(i);
@@ -88,9 +86,9 @@ public class XMLParse {
                     }
                 }
             }
-        
+
             loc = new Location(locName, x, y);
-          
+
             return loc;
         }
         return null;
@@ -110,7 +108,7 @@ public class XMLParse {
             NodeList elevationList = e.getElementsByTagName("elevation");
             Element eElevation = (Element) elevationList.item(0);
             elevation = Double.parseDouble(eElevation.getTextContent());
-            System.out.println(elevation);
+            //System.out.println(elevation);
             return elevation;
         }
 
@@ -163,12 +161,12 @@ public class XMLParse {
             NodeList duration = elem.getElementsByTagName("duration");
             NodeList distance = elem.getElementsByTagName("distance");
             NodeList html_instruction = elem.getElementsByTagName("html_instructions");
-   
+
             for (int k = 0; k < distance.getLength(); k++) {
                 //
                 Element elem_end_loc = (Element) end_loc.item(k);
                 Element elem_distance = (Element) distance.item(k);
-                Element elem_duration = (Element) duration.item(k); 
+                Element elem_duration = (Element) duration.item(k);
                 //
                 NodeList end_loc_lat = elem_end_loc.getElementsByTagName("lat");
                 NodeList end_loc_lng = elem_end_loc.getElementsByTagName("lng");
@@ -184,36 +182,36 @@ public class XMLParse {
                 //
                 String str_distance = elem_distance_value.getTextContent();
                 float f_distance = Float.parseFloat(str_distance);
-                
+
                 String str_duration = elem_duration_value.getTextContent();
                 int i_duration = Integer.parseInt(str_duration);
                 //
                 String str_endloclat = endloclat.getTextContent();
                 float f_endloclat = Float.parseFloat(str_endloclat);
-                
+
                 String str_endloclng = endloclng.getTextContent();
                 float f_endloclng = Float.parseFloat(str_endloclng);
                 //             
                 String str_html_instruction = html_instr.getTextContent();
                 //
                 GeocodingAPI a = new GeocodingAPI();
-                double[] koordinaten = {f_endloclat,f_endloclng};
+                double[] koordinaten = {f_endloclat, f_endloclng};
                 //
                 Location l = a.KoordToOrt(koordinaten);
                 //
                 a.getElevationInformation(l);
-                double d_elevation =l.getHoehe();
+                double d_elevation = l.getHoehe();
                 //
-                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));    
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
             }
-            
+
         }
-      return list;
+        return list;
 
     }
 
     public static void main(String[] args) {
-        
+
         // Test xmlToLocation
 //        XMLParse xml = new XMLParse("<GeocodeResponse>\n"
 //                + "<status>OK</status>\n"
@@ -277,11 +275,7 @@ public class XMLParse {
 //                + "</result>\n"
 //                + "</GeocodeResponse>");
 //        Location l = xml.xmlToLocation();
-        
-       
-        
-        
-       //  Test Elevation Information
+        //  Test Elevation Information
         XMLParse xml = new XMLParse("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<ElevationResponse>\n"
                 + " <status>OK</status>\n"
@@ -294,9 +288,6 @@ public class XMLParse {
                 + "  <resolution>9.5439520</resolution>\n"
                 + " </result>\n"
                 + "</ElevationResponse>");
-        
-        
-        
 
         xml.xmlElevationInformation();
 

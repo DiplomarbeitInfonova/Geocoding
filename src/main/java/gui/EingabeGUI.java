@@ -450,7 +450,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         double[] dfeld = new double[locations.size()];
         for (int i = 0; i < locations.size()-2; i++) {
             dfeld[i] = locations.get(i).getHoehe();
-            System.out.print(dfeld[i]+" ");
+            //System.out.print(dfeld[i]+" ");
         }
         return dfeld;
     }

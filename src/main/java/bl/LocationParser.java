@@ -31,7 +31,7 @@ public class LocationParser {
             koordinaten[1]=(double)leglist.get(i).getEnd_loc_lng();
             Location l = new Location((geocoding.KoordToOrt(koordinaten)).getName(), koordinaten[0], koordinaten[1], leglist.get(i).getElevation());
             returnlist.add(l);
-            System.out.println(returnlist.get(i).toString());
+            //System.out.println(returnlist.get(i).toString());
         }
         return returnlist;
     }
