@@ -207,18 +207,19 @@ public class XMLParse {
                 
                 a.getElevationInformation(l);
                 String str_elevation =""+ l.getHoehe();
-            double d_elevation=0;
+                double d_elevation=0;
                 if(str_elevation!=null){
                   d_elevation = Double.parseDouble(str_elevation);   
                 }
                 
                 System.out.println("el: "+str_elevation);
                 //
-                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));              
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
+                return list;
             }
         }
 
-        return list;
+        return null;
 
     }
 

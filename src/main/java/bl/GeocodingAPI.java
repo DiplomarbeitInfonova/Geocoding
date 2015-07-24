@@ -112,7 +112,7 @@ public class GeocodingAPI
         l.setHoehe(Double.parseDouble(response));
     }
 
-    public LinkedList<Leg> getWaypoints(String l1, String l2)
+    public LinkedList<Location> getWaypoints(String l1, String l2)
     {
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin=" + l1 + "&destination=" + l2 + "&key=" + apiKey;
         LinkedList<Leg> response = new LinkedList<Leg>();
@@ -123,12 +123,14 @@ public class GeocodingAPI
             System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
+            LocationParser parser = new LocationParser();
+            return parser.LegtoLocation(response);
 
         } catch (MalformedURLException ex)
         {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return response;
+        return null;
     }
 
     public static void main(String[] args)
