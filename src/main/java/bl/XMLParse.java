@@ -38,7 +38,7 @@ public class XMLParse {
             xmlDoc = this.loadXMLFromString();
         } catch (Exception ex) {
             Logger.getLogger(XMLParse.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Fehler im Constructor XMLParse");
+//            System.out.println("Fehler im Constructor XMLParse");
         }
     }
 
@@ -61,7 +61,7 @@ public class XMLParse {
                 String responseName = eName.getTextContent();
                 String name = responseName.split("\n")[1];
                 String type = responseName.split("\n")[3];
-                System.out.println("Name: "+name+"|Type: "+type);
+//                System.out.println("Name: "+name+"|Type: "+type);
                 if(type.trim().equals("locality")||type.trim()=="locality")
                 {
                     locName = name;
@@ -88,9 +88,9 @@ public class XMLParse {
                     }
                 }
             }
-            System.out.println(locName + " sdfajpfsadpjfsdpj");
+//            System.out.println(locName + " sdfajpfsadpjfsdpj");
             loc = new Location(locName, x, y);
-            System.out.println("xmltoLocation\n"+loc.toString());
+//            System.out.println("xmltoLocation\n"+loc.toString());
             return loc;
         }
         return null;
@@ -99,6 +99,9 @@ public class XMLParse {
     public double xmlElevationInformation() {
         double elevation;
 
+        System.out.println("Ausgabe des xmlStrings");
+        System.out.println(this.xmlString);
+        
         Element root = xmlDoc.getDocumentElement();
 
         NodeList results = root.getElementsByTagName("result");
@@ -107,7 +110,7 @@ public class XMLParse {
             NodeList elevationList = e.getElementsByTagName("elevation");
             Element eElevation = (Element) elevationList.item(0);
             elevation = Double.parseDouble(eElevation.getTextContent());
-            System.out.println(elevation);
+//            System.out.println(elevation);
             return elevation;
         }
 
@@ -131,7 +134,7 @@ public class XMLParse {
                     NodeList durationText = eDuration.getElementsByTagName("text");
                     Element dText = (Element) durationText.item(0);
                     duration = dText.getTextContent();
-                    System.out.println(duration);
+//                    System.out.println(duration);
                 }
                 NodeList distanceList = e1.getElementsByTagName("distance");
                 for (int k = 0; k < distanceList.getLength(); k++) {
@@ -139,7 +142,6 @@ public class XMLParse {
                     NodeList distanceText = eDistance.getElementsByTagName("text");
                     Element dText = (Element) distanceText.item(0);
                     distance = dText.getTextContent();
-                    System.out.println(distance);
                 }
             }
         }
@@ -198,7 +200,7 @@ public class XMLParse {
                 double[] koordinaten = {f_endloclat,f_endloclng};
                 //
                 Location l = a.KoordToOrt(koordinaten);
-                System.out.println(l.toString());
+//                System.out.println(l.toString());
                 //
                 
                 /*
@@ -213,7 +215,7 @@ public class XMLParse {
                   d_elevation = Double.parseDouble(str_elevation);   
                 }
                 
-                System.out.println("el: "+str_elevation);
+//                System.out.println("el: "+str_elevation);
                 //
                 list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
                 return list;
