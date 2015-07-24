@@ -66,7 +66,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return String.format("Location=\n\tName: %s\n\t x-Koord: %f \n\t y-Koord: %f", this.name, this.xKoord, this.yKoord);
+        return String.format("Location=\n\tName: %s\n\t x-Koord: %f \n\t y-Koord: %f \n\t Hoehe: %f", this.name, this.xKoord, this.yKoord, this.hoehe);
     }
     
 }
