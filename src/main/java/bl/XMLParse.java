@@ -205,7 +205,8 @@ public class XMLParse {
                 *       Funktioniert nicht ganz. Wenn diese Methode funktioniert, geht meins.
                 */
                 
-                String str_elevation = a.getElevationInformation(l);
+                a.getElevationInformation(l);
+                String str_elevation =""+ l.getHoehe();
             double d_elevation=0;
                 if(str_elevation!=null){
                   d_elevation = Double.parseDouble(str_elevation);   

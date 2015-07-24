@@ -95,7 +95,7 @@ public class GeocodingAPI
         return response;
     }
 
-    public String getElevationInformation(Location l)
+    public void getElevationInformation(Location l)
     {
         String request = "http://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         String response = "";
@@ -109,7 +109,7 @@ public class GeocodingAPI
         {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return response;
+        l.setHoehe(Double.parseDouble(response));
     }
 
     public LinkedList<Leg> getWaypoints(String l1, String l2)
