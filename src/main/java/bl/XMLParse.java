@@ -99,9 +99,9 @@ public class XMLParse {
     public double xmlElevationInformation() {
         double elevation;
 
-        System.out.println("Ausgabe des xmlStrings");
-        System.out.println(this.xmlString);
-        
+//        System.out.println("Ausgabe des xmlStrings");
+//        System.out.println(this.xmlString);
+//        
         Element root = xmlDoc.getDocumentElement();
 
         NodeList results = root.getElementsByTagName("result");

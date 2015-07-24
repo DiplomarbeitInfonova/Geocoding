@@ -125,10 +125,10 @@ public class GeocodingAPI
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
-            for (int i = 0; i < response.size(); i++)
-            {
-                System.out.println(response.toString());
-            }
+//            for (int i = 0; i < response.size(); i++)
+//            {
+//                System.out.println(response.toString());
+//            }
             LocationParser parser = new LocationParser();
             return parser.LegtoLocation(response);
 
@@ -158,7 +158,7 @@ public class GeocodingAPI
         //System.out.println(api.OrtToKoord("Ligist").toString());
         double[] k = {47.066667, 15.433333};
       Location l=  api.KoordToOrt(k);
-        System.out.println(l.toString());
+//        System.out.println(l.toString());
       
       
     }
