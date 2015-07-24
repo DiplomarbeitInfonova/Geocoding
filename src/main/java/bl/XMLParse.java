@@ -96,7 +96,7 @@ public class XMLParse {
         return null;
     }
 
-    public String xmlElevationInformation() {
+    public double xmlElevationInformation() {
         double elevation;
 
         Element root = xmlDoc.getDocumentElement();
@@ -108,9 +108,10 @@ public class XMLParse {
             Element eElevation = (Element) elevationList.item(0);
             elevation = Double.parseDouble(eElevation.getTextContent());
             System.out.println(elevation);
+            return elevation;
         }
 
-        return null;
+        return 0.0;
     }
 
     public String xmlToDistanceAndDuration() {
