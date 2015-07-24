@@ -204,9 +204,7 @@ public class XMLParse {
                 a.getElevationInformation(l);
                 double d_elevation =l.getHoehe();
                 //
-                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
-             //   return list;
-                
+                list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));    
             }
             
         }
