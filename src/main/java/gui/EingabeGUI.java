@@ -321,6 +321,7 @@ public class EingabeGUI extends javax.swing.JFrame
         // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
         GraphingData diagramm = new GraphingData();
         double[] hoehen = this.locationsToDouble();
+        diagramm.setData(hoehen);
         this.panhoehe.add(diagramm,BorderLayout.CENTER);
         panhoehe.repaint();
     }//GEN-LAST:event_mi_StartActionPerformed
