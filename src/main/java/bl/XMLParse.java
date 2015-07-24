@@ -110,7 +110,7 @@ public class XMLParse {
             NodeList elevationList = e.getElementsByTagName("elevation");
             Element eElevation = (Element) elevationList.item(0);
             elevation = Double.parseDouble(eElevation.getTextContent());
-//            System.out.println(elevation);
+            System.out.println(elevation);
             return elevation;
         }
 
@@ -296,17 +296,21 @@ public class XMLParse {
         
         
        //  Test Elevation Information
-        XMLParse xml = new XMLParse("<ElevationResponse>\n"
-                + "<status>OK</status>\n"
-                + "<result>\n"
-                + "<location>\n"
-                + "<lat>39.7391536</lat>\n"
-                + "<lng>-104.9847034</lng>\n"
-                + "</location>\n"
-                + "<elevation>1608.6379395</elevation>\n"
-                + "<resolution>4.7719760</resolution>\n"
-                + "</result>\n"
+        XMLParse xml = new XMLParse("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<ElevationResponse>\n"
+                + " <status>OK</status>\n"
+                + " <result>\n"
+                + "  <location>\n"
+                + "   <lat>47.2257101</lat>\n"
+                + "   <lng>15.9103866</lng>\n"
+                + "  </location>\n"
+                + "  <elevation>333.7392578</elevation>\n"
+                + "  <resolution>9.5439520</resolution>\n"
+                + " </result>\n"
                 + "</ElevationResponse>");
+        
+        
+        
 
         xml.xmlElevationInformation();
 

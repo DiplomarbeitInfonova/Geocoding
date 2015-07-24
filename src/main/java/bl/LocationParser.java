@@ -29,7 +29,8 @@ public class LocationParser {
         for (int i = 0; i < leglist.size(); i++) {
             koordinaten[0]=(double)leglist.get(i).getEnd_loc_lat();
             koordinaten[1]=(double)leglist.get(i).getEnd_loc_lng();
-            returnlist.add(geocoding.KoordToOrt(koordinaten));
+            Location l = new Location(geocoding.KoordToOrt(koordinaten).getName(), koordinaten[0], koordinaten[1], leglist.get(i).getElevation());
+            returnlist.add(l);
         }
         return returnlist;
     }
