@@ -125,10 +125,6 @@ public class GeocodingAPI
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
-//            for (int i = 0; i < response.size(); i++)
-//            {
-//                System.out.println(response.toString());
-//            }
             LocationParser parser = new LocationParser();
             return parser.LegtoLocation(response);
 
@@ -160,9 +156,10 @@ public class GeocodingAPI
         try
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
-            String answer = sendObject.read();
-            xmlp = new XMLParse(answer);
-            response = xmlp.xmlFromRoadsAPI();
+            String answer = sendObject.read();         
+            JSONParse json = new JSONParse(answer);
+            response = json.convert();
+            System.out.println(response);
             return response;
 
         } catch (MalformedURLException ex)

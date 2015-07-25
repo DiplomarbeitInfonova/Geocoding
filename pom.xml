@@ -16,5 +16,37 @@
 	<artifactId>jxmapviewer2</artifactId>
 	<version>2.0</version>
 </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sdicons.jsontools</groupId>
+            <artifactId>jsontools-core</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.chameleon.json</groupId>
+            <artifactId>json-service-json.org</artifactId>
+            <version>0.4.0</version>
+            <type>tar.gz</type>
+            <classifier>bin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.glassfish.v3.osgi</groupId>
+            <artifactId>jettison</artifactId>
+            <version>1.0.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dooapp.XStreamFX</groupId>
+            <artifactId>XStreamFX</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>1.17.0-rc</version>
+        </dependency>
     </dependencies>
 </project>
