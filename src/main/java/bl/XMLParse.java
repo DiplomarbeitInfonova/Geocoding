@@ -216,25 +216,26 @@ public class XMLParse {
         LinkedList<Location> list = new LinkedList<Location>();
         double[] koordinaten = new double[2];
         Element root = xmlDoc.getDocumentElement();
-        NodeList locationList = root.getElementsByTagName("location");
+        NodeList locationList = root.getElementsByTagName("snappedPoints");
 
         for (int i = 0; i < locationList.getLength(); i++) {
             Element elem = (Element) locationList.item(i);
-                NodeList lat = elem.getElementsByTagName("latitude");
-                NodeList lng = elem.getElementsByTagName("longitude");
-                for (int k = 0; k < lat.getLength(); k++) { 
-                        Element elat = (Element) lat.item(k);
-                        Element elng = (Element) lng.item(k);
-                        String strlat = elat.getTextContent();
-                        double d_lat = Double.parseDouble(strlat);
-                        String strlng = elng.getTextContent();
-                        double d_lng = Double.parseDouble(strlng);
-                        koordinaten[0] = d_lat;
-                        koordinaten[1] = d_lng;
-                        Location l = geo.KoordToOrt(koordinaten);          
-                        list.add(l);
-                        System.out.println(l.toString());
-            }    
+            NodeList lat = elem.getElementsByTagName("latitude");
+            NodeList lng = elem.getElementsByTagName("longitude");
+            for (int k = 0; k < lat.getLength(); k++) {
+                Element elat = (Element) lat.item(k);
+                Element elng = (Element) lng.item(k);
+                String strlat = elat.getTextContent();
+                double d_lat = Double.parseDouble(strlat);
+                String strlng = elng.getTextContent();
+                double d_lng = Double.parseDouble(strlng);
+                koordinaten[0] = d_lat;
+                koordinaten[1] = d_lng;
+                Location l = geo.KoordToOrt(koordinaten);
+                System.out.println("Location: "+l.toString());
+                list.add(l);
+                
+            }
         }
         return list;
     }

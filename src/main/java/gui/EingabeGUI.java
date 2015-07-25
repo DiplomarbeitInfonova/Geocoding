@@ -350,8 +350,9 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.lab_Distance.setText(spl[1]);
         this.lab_Duration.setText(spl[0]);
         locations.clear();
-        LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
-        locations = geo.getWaypointsMitRoadsAPI(lList);
+        locations = geo.getWaypoints(a.getName(), b.getName());
+        //LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
+        //locations = geo.getWaypointsMitRoadsAPI(lList);
 
         locations.add(a);
         locations.add(b);
