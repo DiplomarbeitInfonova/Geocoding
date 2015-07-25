@@ -138,6 +138,42 @@ public class GeocodingAPI
         }
         return null;
     }
+    
+    
+    public LinkedList<Location> getWaypointsMitRoadsAPI(LinkedList<Location> waypoints)
+    {
+        String request = "https://roads.googleapis.com/v1/snapToRoads?path=";
+        
+        for(int i = 0; i < waypoints.size(); i++)
+        {
+            if(i<waypoints.size()-1)
+            {
+                request=request+ waypoints.get(i).getxKoord()+","+waypoints.get(i).getyKoord()+"|";
+            } else
+            {
+                request=request+ waypoints.get(i).getxKoord()+","+waypoints.get(i).getyKoord();
+            }
+        }
+        request = request+"&interpolate=true&key=" + apiKey;
+        System.out.println(request);
+        
+        LinkedList<Leg> response = new LinkedList<Leg>();
+        try
+        {
+            SendToMapsAPI sendObject = new SendToMapsAPI(request);
+            String answer = sendObject.read();
+            xmlp = new XMLParse(answer);
+            response = xmlp.xmlFromDistanceAPItoLocations();
+            LocationParser parser = new LocationParser();
+            return parser.LegtoLocation(response);
+
+        } catch (MalformedURLException ex)
+        {
+            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 
     public static void main(String[] args)
     {
