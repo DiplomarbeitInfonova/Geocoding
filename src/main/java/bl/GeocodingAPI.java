@@ -155,17 +155,15 @@ public class GeocodingAPI
             }
         }
         request = request+"&interpolate=true&key=" + apiKey;
-        System.out.println(request);
         
-        LinkedList<Leg> response = new LinkedList<Leg>();
+        LinkedList<Location> response = new LinkedList<Location>();
         try
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             xmlp = new XMLParse(answer);
-            response = xmlp.xmlFromDistanceAPItoLocations();
-            LocationParser parser = new LocationParser();
-            return parser.LegtoLocation(response);
+            response = xmlp.xmlFromRoadsAPI();
+            return response;
 
         } catch (MalformedURLException ex)
         {

@@ -24,6 +24,7 @@ public class XMLParse {
 
     private static Document xmlDoc;
     private String xmlString;
+    private GeocodingAPI geo;
 
     public Document loadXMLFromString() throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -36,6 +37,7 @@ public class XMLParse {
         this.xmlString = requestUrl;
         try {
             xmlDoc = this.loadXMLFromString();
+            geo = new GeocodingAPI();
         } catch (Exception ex) {
             Logger.getLogger(XMLParse.class.getName()).log(Level.SEVERE, null, ex);
 //            System.out.println("Fehler im Constructor XMLParse");
@@ -208,6 +210,35 @@ public class XMLParse {
         }
         return list;
 
+    }
+
+    public LinkedList<Location> xmlFromRoadsAPI() {
+        LinkedList<Location> list = new LinkedList<Location>();
+        double[] koordinaten = new double[2];
+        Element root = xmlDoc.getDocumentElement();
+        NodeList snappedPoints = root.getElementsByTagName("snappedPoints");
+
+        //System.out.println(snappedPoints.item(0).getTextContent());
+
+        for (int i = 0; i < snappedPoints.getLength(); i++) {
+            Element e1 = (Element) snappedPoints.item(i);
+            NodeList loclist = e1.getElementsByTagName("location");
+            for (int j = 0; j < loclist.getLength(); j++) {
+                Element e2 = (Element) loclist.item(i);
+                String latList = e2.getAttribute("latitude");
+                System.out.println("lat: " + latList);
+                double lat = Double.parseDouble(latList);
+                String lngList = e2.getAttribute("longitude");
+                System.out.println("lng: " + lngList);
+                double lng = Double.parseDouble(lngList);
+                koordinaten[0] = lat;
+                koordinaten[1] = lng;
+                Location l = geo.KoordToOrt(koordinaten);
+                list.add(l);
+                System.out.println(l.toString());
+            }
+        }
+        return list;
     }
 
     public static void main(String[] args) {
