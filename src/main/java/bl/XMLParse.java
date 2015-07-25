@@ -216,27 +216,25 @@ public class XMLParse {
         LinkedList<Location> list = new LinkedList<Location>();
         double[] koordinaten = new double[2];
         Element root = xmlDoc.getDocumentElement();
-        NodeList snappedPoints = root.getElementsByTagName("snappedPoints");
+        NodeList locationList = root.getElementsByTagName("location");
 
-        //System.out.println(snappedPoints.item(0).getTextContent());
-
-        for (int i = 0; i < snappedPoints.getLength(); i++) {
-            Element e1 = (Element) snappedPoints.item(i);
-            NodeList loclist = e1.getElementsByTagName("location");
-            for (int j = 0; j < loclist.getLength(); j++) {
-                Element e2 = (Element) loclist.item(i);
-                String latList = e2.getAttribute("latitude");
-                System.out.println("lat: " + latList);
-                double lat = Double.parseDouble(latList);
-                String lngList = e2.getAttribute("longitude");
-                System.out.println("lng: " + lngList);
-                double lng = Double.parseDouble(lngList);
-                koordinaten[0] = lat;
-                koordinaten[1] = lng;
-                Location l = geo.KoordToOrt(koordinaten);
-                list.add(l);
-                System.out.println(l.toString());
-            }
+        for (int i = 0; i < locationList.getLength(); i++) {
+            Element elem = (Element) locationList.item(i);
+                NodeList lat = elem.getElementsByTagName("latitude");
+                NodeList lng = elem.getElementsByTagName("longitude");
+                for (int k = 0; k < lat.getLength(); k++) { 
+                        Element elat = (Element) lat.item(k);
+                        Element elng = (Element) lng.item(k);
+                        String strlat = elat.getTextContent();
+                        double d_lat = Double.parseDouble(strlat);
+                        String strlng = elng.getTextContent();
+                        double d_lng = Double.parseDouble(strlng);
+                        koordinaten[0] = d_lat;
+                        koordinaten[1] = d_lng;
+                        Location l = geo.KoordToOrt(koordinaten);          
+                        list.add(l);
+                        System.out.println(l.toString());
+            }    
         }
         return list;
     }
