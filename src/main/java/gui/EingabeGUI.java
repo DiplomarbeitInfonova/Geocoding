@@ -58,7 +58,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
         MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
-        
+
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
@@ -108,23 +108,21 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                 int lastX = -1;
                 int lastY = -1;
-                
+
                 for (GeoPosition gp : region) {
                     //convert geo to world bitmap pixel
-                    
+
                     Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
                     if (lastX != -1 && lastY != -1) {
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
                     }
                     lastX = (int) pt.getX();
                     lastY = (int) pt.getY();
-                    
-                    
-                   
+
                 }
             }
         };
-     MainMap.getMainMap().setOverlayPainter(lineOverlay);
+        MainMap.getMainMap().setOverlayPainter(lineOverlay);
     }
 
     @SuppressWarnings("unchecked")
@@ -166,6 +164,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         lab_Duration = new javax.swing.JLabel();
         panhoehe = new javax.swing.JPanel();
         panMap = new javax.swing.JPanel();
+        MainMap = new org.jxmapviewer.JXMapKit();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_Start = new javax.swing.JMenuItem();
@@ -175,7 +174,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         jPopupMenu1.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1280, 900));
+        setMinimumSize(new java.awt.Dimension(1600, 1000));
+        setPreferredSize(new java.awt.Dimension(304, 200));
 
         panControls.setMinimumSize(new java.awt.Dimension(300, 298));
         panControls.setPreferredSize(new java.awt.Dimension(300, 100));
@@ -359,18 +359,16 @@ public class EingabeGUI extends javax.swing.JFrame {
 //        LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
 //        locations = geo.getWaypointsMitRoadsAPI(lList);
 
-        //locations.add(a);
-        //locations.add(b);
+//locations.add(a);
+//locations.add(b);
         //this.addWaypoint(locations);
-
         // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
         GraphingData diagramm = new GraphingData();
         double[] hoehen = this.locationsToDouble();
         diagramm.setData(hoehen);
         this.panhoehe.add(diagramm, BorderLayout.CENTER);
         panhoehe.repaint();
-        
-        
+
         paintRoute(locations);
     }//GEN-LAST:event_mi_StartActionPerformed
 
@@ -410,7 +408,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static final org.jxmapviewer.JXMapKit MainMap = new org.jxmapviewer.JXMapKit();
+    private static org.jxmapviewer.JXMapKit MainMap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
