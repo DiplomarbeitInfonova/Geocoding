@@ -152,13 +152,16 @@ public class GeocodingAPI
         }
         request = request+"&interpolate=true&key=" + apiKey;
         
+        
+        System.out.println("request: "+request);
+        
         LinkedList<Location> response = new LinkedList<Location>();
         try
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();         
             JSONParse json = new JSONParse(answer);
-            response = json.convert();
+            //response = json.convertToLocationList();
             System.out.println(response);
             return response;
 
