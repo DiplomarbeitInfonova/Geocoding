@@ -108,14 +108,19 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                 int lastX = -1;
                 int lastY = -1;
+                
                 for (GeoPosition gp : region) {
                     //convert geo to world bitmap pixel
+                    
                     Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
                     if (lastX != -1 && lastY != -1) {
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
                     }
                     lastX = (int) pt.getX();
                     lastY = (int) pt.getY();
+                    
+                    
+                   
                 }
             }
         };
@@ -354,8 +359,8 @@ public class EingabeGUI extends javax.swing.JFrame {
 //        LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
 //        locations = geo.getWaypointsMitRoadsAPI(lList);
 
-        locations.add(a);
-        locations.add(b);
+        //locations.add(a);
+        //locations.add(b);
         //this.addWaypoint(locations);
 
         // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
@@ -450,7 +455,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private double[] locationsToDouble() {
         // Double Feld von Höhen wird erstellt für das Diagramm
         double[] dfeld = new double[locations.size()];
-        for (int i = 0; i < locations.size()-2; i++) {
+        for (int i = 0; i < locations.size(); i++) {
             dfeld[i] = locations.get(i).getHoehe();
             //System.out.print(dfeld[i]+" ");
         }
