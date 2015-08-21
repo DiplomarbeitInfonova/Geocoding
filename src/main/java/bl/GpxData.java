@@ -30,11 +30,11 @@ public class GpxData {
      * Parses the waypoint (wpt tags) data into native objects from a GPX
      * stream.
      */
-    private List<Location> loadGpxData(XmlPullParser parser, InputStream gpxIn)
+    public LinkedList<Location> loadGpxData()
             throws XmlPullParserException, IOException {
         // We use a List<> as we need subList for paging later
-        List<Location> list = new LinkedList<>();
-        parser.setInput(gpxIn, null);
+        LinkedList<Location> list = new LinkedList<>();
+        parser.setInput(in, null);
         parser.nextTag();
 
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
