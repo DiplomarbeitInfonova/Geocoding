@@ -1,60 +1,58 @@
 package bl;
 
 import beans.Location;
-import java.text.ParseException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.JSONString;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import org.json.simple.parser.JSONParser;
-
+import java.util.List;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  *
  * @author patzineubi
- * 
+ *
  */
 public class GpxData {
 
-    public String request;
-    public JSONObject jsonobj;
+    private String request;
+    private XmlPullParser parser;
+    private GeocodingAPI geo;
+    private InputStream in;
 
-    public GpxData(String s) {
-        
-        try {
-            //now parse
-            JSONParser parser = new JSONParser();
-            Object obj = parser.parse(s);
-            jsonobj = (JSONObject) obj;
-            
-            System.out.println("object: "+jsonobj);
-
-        } catch (org.json.simple.parser.ParseException ex) {
-            Logger.getLogger(GpxData.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        
+    public GpxData(XmlPullParser parse, InputStream inputStream) {
+        this.geo = new GeocodingAPI();
+        this.parser = parse;
+        this.in = inputStream;
     }
 
-    public LinkedList<Location> convert() {
+    /**
+     * Parses the waypoint (wpt tags) data into native objects from a GPX
+     * stream.
+     */
+    private List<Location> loadGpxData(XmlPullParser parser, InputStream gpxIn)
+            throws XmlPullParserException, IOException {
+        // We use a List<> as we need subList for paging later
+        List<Location> list = new LinkedList<>();
+        parser.setInput(gpxIn, null);
+        parser.nextTag();
 
-        LinkedList<Location> list = new LinkedList<Location>();
-        
-        JSONArray jsonObject1 = (JSONArray) jsonobj.get("snappedPoints");
-         //JSONObject jsonObject2 = (JSONObject)jsonObject1.get(0);
-         System.out.println(jsonObject1);
-//            JSONObject jsonObject3 = (JSONObject)jsonObject2.get("geometry");
-//            JSONObject location = (JSONObject) jsonObject3.get("location");
-//
-//            System.out.println( "Lat = "+location.get("lat"));
-//            System.out.println( "Lng = "+location.get("lng"));
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
 
-        
-        
-        return null;
+            double[] koordinaten = new double[2];
+            koordinaten[0] = Double.valueOf(parser.getAttributeValue(null, "lat"));
+            koordinaten[1] = Double.valueOf(parser.getAttributeValue(null, "lon"));
+
+            if (parser.getName().equals("wpt")) {
+                // Save the discovered lat/lon attributes in each <wpt>
+                list.add(geo.KoordToOrt(koordinaten));
+            }
+            // Otherwise, skip irrelevant data
+        }
+        return list;
     }
 
     public static void main(String[] args) {
