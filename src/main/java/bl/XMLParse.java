@@ -25,6 +25,7 @@ public class XMLParse {
     private static Document xmlDoc;
     private String xmlString;
     private GeocodingAPI geo;
+    private double[] koordinaten = new double[2];
 
     public Document loadXMLFromString() throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -213,28 +214,29 @@ public class XMLParse {
     }
 
     public LinkedList<Location> xmlFromRoadsAPI() {
-        LinkedList<Location> list = new LinkedList<Location>();
-        double[] koordinaten = new double[2];
-        Element root = xmlDoc.getDocumentElement();
-        NodeList locationList = root.getElementsByTagName("snappedPoints");
 
-        for (int i = 0; i < locationList.getLength(); i++) {
-            Element elem = (Element) locationList.item(i);
-            NodeList lat = elem.getElementsByTagName("latitude");
-            NodeList lng = elem.getElementsByTagName("longitude");
-            for (int k = 0; k < lat.getLength(); k++) {
-                Element elat = (Element) lat.item(k);
-                Element elng = (Element) lng.item(k);
-                String strlat = elat.getTextContent();
-                double d_lat = Double.parseDouble(strlat);
-                String strlng = elng.getTextContent();
-                double d_lng = Double.parseDouble(strlng);
-                koordinaten[0] = d_lat;
-                koordinaten[1] = d_lng;
+        LinkedList<Location> list = new LinkedList<Location>();
+        Element root = xmlDoc.getDocumentElement();
+        NodeList nList = root.getElementsByTagName("snappedPoints");
+
+        for (int i = 0; i < nList.getLength(); i++) {
+            Element eElement = (Element) nList.item(i);
+            NodeList loc = eElement.getElementsByTagName("location");
+
+            for (int k = 0; k < loc.getLength(); k++) {
+
+                Element e = (Element) loc.item(k);
+                System.out.println("\nCurrent Element :" + loc.item(k).getNodeName());
+                String latitude = e.getElementsByTagName("latitude").item(k).getTextContent();
+                double lat = Double.parseDouble(latitude);
+                String longitude = e.getElementsByTagName("longitude").item(k).getTextContent();
+                double lng = Double.parseDouble(longitude);
+                koordinaten[0] = lat;
+                koordinaten[1] = lng;
                 Location l = geo.KoordToOrt(koordinaten);
-                System.out.println("Location: "+l.toString());
+                geo.getElevationInformation(l);
                 list.add(l);
-                
+                System.out.println(list.get(k).toString());
             }
         }
         return list;
@@ -306,20 +308,12 @@ public class XMLParse {
 //                + "</GeocodeResponse>");
 //        Location l = xml.xmlToLocation();
         //  Test Elevation Information
-        XMLParse xml = new XMLParse("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<ElevationResponse>\n"
-                + " <status>OK</status>\n"
-                + " <result>\n"
-                + "  <location>\n"
-                + "   <lat>47.2257101</lat>\n"
-                + "   <lng>15.9103866</lng>\n"
-                + "  </location>\n"
-                + "  <elevation>333.7392578</elevation>\n"
-                + "  <resolution>9.5439520</resolution>\n"
-                + " </result>\n"
-                + "</ElevationResponse>");
+        XMLParse xml = new XMLParse("https://roads.googleapis.com/v1/snapToRoads?path=46.72281265258789,15.648141860961914|46.99358367919922,15.411750793457031|47.02824401855469,15.413273811340332|47.032527923583984,15.412571907043457|47.03444290161133,15.411592483520508|47.06233596801758,15.423318862915039|47.06652069091797,15.427214622497559|47.066871643066406,15.43134593963623|47.06647872924805,15.431346893310547|47.06653594970703,15.43171215057373|47.06958770751953,15.434045791625977|47.06946563720703,15.436347961425781|47.068878173828125,15.43686294555664|47.06978225708008,15.438536643981934|47.07022476196289,15.438182830810547&interpolate=true&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo");
 
-        xml.xmlElevationInformation();
+        LinkedList<Location> list = xml.xmlFromRoadsAPI();
+        for (Location l : list) {
+            System.out.println(l.toString());
+        }
 
     }
 }

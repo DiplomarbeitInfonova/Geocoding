@@ -16,6 +16,9 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -164,17 +167,23 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();  
-            InputStream inputstream = new ByteArrayInputStream(answer.getBytes());
-            GpxData gpx = new GpxData(inputstream);
-            response = gpx.loadGpxData();
-            System.out.println("response: "+response);
-            return response;
+            JSONObject json = null;
+            
+            json = new JSONObject(answer);
+            
+            String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><root>";
+            xml+=XML.toString(json)+"</root>";
+            System.out.println("xml: "+xml);
+            xmlp = new XMLParse(xml);
+            response = xmlp.xmlFromRoadsAPI();
 
         } catch (MalformedURLException ex)
         {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+       return response;
     }
 
     public static void main(String[] args)
