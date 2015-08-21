@@ -160,7 +160,7 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();         
-            JSONParse json = new JSONParse(answer);
+            GpxData json = new GpxData(answer);
             //response = json.convertToLocationList();
             System.out.println(response);
             return response;

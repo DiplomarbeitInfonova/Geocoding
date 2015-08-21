@@ -17,12 +17,12 @@ import org.json.simple.parser.JSONParser;
  * @author patzineubi
  * 
  */
-public class JSONParse {
+public class GpxData {
 
     public String request;
     public JSONObject jsonobj;
 
-    public JSONParse(String s) {
+    public GpxData(String s) {
         
         try {
             //now parse
@@ -33,7 +33,7 @@ public class JSONParse {
             System.out.println("object: "+jsonobj);
 
         } catch (org.json.simple.parser.ParseException ex) {
-            Logger.getLogger(JSONParse.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GpxData.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         
