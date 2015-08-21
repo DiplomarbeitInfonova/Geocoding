@@ -19,12 +19,15 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import org.jxmapviewer.JXMapKit;
@@ -35,6 +38,7 @@ import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  *
@@ -310,66 +314,72 @@ public class EingabeGUI extends javax.swing.JFrame {
      und vice versa.
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
-        // Prüfen
-        if (!this.tf_OrtsnameA.getText().equals("")) {
-            a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
-            this.tf_XKoordA.setText(a.getxKoord() + "");
-            this.tf_YKoordA.setText(a.getyKoord() + "");
-        } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals("")) {
-            String xS = this.tf_XKoordA.getText();
-            String yS = this.tf_YKoordA.getText();
-            double x = Double.parseDouble(xS);
-            double y = Double.parseDouble(yS);
-            double[] dfeld
-                    = {
-                        x, y
-                    };
-            a = geo.KoordToOrt(dfeld);
-            this.tf_OrtsnameA.setText(a.getName());
-        } else {
-            JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
-            return;
-        }
-
-        if (!this.tf_OrtsnameB.getText().equals("")) {
-            b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
-            this.tf_XKoordB.setText(b.getxKoord() + "");
-            this.tf_YKoordB.setText(b.getyKoord() + "");
-        } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
-            String xS = this.tf_XKoordB.getText();
-            double x = Double.parseDouble(xS);
-            String yS = this.tf_YKoordB.getText();
-            double y = Double.parseDouble(yS);
-            double[] dfeld
-                    = {
-                        x, y
-                    };
-            b = geo.KoordToOrt(dfeld);
-            this.tf_OrtsnameB.setText(b.getName());
-        } else {
-            JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
-            return;
-        }
-        String dur = geo.LocationToDistance(a, b);
-        String[] spl = dur.split("-");
-        this.lab_Distance.setText(spl[1]);
-        this.lab_Duration.setText(spl[0]);
-        locations.clear();
-        locations = geo.getWaypoints(a.getName(), b.getName());
-//        LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
-//        locations = geo.getWaypointsMitRoadsAPI(lList);
-
+        try {
+            // Prüfen
+            if (!this.tf_OrtsnameA.getText().equals("")) {
+                a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
+                this.tf_XKoordA.setText(a.getxKoord() + "");
+                this.tf_YKoordA.setText(a.getyKoord() + "");
+            } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals("")) {
+                String xS = this.tf_XKoordA.getText();
+                String yS = this.tf_YKoordA.getText();
+                double x = Double.parseDouble(xS);
+                double y = Double.parseDouble(yS);
+                double[] dfeld
+                        = {
+                            x, y
+                        };
+                a = geo.KoordToOrt(dfeld);
+                this.tf_OrtsnameA.setText(a.getName());
+            } else {
+                JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
+                return;
+            }
+            
+            if (!this.tf_OrtsnameB.getText().equals("")) {
+                b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
+                this.tf_XKoordB.setText(b.getxKoord() + "");
+                this.tf_YKoordB.setText(b.getyKoord() + "");
+            } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
+                String xS = this.tf_XKoordB.getText();
+                double x = Double.parseDouble(xS);
+                String yS = this.tf_YKoordB.getText();
+                double y = Double.parseDouble(yS);
+                double[] dfeld
+                        = {
+                            x, y
+                        };
+                b = geo.KoordToOrt(dfeld);
+                this.tf_OrtsnameB.setText(b.getName());
+            } else {
+                JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
+                return;
+            }
+            String dur = geo.LocationToDistance(a, b);
+            String[] spl = dur.split("-");
+            this.lab_Distance.setText(spl[1]);
+            this.lab_Duration.setText(spl[0]);
+            locations.clear();
+            //       locations = geo.getWaypoints(a.getName(), b.getName());
+            LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
+            locations = geo.getWaypointsMitRoadsAPI(lList);
+            
 //locations.add(a);
 //locations.add(b);
-        //this.addWaypoint(locations);
-        // Ein Höhendiagramm wird erstellt und in das Panel eingebunden. 
-        GraphingData diagramm = new GraphingData();
-        double[] hoehen = this.locationsToDouble();
-        diagramm.setData(hoehen);
-        this.panhoehe.add(diagramm, BorderLayout.CENTER);
-        panhoehe.repaint();
-
-        paintRoute(locations);
+            //this.addWaypoint(locations);
+            // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
+            GraphingData diagramm = new GraphingData();
+            double[] hoehen = this.locationsToDouble();
+            diagramm.setData(hoehen);
+            this.panhoehe.add(diagramm, BorderLayout.CENTER);
+            panhoehe.repaint();
+            
+            paintRoute(locations);
+        } catch (XmlPullParserException ex) {
+            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mi_StartActionPerformed
 
     /**

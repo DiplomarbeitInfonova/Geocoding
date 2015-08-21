@@ -10,7 +10,6 @@ import beans.Location;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
@@ -29,7 +28,6 @@ public class GeocodingAPI
 
     private XMLParse xmlp;
     private final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
-    private XmlPullParser parser;
 
     /*
      Die Methode findet zum eingegeben Ort die passenden
@@ -130,7 +128,6 @@ public class GeocodingAPI
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
-//            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
             LocationParser parser = new LocationParser();
@@ -142,198 +139,7 @@ public class GeocodingAPI
         }
         return null;
     }
-    
-    public void initializeXMLPullParser()
-    {
-        parser = new XmlPullParser() {
-
-            @Override
-            public void setFeature(String string, boolean bln) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean getFeature(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void setProperty(String string, Object o) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public Object getProperty(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void setInput(Reader reader) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void setInput(InputStream in, String string) throws XmlPullParserException {
-                parser.setInput(in, string);
-            }
-
-            @Override
-            public String getInputEncoding() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void defineEntityReplacementText(String string, String string1) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int getNamespaceCount(int i) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getNamespacePrefix(int i) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getNamespaceUri(int i) throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getNamespace(String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int getDepth() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getPositionDescription() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int getLineNumber() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int getColumnNumber() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean isWhitespace() throws XmlPullParserException {
-                return parser.isWhitespace();
-            }
-
-            @Override
-            public String getText() {
-                return parser.getText();
-            }
-
-            @Override
-            public char[] getTextCharacters(int[] ints) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getNamespace() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getName() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getPrefix() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean isEmptyElementTag() throws XmlPullParserException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int getAttributeCount() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getAttributeNamespace(int i) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getAttributeName(int i) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getAttributePrefix(int i) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getAttributeType(int i) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean isAttributeDefault(int i) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getAttributeValue(int i) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getAttributeValue(String string, String string1) {
-                return parser.getAttributeValue(string, string1);
-            }
-
-            @Override
-            public int getEventType() throws XmlPullParserException {
-                return parser.getEventType();
-            }
-
-            @Override
-            public int next() throws XmlPullParserException, IOException {
-                return parser.next();
-            }
-
-            @Override
-            public int nextToken() throws XmlPullParserException, IOException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void require(int i, String string, String string1) throws XmlPullParserException, IOException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String nextText() throws XmlPullParserException, IOException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int nextTag() throws XmlPullParserException, IOException {
-                return parser.nextTag();
-            }
-        };
-    }
-    
+     
     public LinkedList<Location> getWaypointsMitRoadsAPI(LinkedList<Location> waypoints) throws XmlPullParserException, IOException
     {
         String request = "https://roads.googleapis.com/v1/snapToRoads?path=";
@@ -357,13 +163,11 @@ public class GeocodingAPI
         try
         {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
-            String answer = sendObject.read(); 
-            
-            initializeXMLPullParser();
-            InputStream inputstream = new ByteArrayInputStream(answer.getBytes(StandardCharsets.UTF_8));
-            GpxData gpx = new GpxData(parser, inputstream);
+            String answer = sendObject.read();  
+            InputStream inputstream = new ByteArrayInputStream(answer.getBytes());
+            GpxData gpx = new GpxData(inputstream);
             response = gpx.loadGpxData();
-            System.out.println(response);
+            System.out.println("response: "+response);
             return response;
 
         } catch (MalformedURLException ex)
@@ -372,7 +176,6 @@ public class GeocodingAPI
         }
         return null;
     }
-
 
     public static void main(String[] args)
     {
