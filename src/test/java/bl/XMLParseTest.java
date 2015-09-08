@@ -23,6 +23,9 @@ import org.w3c.dom.Document;
  */
 public class XMLParseTest {
     
+    private XMLParse m_parser;
+    
+    
     public XMLParseTest() {
     }
     
@@ -35,25 +38,11 @@ public class XMLParseTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() {        
     }
     
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of loadXMLFromString method, of class XMLParse.
-     */
-    @Test
-    public void testLoadXMLFromString() throws Exception {
-        System.out.println("loadXMLFromString");
-        XMLParse instance = null;
-        Document expResult = null;
-        Document result = instance.loadXMLFromString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -62,8 +51,8 @@ public class XMLParseTest {
     @Test
     public void testXmlToLocation() {
         System.out.println("xmlToLocation");
-        XMLParse instance = null;
-        Location expResult = null;
+        XMLParse instance = new XMLParse("https://maps.googleapis.com/maps/api/geocode/xml?address=Ligist&key=AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo");
+        Location expResult = new Location("Ligist",46.9917246,15.2107184,0);
         Location result = instance.xmlToLocation();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
