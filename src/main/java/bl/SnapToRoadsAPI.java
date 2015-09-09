@@ -1,13 +1,7 @@
 package bl;
 
 import beans.Location;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.RoadsApi;
 import com.google.maps.model.LatLng;
-import com.google.maps.model.SnappedPoint;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,141 +13,173 @@ import java.util.ListIterator;
  * @author patzineubi
  *
  */
-public class SnapToRoadsAPI {
+public class SnapToRoadsAPI
+{
 
     private LinkedList<Location> list;
     private List<LatLng> snappedListe;
     private GeocodingAPI geo;
 
-    public SnapToRoadsAPI(LinkedList<Location> liste) {
-       this.list = liste;
-       geo = new GeocodingAPI();
-       snappedListe = new List<LatLng>() {
+    public SnapToRoadsAPI(LinkedList<Location> liste)
+    {
+        this.list = liste;
+        geo = new GeocodingAPI();
+        snappedListe = new List<LatLng>()
+        {
 
-           @Override
-           public int size() {
-               return snappedListe.size();           }
+            @Override
+            public int size()
+            {
+                return snappedListe.size();
+            }
 
-           @Override
-           public boolean isEmpty() {
-                    return snappedListe.isEmpty();      }
+            @Override
+            public boolean isEmpty()
+            {
+                return snappedListe.isEmpty();
+            }
 
-           @Override
-           public boolean contains(Object o) {
-             return snappedListe.contains(o);           }
+            @Override
+            public boolean contains(Object o)
+            {
+                return snappedListe.contains(o);
+            }
 
-           @Override
-           public Iterator<LatLng> iterator() {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public Iterator<LatLng> iterator()
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public Object[] toArray() {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public Object[] toArray()
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public <T> T[] toArray(T[] a) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public <T> T[] toArray(T[] a)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public boolean add(LatLng e) 
-           {
-                return snappedListe.add(e);  
-           }
+            @Override
+            public boolean add(LatLng e)
+            {
+                return snappedListe.add(e);
+            }
 
-           @Override
-           public boolean remove(Object o) {
-   return snappedListe.remove(o);           }
+            @Override
+            public boolean remove(Object o)
+            {
+                return snappedListe.remove(o);
+            }
 
-           @Override
-           public boolean containsAll(Collection<?> c) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public boolean containsAll(Collection<?> c)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public boolean addAll(Collection<? extends LatLng> c) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public boolean addAll(Collection<? extends LatLng> c)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public boolean addAll(int index, Collection<? extends LatLng> c) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public boolean addAll(int index, Collection<? extends LatLng> c)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public boolean removeAll(Collection<?> c) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public boolean removeAll(Collection<?> c)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public boolean retainAll(Collection<?> c) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public boolean retainAll(Collection<?> c)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public void clear() {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public void clear()
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public LatLng get(int index) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public LatLng get(int index)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public LatLng set(int index, LatLng element) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public LatLng set(int index, LatLng element)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public void add(int index, LatLng element) {
-               snappedListe.add(index, element);           }
+            @Override
+            public void add(int index, LatLng element)
+            {
+                snappedListe.add(index, element);
+            }
 
-           @Override
-           public LatLng remove(int index) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public LatLng remove(int index)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public int indexOf(Object o) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public int indexOf(Object o)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public int lastIndexOf(Object o) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public int lastIndexOf(Object o)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public ListIterator<LatLng> listIterator() {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public ListIterator<LatLng> listIterator()
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public ListIterator<LatLng> listIterator(int index) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
+            @Override
+            public ListIterator<LatLng> listIterator(int index)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
 
-           @Override
-           public List<LatLng> subList(int fromIndex, int toIndex) {
-               throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           }
-       };
-       for(Location l:list)
-       {
-           snappedListe.add(new LatLng(l.getxKoord(),l.getyKoord()));
-       }
-       
+            @Override
+            public List<LatLng> subList(int fromIndex, int toIndex)
+            {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        for (Location l : list)
+        {
+            snappedListe.add(new LatLng(l.getxKoord(), l.getyKoord()));
+        }
+
     }
 
     /**
- * Snaps the points to their most likely position on roads using the Roads API.
- */
-/**
- * Snaps the points to their most likely position on roads using the Roads API.
- */
+     * Snaps the points to their most likely position on roads using the Roads
+     * API.
+     */
+    /**
+     * Snaps the points to their most likely position on roads using the Roads
+     * API.
+     */
 //public List<SnappedPoint> snapToRoads(GeoApiContext context) throws Exception {
 //    List<SnappedPoint> snappedPoints = new ArrayList<>();
 //
@@ -211,9 +237,9 @@ public class SnapToRoadsAPI {
 //    
 //    return list;
 //}
+    public static void main(String[] args)
+    {
 
-    public static void main(String[] args) {
-        
     }
-    
+
 }

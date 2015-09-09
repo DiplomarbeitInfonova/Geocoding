@@ -20,34 +20,39 @@ import javax.swing.JPanel;
  *
  * @author Veronika
  */
-public class GraphingData extends JPanel {
-    double[] data = {
+public class GraphingData extends JPanel
+{
+
+    double[] data =
+    {
         0, 14, 18, 03, 86, 88, 74, 87, 54, 77,
         61, 55, 48, 60, 49, 36, 38, 27, 20, 18
     };
 
-    public double[] getData() {
+    public double[] getData()
+    {
         return data;
     }
 
-    public void setData(double[] data) {
+    public void setData(double[] data)
+    {
         this.data = data;
     }
 
-    
     final int PAD = 20;
- 
-    protected void paintComponent(Graphics g) {
+
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
         int w = getWidth();
         int h = getHeight();
         // Draw ordinate.
-        g2.draw(new Line2D.Double(PAD, PAD, PAD, h-PAD));
+        g2.draw(new Line2D.Double(PAD, PAD, PAD, h - PAD));
         // Draw abcissa.
-        g2.draw(new Line2D.Double(PAD, h-PAD, w-PAD, h-PAD));
+        g2.draw(new Line2D.Double(PAD, h - PAD, w - PAD, h - PAD));
         // Draw labels.
         Font font = g2.getFont();
         FontRenderContext frc = g2.getFontRenderContext();
@@ -55,45 +60,52 @@ public class GraphingData extends JPanel {
         float sh = lm.getAscent() + lm.getDescent();
         // Ordinate label.
         String s = "Höhe";
-        float sy = PAD + ((h - 2*PAD) - s.length()*sh)/2 + lm.getAscent();
-        for(int i = 0; i < s.length(); i++) {
+        float sy = PAD + ((h - 2 * PAD) - s.length() * sh) / 2 + lm.getAscent();
+        for (int i = 0; i < s.length(); i++)
+        {
             String letter = String.valueOf(s.charAt(i));
-            float sw = (float)font.getStringBounds(letter, frc).getWidth();
-            float sx = (PAD - sw)/2;
+            float sw = (float) font.getStringBounds(letter, frc).getWidth();
+            float sx = (PAD - sw) / 2;
             g2.drawString(letter, sx, sy);
             sy += sh;
         }
         // Abcissa label.
         s = "Ort";
-        sy = h - PAD + (PAD - sh)/2 + lm.getAscent();
-        float sw = (float)font.getStringBounds(s, frc).getWidth();
-        float sx = (w - sw)/2;
+        sy = h - PAD + (PAD - sh) / 2 + lm.getAscent();
+        float sw = (float) font.getStringBounds(s, frc).getWidth();
+        float sx = (w - sw) / 2;
         g2.drawString(s, sx, sy);
         // Draw lines.
-        double xInc = (double)(w - 2*PAD)/(data.length-1);
-        double scale = (double)(h - 2*PAD)/getMax();
+        double xInc = (double) (w - 2 * PAD) / (data.length - 1);
+        double scale = (double) (h - 2 * PAD) / getMax();
         g2.setPaint(Color.RED.brighter());
-        for(int i = 0; i < data.length-1; i++) {
-            double x1 = PAD + i*xInc;
-            double y1 = h - PAD - scale*data[i];
-            double x2 = PAD + (i+1)*xInc;
-            double y2 = h - PAD - scale*data[i+1];
+        for (int i = 0; i < data.length - 1; i++)
+        {
+            double x1 = PAD + i * xInc;
+            double y1 = h - PAD - scale * data[i];
+            double x2 = PAD + (i + 1) * xInc;
+            double y2 = h - PAD - scale * data[i + 1];
             g2.draw(new Line2D.Double(x1, y1, x2, y2));
         }
         // Mark data points.
         g2.setPaint(Color.red);
-        for(int i = 0; i < data.length; i++) {
-            double x = PAD + i*xInc;
-            double y = h - PAD - scale*data[i];
-            g2.fill(new Ellipse2D.Double(x-2, y-2, 4, 4));
+        for (int i = 0; i < data.length; i++)
+        {
+            double x = PAD + i * xInc;
+            double y = h - PAD - scale * data[i];
+            g2.fill(new Ellipse2D.Double(x - 2, y - 2, 4, 4));
         }
     }
- 
-    private double getMax() {
+
+    private double getMax()
+    {
         double max = -Integer.MAX_VALUE;
-        for(int i = 0; i < data.length; i++) {
-            if(data[i] > max)
+        for (int i = 0; i < data.length; i++)
+        {
+            if (data[i] > max)
+            {
                 max = data[i];
+            }
         }
         return max;
     }

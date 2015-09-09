@@ -13,22 +13,25 @@ import java.util.LinkedList;
  *
  * @author Domi
  */
-public class LocationParser {
+public class LocationParser
+{
+
     private GeocodingAPI geocoding;
-    public LocationParser(){
-        geocoding=new GeocodingAPI();
+
+    public LocationParser()
+    {
+        geocoding = new GeocodingAPI();
     }
-    
-    
-    
+
     //String name, double xKoord, double yKoord, double hoehe
-    
-    public LinkedList<Location> LegtoLocation(LinkedList<Leg> leglist){
-        LinkedList<Location> returnlist=new LinkedList<Location>();
-        double[] koordinaten=new double[2];
-        for (int i = 0; i < leglist.size(); i++) {
-            koordinaten[0]=(double)leglist.get(i).getEnd_loc_lat();
-            koordinaten[1]=(double)leglist.get(i).getEnd_loc_lng();
+    public LinkedList<Location> LegtoLocation(LinkedList<Leg> leglist)
+    {
+        LinkedList<Location> returnlist = new LinkedList<Location>();
+        double[] koordinaten = new double[2];
+        for (int i = 0; i < leglist.size(); i++)
+        {
+            koordinaten[0] = (double) leglist.get(i).getEnd_loc_lat();
+            koordinaten[1] = (double) leglist.get(i).getEnd_loc_lng();
             Location l = new Location((geocoding.KoordToOrt(koordinaten)).getName(), koordinaten[0], koordinaten[1], leglist.get(i).getElevation());
             returnlist.add(l);
             //System.out.println(returnlist.get(i).toString());
