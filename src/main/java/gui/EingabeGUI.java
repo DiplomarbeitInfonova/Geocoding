@@ -11,6 +11,9 @@ import bl.GeocodingAPI;
 import bl.GraphingData;
 import bl.LocationParser;
 import bl.RoutePainter;
+import bl.SnapToRoadsAPI;
+import com.google.maps.GeoApiContext;
+import com.google.maps.model.SnappedPoint;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -364,6 +367,9 @@ public class EingabeGUI extends javax.swing.JFrame {
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
+//            SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
+//            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext());
+//            LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
             
             //locations.add(a);
             //locations.add(b);
@@ -379,6 +385,8 @@ public class EingabeGUI extends javax.swing.JFrame {
         } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
