@@ -248,7 +248,6 @@ public class XMLParse
 
             for (int k = 0; k < loc.getLength(); k++)
             {
-
                 Element e = (Element) loc.item(k);
                 System.out.println("\nCurrent Element :" + loc.item(k).getNodeName());
                 String latitude = e.getElementsByTagName("latitude").item(k).getTextContent();
