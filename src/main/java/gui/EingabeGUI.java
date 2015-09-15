@@ -9,6 +9,9 @@ import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData;
 import bl.RoutePainter;
+import bl.SnapToRoadsAPI;
+import com.google.maps.GeoApiContext;
+import com.google.maps.model.SnappedPoint;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -135,8 +138,7 @@ public class EingabeGUI extends javax.swing.JFrame
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -295,10 +297,8 @@ public class EingabeGUI extends javax.swing.JFrame
         jMenu1.setText("File");
 
         mi_Start.setText("Start");
-        mi_Start.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        mi_Start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mi_StartActionPerformed(evt);
             }
         });
@@ -380,9 +380,9 @@ public class EingabeGUI extends javax.swing.JFrame
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
-//            SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
-//            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext());
-//            LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
+            SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
+            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext());
+            LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
 
             //locations.add(a);
             //locations.add(b);
@@ -394,7 +394,7 @@ public class EingabeGUI extends javax.swing.JFrame
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
             panhoehe.repaint();
 
-            paintRoute(locations);
+            paintRoute(list);
         } catch (XmlPullParserException ex)
         {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
