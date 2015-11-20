@@ -42,8 +42,7 @@ import org.xmlpull.v1.XmlPullParserException;
  *
  * @author Veronika
  */
-public class EingabeGUI extends javax.swing.JFrame
-{
+public class EingabeGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form EingabeGUI
@@ -54,8 +53,7 @@ public class EingabeGUI extends javax.swing.JFrame
     private LinkedList<Location> locations = new LinkedList<>();
     private RoutePainter routepainter;
 
-    public EingabeGUI()
-    {
+    public EingabeGUI() {
         initComponents();
         this.setLocationRelativeTo(null);
         geo = new GeocodingAPI();
@@ -67,12 +65,10 @@ public class EingabeGUI extends javax.swing.JFrame
         rbgroup.add(rb_3D);
     }
 
-    public void addWaypoint(LinkedList<Location> locations)
-    {
+    public void addWaypoint(LinkedList<Location> locations) {
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
-        for (Location l : locations)
-        {
+        for (Location l : locations) {
             waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
         }
 
@@ -87,24 +83,21 @@ public class EingabeGUI extends javax.swing.JFrame
         repaint();
     }
 
-    public void paintRoute(LinkedList<Location> locations)
-    {
+    public void paintRoute(LinkedList<Location> locations) {
+
         //JXMapKit mp, LinkedList<GeoPosition> points
 //        routepainter=new RoutePainter(this.MainMap,locations );
 //        MainMap.getMainMap().setOverlayPainter(routepainter.getPainter());
 //        repaint();
-        final List<GeoPosition> region = new ArrayList<GeoPosition>();
+        final List<GeoPosition> region = new ArrayList<>();
 
-        for (int i = 0; i < locations.size(); i++)
-        {
-            region.add(new GeoPosition(locations.get(i).getxKoord(), locations.get(i).getyKoord()));
+        for (Location location : locations) {
+            region.add(new GeoPosition(location.getxKoord(), location.getyKoord()));
         }
-        Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>()
-        {
+        Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
 
             @Override
-            public void paint(Graphics2D g, JXMapViewer object, int width, int height)
-            {
+            public void paint(Graphics2D g, JXMapViewer object, int width, int height) {
                 g = (Graphics2D) g.create();
                 //convert from viewport to world bitmap
                 Rectangle rect = EingabeGUI.MainMap.getMainMap().getViewportBounds();
@@ -118,13 +111,12 @@ public class EingabeGUI extends javax.swing.JFrame
                 int lastX = -1;
                 int lastY = -1;
 
-                for (GeoPosition gp : region)
-                {
+                for (GeoPosition gp : region) {
                     //convert geo to world bitmap pixel
 
                     Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
-                    if (lastX != -1 && lastY != -1)
-                    {
+                    if (lastX != -1 && lastY != -1) {
+                        
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
                     }
                     lastX = (int) pt.getX();
@@ -325,53 +317,44 @@ public class EingabeGUI extends javax.swing.JFrame
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
 
-        try
-        {
+        try {
             // Prüfen
-            if (!this.tf_OrtsnameA.getText().equals(""))
-            {
+            if (!this.tf_OrtsnameA.getText().equals("")) {
                 a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
                 this.tf_XKoordA.setText(a.getxKoord() + "");
                 this.tf_YKoordA.setText(a.getyKoord() + "");
-            } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals(""))
-            {
+            } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals("")) {
                 String xS = this.tf_XKoordA.getText();
                 String yS = this.tf_YKoordA.getText();
                 double x = Double.parseDouble(xS);
                 double y = Double.parseDouble(yS);
                 double[] dfeld
-                         =
-                        {
+                        = {
                             x, y
                         };
                 a = geo.KoordToOrt(dfeld);
                 this.tf_OrtsnameA.setText(a.getName());
-            } else
-            {
+            } else {
                 JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
                 return;
             }
 
-            if (!this.tf_OrtsnameB.getText().equals(""))
-            {
+            if (!this.tf_OrtsnameB.getText().equals("")) {
                 b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
                 this.tf_XKoordB.setText(b.getxKoord() + "");
                 this.tf_YKoordB.setText(b.getyKoord() + "");
-            } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals(""))
-            {
+            } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
                 String xS = this.tf_XKoordB.getText();
                 double x = Double.parseDouble(xS);
                 String yS = this.tf_YKoordB.getText();
                 double y = Double.parseDouble(yS);
                 double[] dfeld
-                         =
-                        {
+                        = {
                             x, y
                         };
                 b = geo.KoordToOrt(dfeld);
                 this.tf_OrtsnameB.setText(b.getName());
-            } else
-            {
+            } else {
                 JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
                 return;
             }
@@ -383,8 +366,8 @@ public class EingabeGUI extends javax.swing.JFrame
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
-            SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
-            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext());
+SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
+List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext());
             LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
 
             //locations.add(a);
@@ -396,16 +379,12 @@ public class EingabeGUI extends javax.swing.JFrame
             diagramm.setData(hoehen);
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
             panhoehe.repaint();
-
-            paintRoute(list);
-        } catch (XmlPullParserException ex)
-        {
+            paintRoute(locations);
+        } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -414,43 +393,33 @@ public class EingabeGUI extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 new EingabeGUI().setVisible(true);
             }
         });
@@ -499,12 +468,10 @@ public class EingabeGUI extends javax.swing.JFrame
     private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
 
-    private double[] locationsToDouble()
-    {
+    private double[] locationsToDouble() {
         // Double Feld von Höhen wird erstellt für das Diagramm
         double[] dfeld = new double[locations.size()];
-        for (int i = 0; i < locations.size(); i++)
-        {
+        for (int i = 0; i < locations.size(); i++) {
             dfeld[i] = locations.get(i).getHoehe();
             //System.out.print(dfeld[i]+" ");
         }

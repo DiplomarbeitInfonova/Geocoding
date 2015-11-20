@@ -259,8 +259,14 @@ public class XMLParse
                 Location l = geo.KoordToOrt(koordinaten);
                 geo.getElevationInformation(l);
                 list.add(l);
-                System.out.println(list.get(k).toString());
+               
             }
+             //System.out.println(list.get(i).toString());
+        }
+        
+        
+        for(Location l:list){
+            System.out.println(l.toString());
         }
         return list;
     }
