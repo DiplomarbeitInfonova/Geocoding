@@ -26,7 +26,7 @@ public class GeocodingAPI
 {
 
     private XMLParse xmlp;
-    private final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
+    public final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
 
     /*
      Die Methode findet zum eingegeben Ort die passenden

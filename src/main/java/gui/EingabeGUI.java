@@ -367,7 +367,12 @@ public class EingabeGUI extends javax.swing.JFrame {
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
 SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
-List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext());
+
+GeoApiContext apicontext=new GeoApiContext();
+apicontext.setApiKey(geo.apiKey);
+
+
+List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
             LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
 
             //locations.add(a);
