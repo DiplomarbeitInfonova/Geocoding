@@ -88,13 +88,13 @@ public class GraphingData extends JPanel
             g2.draw(new Line2D.Double(x1, y1, x2, y2));
         }
         // Mark data points.
-        g2.setPaint(Color.red);
-        for (int i = 0; i < data.length; i++)
-        {
-            double x = PAD + i * xInc;
-            double y = h - PAD - scale * data[i];
-            g2.fill(new Ellipse2D.Double(x - 2, y - 2, 4, 4));
-        }
+//        g2.setPaint(Color.red);
+//        for (int i = 0; i < data.length; i++)
+//        {
+//            double x = PAD + i * xInc;
+//            double y = h - PAD - scale * data[i];
+//            g2.fill(new Ellipse2D.Double(x - 2, y - 2, 4, 4));
+//        }
     }
 
     private double getMax()
