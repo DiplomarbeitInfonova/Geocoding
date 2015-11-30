@@ -51,7 +51,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     private Location a;
     private Location b;
     private LinkedList<Location> locations = new LinkedList<>();
-    private RoutePainter routepainter;
 
     public EingabeGUI() {
         initComponents();
@@ -66,6 +65,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     public void addWaypoint(LinkedList<Location> locations) {
+        //Author Dominik
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
         for (Location l : locations) {
@@ -84,11 +84,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     public void paintRoute(LinkedList<Location> locations) {
-
-        //JXMapKit mp, LinkedList<GeoPosition> points
-//        routepainter=new RoutePainter(this.MainMap,locations );
-//        MainMap.getMainMap().setOverlayPainter(routepainter.getPainter());
-//        repaint();
+//Autor Dominik
         final List<GeoPosition> region = new ArrayList<>();
 
         for (Location location : locations) {
@@ -116,7 +112,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                     Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
                     if (lastX != -1 && lastY != -1) {
-                        
+
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
                     }
                     lastX = (int) pt.getX();
@@ -313,7 +309,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      und vice versa.
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
-
+//Author Dominik
         try {
             // Prüfen
             if (!this.tf_OrtsnameA.getText().equals("")) {
@@ -363,13 +359,12 @@ public class EingabeGUI extends javax.swing.JFrame {
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
-SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
+            SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
 
-GeoApiContext apicontext=new GeoApiContext();
-apicontext.setApiKey(geo.apiKey);
+            GeoApiContext apicontext = new GeoApiContext();
+            apicontext.setApiKey(geo.apiKey);
 
-
-List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
+            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
             LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
 
             //locations.add(a);

@@ -63,11 +63,10 @@ public List<SnappedPoint> snapToRoads(GeoApiContext context) throws Exception {
 
         // Perform the request. Because we have interpolate=true, we will get extra data points
         // between our originally requested path. To ensure we can concatenate these points, we
-        // only start adding once we've hit the first new point (i.e. skip the overlap).
+        // only start adding once we've hit the first new point (i.e. skip the overlap).     
         
         
-        
-        SnappedPoint[] points = RoadsApi.snapToRoads(context, page).await();
+        SnappedPoint[] points = RoadsApi.snapToRoads(context,true, page).await();
       
         
         

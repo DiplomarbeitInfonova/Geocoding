@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author Domi
+ * @author Dominik
  */
 public class LocationParser
 {
@@ -26,6 +26,7 @@ public class LocationParser
     //String name, double xKoord, double yKoord, double hoehe
     public LinkedList<Location> LegtoLocation(LinkedList<Leg> leglist)
     {
+        //Author Dominik
         LinkedList<Location> returnlist = new LinkedList<Location>();
         double[] koordinaten = new double[2];
         for (int i = 0; i < leglist.size(); i++)

@@ -18,11 +18,11 @@ import org.jxmapviewer.viewer.WaypointPainter;
 
 /**
  *
- * @author Domi
+ * @author Dominik
  */
 public class RoutePainter extends WaypointPainter
 {
-
+    //author Dominik
     private JXMapKit mapkit;
     private List<GeoPosition> region = new ArrayList<GeoPosition>();
 
@@ -70,7 +70,6 @@ public class RoutePainter extends WaypointPainter
                 lastX = (int) pt.getX();
                 lastY = (int) pt.getY();
             }
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             g.dispose();
 
         }
