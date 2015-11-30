@@ -83,6 +83,13 @@ public class EingabeGUI extends javax.swing.JFrame {
         repaint();
     }
 
+    /**
+     * Diese Methode zeichnet die übergebenen Locations auf der Karte (JXMapKit)
+     * ein
+     *
+     * @param locations Die LinkedList, die alle Punkte des Weges enthält
+     *
+     */
     public void paintRoute(LinkedList<Location> locations) {
 //Autor Dominik
         final List<GeoPosition> region = new ArrayList<>();
@@ -302,14 +309,34 @@ public class EingabeGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /*
-     Es wird von den Textfeldern der Input geholt und in Locations umgewandelt
-     danach wird von den Locations die Distanz und die Dauer einer Fahrt berechnet.
-     Wenn ein Ortsname eingegeben wurde, werden die Textfelder nun mit den Koordinaten befüllt
-     und vice versa.
+    /**
+     *
+     *
+     * Author: Dominik Es wird von den Textfeldern der Input geholt und in
+     * Locations umgewandelt danach wird von den Locations die Distanz und die
+     * Dauer einer Fahrt berechnet. Wenn ein Ortsname eingegeben wurde, werden
+     * die Textfelder nun mit den Koordinaten befüllt und vice versa. Danach
+     * wird die Fahrtdauer in Stunden und die Distanz der Strecke in km von der
+     * Klasse GeocodingAPI abgefragt und in das Label geschrieben. Danach werden
+     * von der GeocodingAPI die Zwischenpunkte der Strecke mit Übergabe der
+     * beiden Locations (a,b) abgefragt. Danach werden die Locations um die
+     * Waypoints der RoadsAPI erweitert: D.h. es werden zwischen den bereits
+     * bestehenden Punkten viele Zwischenpunkte eingezeichnet, die das Zeichnen
+     * des Straßenverlaufs später erleichtern sollen. Der Aufruf der Klasse
+     * SnapToRoadsAPI soll die bestehende Route an den Straßenverlauf
+     * angleichen. ---KURZE SNAPTOROADS ERKLÄRUNG---
+     *
+     * Anschließend wird das Höhendiagramm gezeichnet. ---HÖHENDIAGRAMM ---
+     *
+     * Zum Schluss erfolgt der Aufruf der Methode paintRoute mit der Liste der
+     * Locations als Übergabeparameter. Hier wird dann die Strecke auf der Karte
+     * eingezeichnet.
+     *
+     *
+     * @param evt
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
-//Author Dominik
+
         try {
             // Prüfen
             if (!this.tf_OrtsnameA.getText().equals("")) {
@@ -351,11 +378,14 @@ public class EingabeGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
                 return;
             }
+
+            /*
+            
+             */
             String dur = geo.LocationToDistance(a, b);
             String[] spl = dur.split("-");
             this.lab_Distance.setText(spl[1]);
             this.lab_Duration.setText(spl[0]);
-            locations.clear();
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
@@ -376,7 +406,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             diagramm.setData(hoehen);
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
             panhoehe.repaint();
-            paintRoute(locations);
+            paintRoute(list);
         } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

@@ -32,8 +32,7 @@ public class GeocodingAPI {
      Die Methode findet zum eingegeben Ort die passenden
      x- und y- Koordinaten und liefert diese in einem 
      double-Feld zurück
-     Beispiel-Link: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY
-    
+     Beispiel-Link: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY    
      Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo   
      */
     public Location OrtToKoord(String name) {
@@ -43,7 +42,6 @@ public class GeocodingAPI {
         name = StringUtils.correctLettersForAPI(name);
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name + "&key=" + apiKey;
         String answer = "";
-
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             answer = sendObject.read();
@@ -54,7 +52,6 @@ public class GeocodingAPI {
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
-
         return ort;
     }
 
