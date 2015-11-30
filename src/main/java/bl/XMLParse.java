@@ -1,4 +1,4 @@
-// author Veronika Gößler
+// author Veronika Gößler und David Kollegger
 package bl;
 
 import beans.Leg;
@@ -115,6 +115,10 @@ public class XMLParse
         Element root = xmlDoc.getDocumentElement();
 
         NodeList results = root.getElementsByTagName("result");
+        if(results == null)
+        {
+            return 0.0;
+        }
         for (int i = 0; i < results.getLength(); i++)
         {
             Element e = (Element) results.item(i);
@@ -122,6 +126,7 @@ public class XMLParse
             Element eElevation = (Element) elevationList.item(0);
             elevation = Double.parseDouble(eElevation.getTextContent());
             //System.out.println(elevation);
+            
             return elevation;
         }
 
