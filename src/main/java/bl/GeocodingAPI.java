@@ -181,6 +181,11 @@ public class GeocodingAPI
         }
         return response;
     }
+    
+    public void loescheDoppelteWerte(LinkedList<Location> list)
+    {
+        
+    }
 
     public static void main(String[] args)
     {
