@@ -9,6 +9,7 @@ import beans.Leg;
 import beans.Location;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +23,7 @@ import org.xmlpull.v1.XmlPullParserException;
  *
  * @author David
  */
-public class GeocodingAPI
-{
+public class GeocodingAPI {
 
     private XMLParse xmlp;
     public final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
@@ -36,8 +36,7 @@ public class GeocodingAPI
     
      Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo   
      */
-    public Location OrtToKoord(String name)
-    {
+    public Location OrtToKoord(String name) {
         double[] koordinaten = new double[2];
         Location ort = null;
         name = StringUtils.deleteSpaces(name);
@@ -45,73 +44,62 @@ public class GeocodingAPI
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?address=" + name + "&key=" + apiKey;
         String answer = "";
 
-        try
-        {
+        try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             answer = sendObject.read();
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
             ort.setName(name);
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
 
         return ort;
     }
 
-    public Location KoordToOrt(double[] koordinaten)
-    {
+    public Location KoordToOrt(double[] koordinaten) {
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + koordinaten[0] + "," + koordinaten[1] + "&key=" + apiKey;
         Location ort = null;
-        try
-        {
+        try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
 //            System.out.println("koordtoOrt\n"+ort.toString());
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
         }
         return ort;
     }
 
-    public String LocationToDistance(Location a, Location b)
-    {
+    public String LocationToDistance(Location a, Location b) {
         String request = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord();
         String response = "";
-        try
-        {
+        try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlToDistanceAndDuration();
 
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return response;
     }
 
-    public void getElevationInformation(Location l)
-    {
+    public void getElevationInformation(Location l) {
         String request = "https://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         double response = 0;
-        try
-        {
+        try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             xmlp = new XMLParse(answer);
             response = xmlp.xmlElevationInformation();
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
 //            System.out.println(ex);
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,12 +107,10 @@ public class GeocodingAPI
         l.setHoehe(response);
     }
 
-    public LinkedList<Location> getWaypoints(String l1, String l2)
-    {
+    public LinkedList<Location> getWaypoints(String l1, String l2) {
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin=" + l1 + "&destination=" + l2 + "&key=" + apiKey;
         LinkedList<Leg> response = new LinkedList<Leg>();
-        try
-        {
+        try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             xmlp = new XMLParse(answer);
@@ -132,24 +118,19 @@ public class GeocodingAPI
             LocationParser parser = new LocationParser();
             return parser.LegtoLocation(response);
 
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public LinkedList<Location> getWaypointsMitRoadsAPI(LinkedList<Location> waypoints) throws XmlPullParserException, IOException
-    {
+    public LinkedList<Location> getWaypointsMitRoadsAPI(LinkedList<Location> waypoints) throws XmlPullParserException, IOException {
         String request = "https://roads.googleapis.com/v1/snapToRoads?path=";
 
-        for (int i = 0; i < waypoints.size(); i++)
-        {
-            if (i < waypoints.size() - 1)
-            {
+        for (int i = 0; i < waypoints.size(); i++) {
+            if (i < waypoints.size() - 1) {
                 request = request + waypoints.get(i).getxKoord() + "," + waypoints.get(i).getyKoord() + "|";
-            } else
-            {
+            } else {
                 request = request + waypoints.get(i).getxKoord() + "," + waypoints.get(i).getyKoord();
             }
         }
@@ -158,8 +139,7 @@ public class GeocodingAPI
         System.out.println("request: " + request);
 
         LinkedList<Location> response = new LinkedList<Location>();
-        try
-        {
+        try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             JSONObject json = null;
@@ -172,26 +152,33 @@ public class GeocodingAPI
             xmlp = new XMLParse(xml);
             response = xmlp.xmlFromRoadsAPI();
 
-        } catch (MalformedURLException ex)
-        {
+        } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex)
-        {
+        } catch (JSONException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
     }
-    
-    public void loescheDoppelteWerte(LinkedList<Location> list)
-    {
-        
+
+    public void loescheDoppelteWerte(LinkedList<Location> list) {
+        for (int i = 0; i < list.size(); i++) {
+            Location l = list.get(i);
+
+            for (int j = 0; j < list.size(); j++) {
+                if (i != j) {
+                    if (l.getxKoord() == list.get(j).getxKoord() && l.getyKoord() == list.get(j).getyKoord()) {
+                        list.remove(i);
+                        j--;
+                    }
+                }
+            }
+        }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws XmlPullParserException, IOException {
 
         GeocodingAPI api = new GeocodingAPI();
-//        LinkedList<Leg> test = api.getWaypoints("Mureck", "Ligist");
+        LinkedList<Location> test = api.getWaypoints("Mureck", "Ligist");
 //        for (int i = 0; i < test.size(); i++)
 //        {
 //            System.out.println("ag: "+test.get(i).toString() + "\n");
@@ -201,12 +188,35 @@ public class GeocodingAPI
         //System.out.println("help: "+s);
         //System.out.println("Test: "+test);
         //System.out.println(api.OrtToKoord("Ligist").toString());
-        double[] k =
-        {
-            47.066667, 15.433333
-        };
+        double[] k
+                = {
+                    47.066667, 15.433333
+                };
         Location l = api.KoordToOrt(k);
 //        System.out.println(l.toString());
+
+//        for(int i = 0; i < test.size(); i++)
+//        {
+//            System.out.println(test.get(i).getxKoord()+" "+test.get(i).getyKoord());
+//        }
+//        
+//        api.loescheDoppelteWerte(test);
+//        System.out.println("nach dem Löschen: ");
+//        for(int i = 0; i < test.size(); i++)
+//        {
+//            System.out.println(test.get(i).getxKoord()+" "+test.get(i).getyKoord());
+//        }
+        LinkedList<Location> list = api.getWaypointsMitRoadsAPI(test);
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
+        }
+
+        api.loescheDoppelteWerte(list);
+        System.out.println("nach dem Löschen: ");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
+        }
 
     }
 }
