@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  * Klass um das Höhendiagramm klein zu zeichnen
  * Extends JPanel damit gleich direkt gezeichnet werden kann
  */
-public class GraphingData extends JPanel
+public class GraphingData_small extends JPanel
 {
 
     private LinkedList<Double> daten;

@@ -7,7 +7,7 @@ package gui;
 
 import beans.Location;
 import bl.GeocodingAPI;
-import bl.GraphingData;
+import bl.GraphingData_small;
 import bl.RoutePainter;
 import bl.SnapToRoadsAPI;
 import com.google.maps.GeoApiContext;
@@ -278,6 +278,11 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         panControls.add(panInfos);
 
+        panhoehe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panhoeheMouseClicked(evt);
+            }
+        });
         panhoehe.setLayout(new java.awt.BorderLayout());
         panControls.add(panhoehe);
 
@@ -401,7 +406,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             //locations.add(b);
             //this.addWaypoint(locations);
             // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
-            GraphingData diagramm = new GraphingData();
+            GraphingData_small diagramm = new GraphingData_small();
             LinkedList<Double> hoehen = this.locationsToStringList();
             diagramm.setDaten(hoehen);
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
@@ -416,6 +421,14 @@ public class EingabeGUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_mi_StartActionPerformed
+
+    private void panhoeheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panhoeheMouseClicked
+        if(locations.size()!=0)
+        {
+        HoehenPanel hoehenpanel = new HoehenPanel(locations);
+        hoehenpanel.setVisible(true);
+        }
+    }//GEN-LAST:event_panhoeheMouseClicked
 
     /**
      * @param args the command line arguments
