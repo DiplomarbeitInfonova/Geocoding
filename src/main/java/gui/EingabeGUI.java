@@ -336,7 +336,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      * @param evt
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
-
+//Author Dominik, Veronika
         try {
             // Prüfen
             if (!this.tf_OrtsnameA.getText().equals("")) {
@@ -402,8 +402,8 @@ public class EingabeGUI extends javax.swing.JFrame {
             //this.addWaypoint(locations);
             // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
             GraphingData diagramm = new GraphingData();
-            double[] hoehen = this.locationsToDouble();
-            diagramm.setData(hoehen);
+            LinkedList<Double> hoehen = this.locationsToStringList();
+            diagramm.setDaten(hoehen);
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
             panhoehe.repaint();
             paintRoute(list);
@@ -495,13 +495,16 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
 
-    private double[] locationsToDouble() {
+    
+
+    private LinkedList<Double> locationsToStringList() {
         // Double Feld von Höhen wird erstellt für das Diagramm
-        double[] dfeld = new double[locations.size()];
+        LinkedList<Double> dlist= new LinkedList<Double>();
+
         for (int i = 0; i < locations.size(); i++) {
-            dfeld[i] = locations.get(i).getHoehe();
+            dlist.add( locations.get(i).getHoehe());
             //System.out.print(dfeld[i]+" ");
         }
-        return dfeld;
+        return dlist;
     }
 }
