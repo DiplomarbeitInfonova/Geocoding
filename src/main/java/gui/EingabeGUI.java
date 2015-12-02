@@ -64,6 +64,13 @@ public class EingabeGUI extends javax.swing.JFrame {
         rbgroup.add(rb_3D);
     }
 
+    /**
+     * Diese Methode zeichnet in die Karte alle Locations ein, 
+     * welche in der List, die übergeben wird, vorhanden sind. 
+     * Übergibt man diese Liste an die Klasse WaypointPainter, 
+     * übernimmt sie das Zeichnen auf der Map. 
+     * @param locations 
+     */
     public void addWaypoint(LinkedList<Location> locations) {
         //Author Dominik
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
@@ -85,7 +92,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     /**
      * Diese Methode zeichnet die übergebenen Locations auf der Karte (JXMapKit)
-     * ein
+     * ein. Hierzu werden Koordinaten in Pixelpunkte umgerechnet. 
      *
      * @param locations Die LinkedList, die alle Punkte des Weges enthält
      *
@@ -115,7 +122,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                 int lastY = -1;
 
                 for (GeoPosition gp : region) {
-                    //convert geo to world bitmap pixel
+                    //Koordinaten zu Pixeln umrechnen
 
                     Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
                     if (lastX != -1 && lastY != -1) {
@@ -317,7 +324,8 @@ public class EingabeGUI extends javax.swing.JFrame {
     /**
      *
      *
-     * Author: Dominik Es wird von den Textfeldern der Input geholt und in
+     * Author: Dominik,Veronika
+     * Es wird von den Textfeldern der Input geholt und in
      * Locations umgewandelt danach wird von den Locations die Distanz und die
      * Dauer einer Fahrt berechnet. Wenn ein Ortsname eingegeben wurde, werden
      * die Textfelder nun mit den Koordinaten befüllt und vice versa. Danach
@@ -329,9 +337,11 @@ public class EingabeGUI extends javax.swing.JFrame {
      * bestehenden Punkten viele Zwischenpunkte eingezeichnet, die das Zeichnen
      * des Straßenverlaufs später erleichtern sollen. Der Aufruf der Klasse
      * SnapToRoadsAPI soll die bestehende Route an den Straßenverlauf
-     * angleichen. ---KURZE SNAPTOROADS ERKLÄRUNG---
+     * angleichen. 
+     * ---KURZE SNAPTOROADS ERKLÄRUNG---
      *
-     * Anschließend wird das Höhendiagramm gezeichnet. ---HÖHENDIAGRAMM ---
+     * Anschließend wird das Höhendiagramm gezeichnet. 
+     * ---HÖHENDIAGRAMM ---
      *
      * Zum Schluss erfolgt der Aufruf der Methode paintRoute mit der Liste der
      * Locations als Übergabeparameter. Hier wird dann die Strecke auf der Karte
@@ -509,7 +519,11 @@ public class EingabeGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     
-
+/**
+ * Diese Methode fügt alle Höhen der Locations- Membervariable zu einer Liste von Strings zusammen. 
+ * Diese wird somit verwendet um das Höhendiagramm zu zeichnen. 
+ * @return 
+ */
     private LinkedList<Double> locationsToStringList() {
         // Double Feld von Höhen wird erstellt für das Diagramm
         LinkedList<Double> dlist= new LinkedList<Double>();

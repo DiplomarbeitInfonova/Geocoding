@@ -12,6 +12,13 @@ package bl;
 public class StringUtils
 {
 
+    /**
+     * Author: Dominik
+     * Da in den Textfeldern der GUI auch Umlaute eingegeben werden können, diese aber nicht von Google verarbeitet werden können, 
+     * muss man alle Umlaute/Scharfe S usw. ersetzen. 
+     * @param name
+     * @return 
+     */
     public static String correctLettersForAPI(String name)
     {
         String correctName = name;

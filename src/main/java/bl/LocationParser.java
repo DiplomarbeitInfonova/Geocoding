@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bl;
 
 import beans.Leg;
@@ -23,7 +18,13 @@ public class LocationParser
         geocoding = new GeocodingAPI();
     }
 
-    //String name, double xKoord, double yKoord, double hoehe
+    /**
+     * Diese Methode wandelt die übergebene Liste von Legs (wird beim HTML- Request benötigt)
+     * in eine Liste von Locations um. 
+     * 
+     * @param leglist
+     * @return 
+     */
     public LinkedList<Location> LegtoLocation(LinkedList<Leg> leglist)
     {
         //Author Dominik

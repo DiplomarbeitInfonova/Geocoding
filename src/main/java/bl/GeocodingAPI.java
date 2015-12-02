@@ -55,6 +55,15 @@ public class GeocodingAPI {
         return ort;
     }
 
+    /**
+     * dominik
+     * Diese Methode parsed ein übergebenes Feld mit double- Koordinaten(Longitude, Latitude)
+     * in ein Location- Objekt. 
+     * Dadurch wird ein Request an die Google geocoding API geschickt, welche 
+     * auf Übergabe der Koordinaten Namen und genaue Adresse zurück. 
+     * @param koordinaten
+     * @return 
+     */
     public Location KoordToOrt(double[] koordinaten) {
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + koordinaten[0] + "," + koordinaten[1] + "&key=" + apiKey;
         Location ort = null;
@@ -71,6 +80,14 @@ public class GeocodingAPI {
         return ort;
     }
 
+    /**
+     * dominik
+     * Diese Methode gibt die Distanz zwischen zwei Orten zurück. 
+     * Wiederum werden die 4 Koordinaten zu Google geschickt und die Distanz und Fahrtdauer der Strecke zwischen diesen Locations zurückgegeben. 
+     * @param a
+     * @param b
+     * @return 
+     */
     public String LocationToDistance(Location a, Location b) {
         String request = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord();
         String response = "";
@@ -88,6 +105,15 @@ public class GeocodingAPI {
         return response;
     }
 
+    
+    /**
+     * dominik
+     * Diese Methode gibt die Höhe einer übergebenen Location l zurück. 
+     * Durch einen Request an die Google ElevationAPI mit übergebenen Longitude, 
+     * 
+     * Langitude- Koordinaten wird die Seehöhe zurückgegeben. 
+     * @param l 
+     */
     public void getElevationInformation(Location l) {
         String request = "https://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         double response = 0;
@@ -104,6 +130,13 @@ public class GeocodingAPI {
         l.setHoehe(response);
     }
 
+    
+    /**
+     * 
+     * @param l1
+     * @param l2
+     * @return 
+     */
     public LinkedList<Location> getWaypoints(String l1, String l2) {
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin=" + l1 + "&destination=" + l2 + "&key=" + apiKey;
         LinkedList<Leg> response = new LinkedList<Leg>();
