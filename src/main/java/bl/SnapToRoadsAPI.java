@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class SnapToRoadsAPI {
 
+    
+    // Test
     private LinkedList<Location> list;
     private List<LatLng> snappedListe;
     private GeocodingAPI geo;
