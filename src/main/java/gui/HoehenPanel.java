@@ -30,7 +30,8 @@ public class HoehenPanel extends javax.swing.JFrame {
     {
         initComponents();
         this.ll=ll;
-        GraphingData_big diagramm = new GraphingData_big(ll);
+        GraphingData_big diagramm = new GraphingData_big();
+        diagramm.setHoehen(ll);
         this.pan_hoehe.add(diagramm);
         this.pan_hoehe.repaint();
     }

@@ -27,11 +27,8 @@ public class GraphingData_big extends JPanel{
         this.hoehen = hoehen;
     }
 
-    public GraphingData_big(LinkedList<Location> hoehen) {
-        this.hoehen = hoehen;
-    }
-
-    @Override
+   
+  
     protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -40,7 +37,10 @@ public class GraphingData_big extends JPanel{
         // Höhe und Breite des Panels ermitteln
         int w = getWidth();
         int h = getHeight();
-        
+        for(Location l : hoehen)
+        {
+            System.out.println(l.getHoehe());   
+        }
     }
     
 }
