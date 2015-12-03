@@ -76,7 +76,10 @@ public class EingabeGUI extends javax.swing.JFrame {
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
         for (Location l : locations) {
-            waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
+            if(l!=null){
+                 waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
+            }
+           
         }
 
         //Ein Waypointpainter wird erstellt um die Punkte an der Karte anzuzeigen
@@ -416,6 +419,9 @@ public class EingabeGUI extends javax.swing.JFrame {
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
+            System.out.println("Länge der Liste: "+locations.size());
+            locations=geo.loescheDoppelteWerte(locations);
+            System.out.println("Länge der Liste nach Löschen: "+locations.size());
             SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
 
             GeoApiContext apicontext = new GeoApiContext();
@@ -435,7 +441,8 @@ public class EingabeGUI extends javax.swing.JFrame {
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
             this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
             panhoehe.repaint();
-            paintRoute(list);
+            //paintRoute(list);
+            this.addWaypoint(list);
         } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

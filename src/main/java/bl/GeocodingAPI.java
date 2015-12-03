@@ -40,7 +40,7 @@ public class GeocodingAPI {
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             answer = sendObject.read();
-//            System.out.println(answer);
+           System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
             ort.setName(name);
@@ -185,7 +185,7 @@ public class GeocodingAPI {
         return response;
     }
 
-    public void loescheDoppelteWerte(LinkedList<Location> list) {
+    public LinkedList<Location> loescheDoppelteWerte(LinkedList<Location> list) {
         for (int i = 0; i < list.size(); i++) {
             Location l = list.get(i);
 
@@ -198,6 +198,7 @@ public class GeocodingAPI {
                 }
             }
         }
+        return list;
     }
 
     public static void main(String[] args) throws XmlPullParserException, IOException {
