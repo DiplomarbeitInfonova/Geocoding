@@ -30,6 +30,8 @@ public class HoehenPanel extends javax.swing.JFrame {
     {
         this.ll=ll;
         GraphingData_big diagramm = new GraphingData_big(ll);
+        this.pan_hoehe.add(diagramm);
+        this.pan_hoehe.repaint();
     }
     /**
      * This method is called from within the constructor to initialize the form.
