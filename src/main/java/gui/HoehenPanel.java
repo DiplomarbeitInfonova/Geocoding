@@ -28,6 +28,7 @@ public class HoehenPanel extends javax.swing.JFrame {
 
     public HoehenPanel(LinkedList<Location> ll)
     {
+        initComponents();
         this.ll=ll;
         GraphingData_big diagramm = new GraphingData_big(ll);
         this.pan_hoehe.add(diagramm);
