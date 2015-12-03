@@ -6,6 +6,7 @@
 package gui;
 
 import beans.Location;
+import bl.GraphingData_big;
 import java.util.LinkedList;
 
 /**
@@ -17,9 +18,9 @@ public class HoehenPanel extends javax.swing.JFrame {
     /**
      * GUI Klasse für das genaue HöhenPanel
      * Greift auf die Java-Klasse GraphinData_big zu und binded dieses Panel ein
-     * ~ Veronika
+     * ~ Veronika  
      */
-    
+    private LinkedList<Location> ll;
     public HoehenPanel() {
         initComponents();
         
@@ -27,7 +28,8 @@ public class HoehenPanel extends javax.swing.JFrame {
 
     public HoehenPanel(LinkedList<Location> ll)
     {
-        
+        this.ll=ll;
+        GraphingData_big diagramm = new GraphingData_big(ll);
     }
     /**
      * This method is called from within the constructor to initialize the form.
