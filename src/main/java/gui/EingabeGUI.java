@@ -176,11 +176,13 @@ public class EingabeGUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         lab_Duration = new javax.swing.JLabel();
         panhoehe = new javax.swing.JPanel();
+        lab_bitteklicken = new javax.swing.JLabel();
         panMap = new javax.swing.JPanel();
         MainMap = new org.jxmapviewer.JXMapKit();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_Start = new javax.swing.JMenuItem();
+        mi_Neu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jMenuItem1.setText("Nach Hier");
@@ -291,6 +293,8 @@ public class EingabeGUI extends javax.swing.JFrame {
             }
         });
         panhoehe.setLayout(new java.awt.BorderLayout());
+        panhoehe.add(lab_bitteklicken, java.awt.BorderLayout.PAGE_START);
+
         panControls.add(panhoehe);
 
         getContentPane().add(panControls, java.awt.BorderLayout.WEST);
@@ -310,6 +314,14 @@ public class EingabeGUI extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mi_Start);
+
+        mi_Neu.setText("Neue Abfrage");
+        mi_Neu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_NeuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mi_Neu);
 
         jMenuBar1.add(jMenu1);
 
@@ -421,6 +433,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             LinkedList<Double> hoehen = this.locationsToStringList();
             diagramm.setDaten(hoehen);
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
+            this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
             panhoehe.repaint();
             paintRoute(list);
         } catch (XmlPullParserException ex) {
@@ -437,11 +450,37 @@ public class EingabeGUI extends javax.swing.JFrame {
         // Onklick event für das Höhenpanel.
         // Wurden noch keine Locations berechnen geschieht bei Klick auf das Panel nichts
         // Gibt es schon Locations bzw. Höhen wird eine zweite GUI aufgerufen die mit den Locations weiterarbeitet
+        // ~Veronika
         if (locations.size() != 0) {
             HoehenPanel hoehenpanel = new HoehenPanel(locations);
             hoehenpanel.setVisible(true);
         }
     }//GEN-LAST:event_panhoeheMouseClicked
+
+    private void mi_NeuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_NeuActionPerformed
+        //Onklick Methode für das Menu Item NeuActionPerformed
+        // Will der Benutzer eine neue Abfrage machen wird die Alte Frage verworfen und 
+        // alles auf Anfangszustand zurückgestellt ~Veronika
+                initComponents();
+        this.setLocationRelativeTo(null);
+        geo = new GeocodingAPI();
+        this.rb_2D.setSelected(true);
+        this.MainMap.setDefaultProvider(OpenStreetMaps);
+        MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
+        ButtonGroup rbgroup = new ButtonGroup();
+        rbgroup.add(rb_2D);
+        rbgroup.add(rb_3D);
+        locations = new LinkedList<>();
+        this.tf_OrtsnameA.setText("");
+        this.tf_OrtsnameB.setText("");
+        this.tf_XKoordA.setText("");
+        this.tf_XKoordB.setText("");
+        this.tf_YKoordA.setText("");
+        this.tf_YKoordB.setText("");
+        this.lab_Distance.setText("");
+        this.lab_Duration.setText("");
+        
+    }//GEN-LAST:event_mi_NeuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,6 +543,8 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
+    private javax.swing.JLabel lab_bitteklicken;
+    private javax.swing.JMenuItem mi_Neu;
     private javax.swing.JMenuItem mi_Start;
     private javax.swing.JPanel panA;
     private javax.swing.JPanel panB;

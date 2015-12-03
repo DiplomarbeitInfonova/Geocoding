@@ -40,6 +40,7 @@ public class GraphingData_big extends JPanel{
         // Höhe und Breite des Panels ermitteln
         int w = getWidth();
         int h = getHeight();
+        
     }
     
 }
