@@ -7,6 +7,8 @@ package bl;
 
 import beans.Location;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
  *
  * @author Veronika
  */
-public class GraphinData_big extends JPanel{
+public class GraphingData_big extends JPanel{
     private LinkedList<Location> hoehen;
 
     public LinkedList<Location> getHoehen() {
@@ -25,13 +27,19 @@ public class GraphinData_big extends JPanel{
         this.hoehen = hoehen;
     }
 
-    public GraphinData_big(LinkedList<Location> hoehen) {
+    public GraphingData_big(LinkedList<Location> hoehen) {
         this.hoehen = hoehen;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+                super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                            RenderingHints.VALUE_ANTIALIAS_ON);
+        // Höhe und Breite des Panels ermitteln
+        int w = getWidth();
+        int h = getHeight();
     }
     
 }

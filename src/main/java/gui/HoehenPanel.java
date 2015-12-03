@@ -15,7 +15,9 @@ import java.util.LinkedList;
 public class HoehenPanel extends javax.swing.JFrame {
 
     /**
-     * Creates new form HoehenPanel
+     * GUI Klasse für das genaue HöhenPanel
+     * Greift auf die Java-Klasse GraphinData_big zu und binded dieses Panel ein
+     * ~ Veronika
      */
     
     public HoehenPanel() {

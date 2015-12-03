@@ -40,7 +40,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 /**
  *
- * @author Veronika
+ * @author Veronika, Dominik
  */
 public class EingabeGUI extends javax.swing.JFrame {
 
@@ -353,7 +353,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
 //Author Dominik, Veronika
         try {
-            // Prüfen
+            // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
             if (!this.tf_OrtsnameA.getText().equals("")) {
                 a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
                 this.tf_XKoordA.setText(a.getxKoord() + "");
@@ -416,6 +416,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             //locations.add(b);
             //this.addWaypoint(locations);
             // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
+            // ~Veronika
             GraphingData_small diagramm = new GraphingData_small();
             LinkedList<Double> hoehen = this.locationsToStringList();
             diagramm.setDaten(hoehen);
@@ -433,10 +434,12 @@ public class EingabeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mi_StartActionPerformed
 
     private void panhoeheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panhoeheMouseClicked
-        if(locations.size()!=0)
-        {
-        HoehenPanel hoehenpanel = new HoehenPanel(locations);
-        hoehenpanel.setVisible(true);
+        // Onklick event für das Höhenpanel.
+        // Wurden noch keine Locations berechnen geschieht bei Klick auf das Panel nichts
+        // Gibt es schon Locations bzw. Höhen wird eine zweite GUI aufgerufen die mit den Locations weiterarbeitet
+        if (locations.size() != 0) {
+            HoehenPanel hoehenpanel = new HoehenPanel(locations);
+            hoehenpanel.setVisible(true);
         }
     }//GEN-LAST:event_panhoeheMouseClicked
 
@@ -518,6 +521,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField tf_YKoordB;
     // End of variables declaration//GEN-END:variables
 
+// Author Veronika
     
 /**
  * Diese Methode fügt alle Höhen der Locations- Membervariable zu einer Liste von Strings zusammen. 
@@ -525,12 +529,12 @@ public class EingabeGUI extends javax.swing.JFrame {
  * @return 
  */
     private LinkedList<Double> locationsToStringList() {
-        // Double Feld von Höhen wird erstellt für das Diagramm
-        LinkedList<Double> dlist= new LinkedList<Double>();
+        //Aus den Locations wird eine LinkedList vom Typ Double ausgelesen um die Daten in das Höhendiagramm leichter zu verarbeiten
+        // ~Veronika
+        LinkedList<Double> dlist = new LinkedList<Double>();
 
         for (int i = 0; i < locations.size(); i++) {
-            dlist.add( locations.get(i).getHoehe());
-            //System.out.print(dfeld[i]+" ");
+            dlist.add(locations.get(i).getHoehe());
         }
         return dlist;
     }
