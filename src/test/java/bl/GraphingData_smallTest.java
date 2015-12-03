@@ -6,6 +6,7 @@
 package bl;
 
 import java.awt.Graphics;
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author Veronika
  */
-public class GraphingDataTest {
+public class GraphingData_smallTest {
     
-    public GraphingDataTest() {
+    public GraphingData_smallTest() {
     }
     
     @BeforeClass
@@ -44,9 +45,9 @@ public class GraphingDataTest {
     @Test
     public void testGetData() {
         System.out.println("getData");
-        GraphingData instance = new GraphingData();
-        double[] expResult = null;
-        double[] result = instance.getData();
+        GraphingData_small instance = new GraphingData_small();
+        LinkedList<Double> expResult = null;
+        LinkedList<Double> result = instance.getDaten();
        // assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -58,9 +59,9 @@ public class GraphingDataTest {
     @Test
     public void testSetData() {
         System.out.println("setData");
-        double[] data = null;
-        GraphingData instance = new GraphingData();
-        instance.setData(data);
+        LinkedList<Double> data = null;
+        GraphingData_small instance = new GraphingData_small();
+        instance.setDaten(data);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -72,7 +73,7 @@ public class GraphingDataTest {
     public void testPaintComponent() {
         System.out.println("paintComponent");
         Graphics g = null;
-        GraphingData instance = new GraphingData();
+        GraphingData_small instance = new GraphingData_small();
         instance.paintComponent(g);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
