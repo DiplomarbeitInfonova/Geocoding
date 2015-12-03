@@ -48,17 +48,7 @@ public class HoehenPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout pan_hoeheLayout = new javax.swing.GroupLayout(pan_hoehe);
-        pan_hoehe.setLayout(pan_hoeheLayout);
-        pan_hoeheLayout.setHorizontalGroup(
-            pan_hoeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        pan_hoeheLayout.setVerticalGroup(
-            pan_hoeheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
+        pan_hoehe.setLayout(new java.awt.BorderLayout());
         getContentPane().add(pan_hoehe, java.awt.BorderLayout.CENTER);
 
         pack();
