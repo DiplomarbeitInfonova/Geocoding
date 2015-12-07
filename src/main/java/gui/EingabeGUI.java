@@ -8,7 +8,6 @@ package gui;
 import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData_small;
-import bl.RoutePainter;
 import bl.SnapToRoadsAPI;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.SnappedPoint;
@@ -19,6 +18,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +31,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
 import org.jxmapviewer.JXMapViewer;
@@ -65,21 +69,21 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Diese Methode zeichnet in die Karte alle Locations ein, 
-     * welche in der List, die übergeben wird, vorhanden sind. 
-     * Übergibt man diese Liste an die Klasse WaypointPainter, 
-     * übernimmt sie das Zeichnen auf der Map. 
-     * @param locations 
+     * Diese Methode zeichnet in die Karte alle Locations ein, welche in der
+     * List, die übergeben wird, vorhanden sind. Übergibt man diese Liste an die
+     * Klasse WaypointPainter, übernimmt sie das Zeichnen auf der Map.
+     *
+     * @param locations
      */
     public void addWaypoint(LinkedList<Location> locations) {
         //Author Dominik
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
         for (Location l : locations) {
-            if(l!=null){
-                 waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
+            if (l != null) {
+                waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
             }
-           
+
         }
 
         //Ein Waypointpainter wird erstellt um die Punkte an der Karte anzuzeigen
@@ -95,7 +99,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     /**
      * Diese Methode zeichnet die übergebenen Locations auf der Karte (JXMapKit)
-     * ein. Hierzu werden Koordinaten in Pixelpunkte umgerechnet. 
+     * ein. Hierzu werden Koordinaten in Pixelpunkte umgerechnet.
      *
      * @param locations Die LinkedList, die alle Punkte des Weges enthält
      *
@@ -187,6 +191,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         mi_Start = new javax.swing.JMenuItem();
         mi_Neu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("Nach Hier");
         jPopupMenu1.add(jMenuItem1);
@@ -328,7 +333,16 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Daten");
+
+        jMenuItem2.setText("von Datei einlesen");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -339,24 +353,21 @@ public class EingabeGUI extends javax.swing.JFrame {
     /**
      *
      *
-     * Author: Dominik,Veronika
-     * Es wird von den Textfeldern der Input geholt und in
-     * Locations umgewandelt danach wird von den Locations die Distanz und die
-     * Dauer einer Fahrt berechnet. Wenn ein Ortsname eingegeben wurde, werden
-     * die Textfelder nun mit den Koordinaten befüllt und vice versa. Danach
-     * wird die Fahrtdauer in Stunden und die Distanz der Strecke in km von der
-     * Klasse GeocodingAPI abgefragt und in das Label geschrieben. Danach werden
-     * von der GeocodingAPI die Zwischenpunkte der Strecke mit Übergabe der
-     * beiden Locations (a,b) abgefragt. Danach werden die Locations um die
-     * Waypoints der RoadsAPI erweitert: D.h. es werden zwischen den bereits
-     * bestehenden Punkten viele Zwischenpunkte eingezeichnet, die das Zeichnen
-     * des Straßenverlaufs später erleichtern sollen. Der Aufruf der Klasse
-     * SnapToRoadsAPI soll die bestehende Route an den Straßenverlauf
-     * angleichen. 
-     * ---KURZE SNAPTOROADS ERKLÄRUNG---
+     * Author: Dominik,Veronika Es wird von den Textfeldern der Input geholt und
+     * in Locations umgewandelt danach wird von den Locations die Distanz und
+     * die Dauer einer Fahrt berechnet. Wenn ein Ortsname eingegeben wurde,
+     * werden die Textfelder nun mit den Koordinaten befüllt und vice versa.
+     * Danach wird die Fahrtdauer in Stunden und die Distanz der Strecke in km
+     * von der Klasse GeocodingAPI abgefragt und in das Label geschrieben.
+     * Danach werden von der GeocodingAPI die Zwischenpunkte der Strecke mit
+     * Übergabe der beiden Locations (a,b) abgefragt. Danach werden die
+     * Locations um die Waypoints der RoadsAPI erweitert: D.h. es werden
+     * zwischen den bereits bestehenden Punkten viele Zwischenpunkte
+     * eingezeichnet, die das Zeichnen des Straßenverlaufs später erleichtern
+     * sollen. Der Aufruf der Klasse SnapToRoadsAPI soll die bestehende Route an
+     * den Straßenverlauf angleichen. ---KURZE SNAPTOROADS ERKLÄRUNG---
      *
-     * Anschließend wird das Höhendiagramm gezeichnet. 
-     * ---HÖHENDIAGRAMM ---
+     * Anschließend wird das Höhendiagramm gezeichnet. ---HÖHENDIAGRAMM ---
      *
      * Zum Schluss erfolgt der Aufruf der Methode paintRoute mit der Liste der
      * Locations als Übergabeparameter. Hier wird dann die Strecke auf der Karte
@@ -419,9 +430,9 @@ public class EingabeGUI extends javax.swing.JFrame {
             //locations = geo.getWaypoints(a.getName(), b.getName());
             LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
             locations = geo.getWaypointsMitRoadsAPI(lList);
-            System.out.println("Länge der Liste: "+locations.size());
-            locations=geo.loescheDoppelteWerte(locations);
-            System.out.println("Länge der Liste nach Löschen: "+locations.size());
+            System.out.println("Länge der Liste: " + locations.size());
+            locations = geo.loescheDoppelteWerte(locations);
+            System.out.println("Länge der Liste nach Löschen: " + locations.size());
             SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
 
             GeoApiContext apicontext = new GeoApiContext();
@@ -468,7 +479,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         //Onklick Methode für das Menu Item NeuActionPerformed
         // Will der Benutzer eine neue Abfrage machen wird die Alte Frage verworfen und 
         // alles auf Anfangszustand zurückgestellt ~Veronika
-                initComponents();
+        initComponents();
         this.setLocationRelativeTo(null);
         geo = new GeocodingAPI();
         this.rb_2D.setSelected(true);
@@ -486,8 +497,65 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.tf_YKoordB.setText("");
         this.lab_Distance.setText("");
         this.lab_Duration.setText("");
-        
+
     }//GEN-LAST:event_mi_NeuActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
+        fc.setDialogTitle("Datei mit Koordinaten auswählen");
+        fc.showOpenDialog(null);
+
+        File f = fc.getSelectedFile();
+        BufferedReader br;
+        LinkedList<Location> locsfromfile = new LinkedList<Location>();
+        try {
+
+            br = new BufferedReader(new FileReader(f));
+
+            String line = "";
+            line = br.readLine();
+            while ((line = br.readLine()) != null) {
+
+                line = line.replace("\"", "");
+
+                String[] splits = line.split(";");
+                Location l = new Location("notfound", Double.parseDouble(splits[0]), Double.parseDouble(splits[1]), 0.0);
+                locsfromfile.add(l);
+
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        JOptionPane.showMessageDialog(null, locsfromfile.size() + " Locations wurden erfolgreich importiert");
+        //, new Object[]{"Route zeichen","Waypoint- Marker setzen","Abbrechen"}
+        Object[] optionen = {"Route zeichen", "Waypoint- Marker setzen", "Abbrechen"};
+        int todo = JOptionPane.showOptionDialog(null,
+                "Welche Aktion soll durchgeführt werden?",
+                "Aktion auswählen",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                optionen,
+                optionen[0]);
+
+        switch (todo) {
+            case 0:
+                this.paintRoute(locsfromfile);
+                break;
+            case 1:
+                this.addWaypoint(locsfromfile);
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -540,6 +608,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -570,12 +639,13 @@ public class EingabeGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 // Author Veronika
-    
-/**
- * Diese Methode fügt alle Höhen der Locations- Membervariable zu einer Liste von Strings zusammen. 
- * Diese wird somit verwendet um das Höhendiagramm zu zeichnen. 
- * @return 
- */
+    /**
+     * Diese Methode fügt alle Höhen der Locations- Membervariable zu einer
+     * Liste von Strings zusammen. Diese wird somit verwendet um das
+     * Höhendiagramm zu zeichnen.
+     *
+     * @return
+     */
     private LinkedList<Double> locationsToStringList() {
         //Aus den Locations wird eine LinkedList vom Typ Double ausgelesen um die Daten in das Höhendiagramm leichter zu verarbeiten
         // ~Veronika
