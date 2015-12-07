@@ -499,8 +499,20 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.lab_Duration.setText("");
 
     }//GEN-LAST:event_mi_NeuActionPerformed
-
+    /**
+     * Author: Dominik 
+     * Beim Klick auf den Menüpunkt Daten -> von Datei einlesen öffnet sich ein
+     * FileChooser, in dem man die .CSV- Datei auswählt, die die zu
+     * importierenden Koordinaten enthält. Erfolgt der Import problemlos, wird
+     * angezeigt wie viele Locations importiert wurden, danach kann man
+     * auswählen ob man nun eine Route zeichnen, Waypoints setzen oder den
+     * Vorgang abbrechen will. Die entsprechende Aktion wird danach
+     * durchgeführt.
+     *
+     * @param evt
+     */
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        //Dominik
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
         fc.setDialogTitle("Datei mit Koordinaten auswählen");
