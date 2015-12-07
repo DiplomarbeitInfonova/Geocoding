@@ -14,6 +14,9 @@ public class Location
     private double yKoord;
     private double hoehe;
 
+    public Location() {
+        }
+
     public double getHoehe()
     {
         return hoehe;
@@ -32,12 +35,12 @@ public class Location
         this.hoehe = hoehe;
     }
 
-    public Location(String name, double xKoord, double yKoord)
-    {
-        this.name = StringUtils.correctLettersForAPI(name);
-        this.xKoord = xKoord;
-        this.yKoord = yKoord;
-    }
+//    public Location(String name, double xKoord, double yKoord)
+//    {
+//        this.name = StringUtils.correctLettersForAPI(name);
+//        this.xKoord = xKoord;
+//        this.yKoord = yKoord;
+//    }
 
     public String getName()
     {
@@ -69,6 +72,12 @@ public class Location
         this.yKoord = yKoord;
     }
 
+    
+    public String toCSVRow(){
+        return this.name+";"+this.xKoord+";"+this.yKoord+";"+this.hoehe;
+    }
+    
+    
     @Override
     public String toString()
     {

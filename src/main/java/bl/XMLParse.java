@@ -98,7 +98,7 @@ public class XMLParse
                 }
             }
 
-            loc = new Location(locName, x, y);
+            loc = new Location(locName, x, y,0);
 
             return loc;
         }

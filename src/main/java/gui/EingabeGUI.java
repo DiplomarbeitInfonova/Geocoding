@@ -19,9 +19,11 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -192,6 +194,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         mi_Neu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("Nach Hier");
         jPopupMenu1.add(jMenuItem1);
@@ -335,13 +338,21 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jMenu2.setText("Daten");
 
-        jMenuItem2.setText("von Datei einlesen");
+        jMenuItem2.setText("Daten importieren");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Daten exportieren");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
@@ -500,11 +511,10 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mi_NeuActionPerformed
     /**
-     * Author: Dominik 
-     * Beim Klick auf den Menüpunkt Daten -> von Datei einlesen öffnet sich ein
-     * FileChooser, in dem man die .CSV- Datei auswählt, die die zu
-     * importierenden Koordinaten enthält. Erfolgt der Import problemlos, wird
-     * angezeigt wie viele Locations importiert wurden, danach kann man
+     * Author: Dominik Beim Klick auf den Menüpunkt Daten -> von Datei einlesen
+     * öffnet sich ein FileChooser, in dem man die .CSV- Datei auswählt, die die
+     * zu importierenden Koordinaten enthält. Erfolgt der Import problemlos,
+     * wird angezeigt wie viele Locations importiert wurden, danach kann man
      * auswählen ob man nun eine Route zeichnen, Waypoints setzen oder den
      * Vorgang abbrechen will. Die entsprechende Aktion wird danach
      * durchgeführt.
@@ -513,61 +523,132 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         //Dominik
-        JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
-        fc.setDialogTitle("Datei mit Koordinaten auswählen");
-        fc.showOpenDialog(null);
 
-        File f = fc.getSelectedFile();
-        BufferedReader br;
-        LinkedList<Location> locsfromfile = new LinkedList<Location>();
-        try {
-
-            br = new BufferedReader(new FileReader(f));
-
-            String line = "";
-            line = br.readLine();
-            while ((line = br.readLine()) != null) {
-
-                line = line.replace("\"", "");
-
-                String[] splits = line.split(";");
-                Location l = new Location("notfound", Double.parseDouble(splits[0]), Double.parseDouble(splits[1]), 0.0);
-                locsfromfile.add(l);
-
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        JOptionPane.showMessageDialog(null, locsfromfile.size() + " Locations wurden erfolgreich importiert");
-        //, new Object[]{"Route zeichen","Waypoint- Marker setzen","Abbrechen"}
-        Object[] optionen = {"Route zeichen", "Waypoint- Marker setzen", "Abbrechen"};
-        int todo = JOptionPane.showOptionDialog(null,
-                "Welche Aktion soll durchgeführt werden?",
-                "Aktion auswählen",
+        Object[] optionen1 = {"Koordinatenpaar [X;Y]", "Location [Name;X;Y;Höhe]", "Abbrechen"};
+        final int format = JOptionPane.showOptionDialog(null,
+                "In welchem Format sind die Locations abgespeichert?",
+                "Quellformat auswählen",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null,
-                optionen,
-                optionen[0]);
+                optionen1,
+                optionen1[0]);
+        if (format != 2) {
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
+            fc.setDialogTitle("Quelldatei auswählen");
+            fc.showOpenDialog(null);
 
-        switch (todo) {
-            case 0:
-                this.paintRoute(locsfromfile);
-                break;
-            case 1:
-                this.addWaypoint(locsfromfile);
-                break;
-            case 2:
-                break;
-            default:
-                break;
+            File f = fc.getSelectedFile();
+            BufferedReader br;
+            LinkedList<Location> locsfromfile = new LinkedList<Location>();
+
+            try {
+
+                br = new BufferedReader(new FileReader(f));
+
+                String line = "";
+                line = br.readLine();
+                while ((line = br.readLine()) != null) {
+
+                    line = line.replace("\"", "");
+
+                    String[] splits = line.split(";");
+                    Location l = new Location();
+                    if (format == 0) {
+                        l = new Location("---", Double.parseDouble(splits[0]), Double.parseDouble(splits[1]), 0.0);
+                    } else if (format == 1) {
+                        l = new Location(splits[0], Double.parseDouble(splits[1]), Double.parseDouble(splits[2]), Double.parseDouble(splits[3]));
+                    }
+
+                    locsfromfile.add(l);
+
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JOptionPane.showMessageDialog(null, locsfromfile.size() + " Locations wurden erfolgreich importiert");
+            //, new Object[]{"Route zeichen","Waypoint- Marker setzen","Abbrechen"}
+            Object[] optionen2 = {"Route zeichen", "Waypoint- Marker setzen", "Abbrechen"};
+            int todo = JOptionPane.showOptionDialog(null,
+                    "Welche Aktion soll durchgeführt werden?",
+                    "Aktion auswählen",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    optionen2,
+                    optionen2[0]);
+            this.locations = locsfromfile;
+            switch (todo) {
+                case 0:
+
+                    this.paintRoute(locations);
+                    break;
+                case 1:
+
+                    this.addWaypoint(locsfromfile);
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       //Dominik
+
+        Object[] optionen1 = {"Koordinatenpaar [X;Y]", "Location [Name;X;Y;Höhe]", "Abbrechen"};
+        final int format = JOptionPane.showOptionDialog(null,
+                "In welchem Format sollen die Locations abgespeichert werden?",
+                "Zielformat wählen",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                optionen1,
+                optionen1[0]);
+
+        if (format != 2) {
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
+            fc.setDialogTitle("Zieldatei auswählen");
+            fc.showSaveDialog(null);
+
+            File f = fc.getSelectedFile();
+
+            BufferedWriter bw;
+
+            try {
+
+                bw = new BufferedWriter(new FileWriter(f));
+
+                String line = "";
+                int i;
+                for (i = 0; i < locations.size(); i++) {
+                    if (format == 0) {
+                        bw.write(locations.get(i).getxKoord() + ";" + locations.get(i).getyKoord());
+                    } else if (format == 1) {
+                        bw.write(locations.get(i).toCSVRow());
+                    }
+
+                    bw.newLine();
+                }
+
+                bw.close();
+                JOptionPane.showMessageDialog(null, i + " Locations wurden erfolgreich exportiert");
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -621,6 +702,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
