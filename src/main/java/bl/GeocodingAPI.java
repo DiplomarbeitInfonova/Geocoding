@@ -127,10 +127,11 @@ public class GeocodingAPI {
 
     
     /**
-     * 
+     * Patrizia
+     * Diese Methode ruft Locations mit der Google Maps API ab.
      * @param l1
      * @param l2
-     * @return 
+     * @return Eine Liste mit Locations wird zurückgegeben.
      */
     public LinkedList<Location> getWaypoints(String l1, String l2) {
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin=" + l1 + "&destination=" + l2 + "&key=" + apiKey;
