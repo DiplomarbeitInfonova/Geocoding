@@ -11,6 +11,7 @@ import bl.GraphingData_small;
 import bl.SnapToRoadsAPI;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.SnappedPoint;
+import com.google.maps.model.SpeedLimit;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -453,26 +455,46 @@ public class EingabeGUI extends javax.swing.JFrame {
             List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
             LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
 
+//            Map<String, SpeedLimit> speedlimitMap = snap.getSpeedLimits(apicontext, snappedList);
+//
+//            for (String key : speedlimitMap.keySet()) {
+//                System.out.print("Key: " + key + " - ");
+//                System.out.print("Value: " + speedlimitMap.get(key) + "\n");
+//            }
+        
+
             //locations.add(a);
-            //locations.add(b);
-            //this.addWaypoint(locations);
-            // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
-            // ~Veronika
-            GraphingData_small diagramm = new GraphingData_small();
-            LinkedList<Double> hoehen = this.locationsToStringList();
-            diagramm.setDaten(hoehen);
-            this.panhoehe.add(diagramm, BorderLayout.CENTER);
-            this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
-            panhoehe.repaint();
-            //paintRoute(list);
-            this.addWaypoint(list);
-        } catch (XmlPullParserException ex) {
+        //locations.add(b);
+        //this.addWaypoint(locations);
+        // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
+        // ~Veronika
+        GraphingData_small diagramm = new GraphingData_small();
+        LinkedList<Double> hoehen = this.locationsToStringList();
+        diagramm.setDaten(hoehen);
+        this.panhoehe.add(diagramm, BorderLayout.CENTER);
+        this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
+        panhoehe.repaint();
+        paintRoute(list);
+        this.addWaypoint(list);
+    }
+    catch (XmlPullParserException ex
+
+    
+        ) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+    }
+    catch (IOException ex
+
+    
+        ) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+    }
+    catch (Exception ex
+
+    
+        ) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    }
 
     }//GEN-LAST:event_mi_StartActionPerformed
 
@@ -564,11 +586,19 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                     locsfromfile.add(l);
 
-                }
+                
+
+}
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(Level.SEVERE, null, ex);
+            } 
+
+catch (IOException ex) {
+                Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             }
 
             JOptionPane.showMessageDialog(null, locsfromfile.size() + " Locations wurden erfolgreich importiert");
@@ -651,10 +681,18 @@ public class EingabeGUI extends javax.swing.JFrame {
                 bw.close();
                 JOptionPane.showMessageDialog(null, i + " Locations wurden erfolgreich exportiert");
 
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            
+
+} catch (FileNotFoundException ex) {
+                Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(Level.SEVERE, null, ex);
+            } 
+
+catch (IOException ex) {
+                Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -674,16 +712,32 @@ public class EingabeGUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(EingabeGUI.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
