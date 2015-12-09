@@ -150,6 +150,14 @@ public class GeocodingAPI {
         return null;
     }
 
+    /**
+     * Patrizia
+     * Mithilfe der Google Roads API wird eine Liste von Waypoints abgerufen.
+     * @param waypoints
+     * @return Eine Liste von Waypoints wird zurückgegeben.
+     * @throws XmlPullParserException
+     * @throws IOException 
+     */
     public LinkedList<Location> getWaypointsMitRoadsAPI(LinkedList<Location> waypoints) throws XmlPullParserException, IOException {
         String request = "https://roads.googleapis.com/v1/snapToRoads?path=";
 
@@ -186,6 +194,12 @@ public class GeocodingAPI {
         return response;
     }
 
+    /**
+     * Patrizia
+     * Diese Methode löscht von der übergebenen Liste die doppelten Werte.
+     * @param list
+     * @return Die bearbeitete Liste wird zurückgegeben.
+     */
     public LinkedList<Location> loescheDoppelteWerte(LinkedList<Location> list) {
         for (int i = 0; i < list.size(); i++) {
             Location l = list.get(i);
