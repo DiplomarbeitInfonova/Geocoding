@@ -170,6 +170,11 @@ public class XMLParse
         return duration + "-" + distance;
     }
 
+    /**
+     * Patrizia
+     * Die Antwort von der Google Distance API wird hier bearbeitet und in eine Liste von Legs umgeformt.
+     * @return Eine Liste von Legs wird zurückgegeben.
+     */
     public LinkedList<Leg> xmlFromDistanceAPItoLocations()
     {
 
@@ -189,59 +194,62 @@ public class XMLParse
 
             for (int k = 0; k < distance.getLength(); k++)
             {
-                //
+                
                 Element elem_end_loc = (Element) end_loc.item(k);
                 Element elem_distance = (Element) distance.item(k);
                 Element elem_duration = (Element) duration.item(k);
-                //
+                
                 NodeList end_loc_lat = elem_end_loc.getElementsByTagName("lat");
                 NodeList end_loc_lng = elem_end_loc.getElementsByTagName("lng");
                 Element endloclat = (Element) end_loc_lat.item(k);
                 Element endloclng = (Element) end_loc_lng.item(k);
-                //
+                
                 NodeList distance_value = elem_distance.getElementsByTagName("value");
                 Element elem_distance_value = (Element) distance_value.item(k);
                 NodeList duration_value = elem_duration.getElementsByTagName("value");
                 Element elem_duration_value = (Element) duration_value.item(k);
-                //
+                
                 Element html_instr = (Element) html_instruction.item(k);
-                //
+                
                 String str_distance = elem_distance_value.getTextContent();
                 float f_distance = Float.parseFloat(str_distance);
 
                 String str_duration = elem_duration_value.getTextContent();
                 int i_duration = Integer.parseInt(str_duration);
-                //
+                
                 String str_endloclat = endloclat.getTextContent();
                 float f_endloclat = Float.parseFloat(str_endloclat);
 
                 String str_endloclng = endloclng.getTextContent();
                 float f_endloclng = Float.parseFloat(str_endloclng);
-                //             
+                             
                 String str_html_instruction = html_instr.getTextContent();
-                //
+                
                 GeocodingAPI a = new GeocodingAPI();
                 double[] koordinaten =
                 {
                     f_endloclat, f_endloclng
                 };
-                //
+
                 Location l = a.KoordToOrt(koordinaten);
-                //
+
                 a.getElevationInformation(l);
                 double d_elevation = l.getHoehe();
-                //
+
                 list.add(new Leg(f_distance, i_duration, f_endloclat, f_endloclng, str_html_instruction, d_elevation));
             }
-
         }
         return list;
 
     }
 
+    /**
+     * Patrizia
+     * Die Antwort von der Google Roads API wird in eine Liste von Locations umgeformt.
+     * @return Eine Liste von Locations wird zurückgegeben.
+     */
     public LinkedList<Location> xmlFromRoadsAPI()
     {
-
         LinkedList<Location> list = new LinkedList<Location>();
         Element root = xmlDoc.getDocumentElement();
         NodeList nList = root.getElementsByTagName("snappedPoints");
@@ -254,7 +262,6 @@ public class XMLParse
             for (int k = 0; k < loc.getLength(); k++)
             {
                 Element e = (Element) loc.item(k);
-                //System.out.println("\nCurrent Element :" + loc.item(k).getNodeName());
                 String latitude = e.getElementsByTagName("latitude").item(k).getTextContent();
                 double lat = Double.parseDouble(latitude);
                 String longitude = e.getElementsByTagName("longitude").item(k).getTextContent();
@@ -263,10 +270,8 @@ public class XMLParse
                 koordinaten[1] = lng;
                 Location l = geo.KoordToOrt(koordinaten);
                 geo.getElevationInformation(l);
-                list.add(l);
-               
+                list.add(l);  
             }
-             //System.out.println(list.get(i).toString());
         }
         
         
