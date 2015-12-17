@@ -16,6 +16,7 @@ import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
@@ -70,6 +71,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
+        this.updateStatus("Warten auf Eingabe...");
     }
 
     /**
@@ -110,6 +112,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     public void paintRoute(LinkedList<Location> locations) {
 //Autor Dominik
+        this.updateStatus("Start des Zeichnens der Route");
         final List<GeoPosition> region = new ArrayList<>();
 
         for (Location location : locations) {
@@ -131,14 +134,17 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                 int lastX = -1;
                 int lastY = -1;
-
+int i=0;
                 for (GeoPosition gp : region) {
                     //Koordinaten zu Pixeln umrechnen
-
-                    Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
+                    
+                        Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
                     if (lastX != -1 && lastY != -1) {
 
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
+                         
+                         
+                        i++;
                     }
                     lastX = (int) pt.getX();
                     lastY = (int) pt.getY();
@@ -186,6 +192,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         lab_Duration = new javax.swing.JLabel();
+        labstatus = new javax.swing.JLabel();
         panhoehe = new javax.swing.JPanel();
         lab_bitteklicken = new javax.swing.JLabel();
         panMap = new javax.swing.JPanel();
@@ -266,7 +273,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         panControls.add(panB);
 
-        panInfos.setLayout(new java.awt.GridLayout(3, 1));
+        panInfos.setLayout(new java.awt.GridLayout(4, 1));
 
         jPanel10.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -280,23 +287,22 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         jPanel11.setLayout(new java.awt.GridLayout(1, 2));
 
-        jLabel7.setText("Distanz");
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("Distanz:");
         jPanel11.add(jLabel7);
-
-        lab_Distance.setText("0000");
         jPanel11.add(lab_Distance);
 
         panInfos.add(jPanel11);
 
         jPanel12.setLayout(new java.awt.GridLayout(1, 2));
 
-        jLabel9.setText("Dauer");
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel9.setText("Dauer:");
         jPanel12.add(jLabel9);
-
-        lab_Duration.setText("0h 00min");
         jPanel12.add(lab_Duration);
 
         panInfos.add(jPanel12);
+        panInfos.add(labstatus);
 
         panControls.add(panInfos);
 
@@ -392,11 +398,11 @@ public class EingabeGUI extends javax.swing.JFrame {
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
 //Author Dominik, Veronika
         try {
-
+            this.getLocationsfromTextfields();
             this.fillTextfields();
-
+            this.updateStatus("Anfrage an Google starten");
             String[] durationarray = geo.LocationToDistance(startloc, zielloc);
-         
+
             this.lab_Distance.setText(durationarray[1]);
             this.lab_Duration.setText(durationarray[0]);
             //locations = geo.getWaypoints(a.getName(), b.getName());
@@ -432,7 +438,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             this.panhoehe.add(diagramm, BorderLayout.CENTER);
             this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
             panhoehe.repaint();
-//            paintRoute(list);
+            paintRoute(locations);
 //            this.addWaypoint(list);
         } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -444,12 +450,16 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mi_StartActionPerformed
 
-    private void fillTextfields() {
-        // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
+    public void updateStatus(String status){
+        this.labstatus.setText(status);
+    }
+    
+    private void getLocationsfromTextfields() {
         if (!this.tf_OrtsnameA.getText().equals("")) {
-            startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText());
-            this.tf_XKoordA.setText(startloc.getxKoord() + "");
-            this.tf_YKoordA.setText(startloc.getyKoord() + "");
+            if (startloc == null) {
+                startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText());
+            }
+
         } else if (!this.tf_XKoordA.getText().isEmpty() && !this.tf_YKoordA.getText().isEmpty()) {
             String xS = this.tf_XKoordA.getText();
             String yS = this.tf_YKoordA.getText();
@@ -459,17 +469,17 @@ public class EingabeGUI extends javax.swing.JFrame {
                     = {
                         x, y
                     };
-            //a = geo.KoordToOrt(dfeld);
-            this.tf_OrtsnameA.setText(startloc.getName());
+            startloc = geo.KoordToOrt(dfeld);
         } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
             return;
         }
 
         if (!this.tf_OrtsnameB.getText().equals("")) {
-            zielloc = geo.OrtToKoord(this.tf_OrtsnameB.getText());
-            this.tf_XKoordB.setText(zielloc.getxKoord() + "");
-            this.tf_YKoordB.setText(zielloc.getyKoord() + "");
+            if (zielloc == null) {
+                zielloc = geo.OrtToKoord(this.tf_OrtsnameB.getText());
+            }
+
         } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
             String xS = this.tf_XKoordB.getText();
             double x = Double.parseDouble(xS);
@@ -480,11 +490,23 @@ public class EingabeGUI extends javax.swing.JFrame {
                         x, y
                     };
             zielloc = geo.KoordToOrt(dfeld);
-            this.tf_OrtsnameB.setText(zielloc.getName());
+
         } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
             return;
         }
+    }
+
+    private void fillTextfields() {
+        // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
+        this.tf_XKoordA.setText(startloc.getxKoord() + "");
+        this.tf_YKoordA.setText(startloc.getyKoord() + "");
+        this.tf_OrtsnameA.setText(startloc.getName());
+
+        this.tf_XKoordB.setText(zielloc.getxKoord() + "");
+        this.tf_YKoordB.setText(zielloc.getyKoord() + "");
+        this.tf_OrtsnameB.setText(zielloc.getName());
+
     }
 
 
@@ -524,8 +546,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mi_NeuActionPerformed
     /**
-     * Author: Dominik 
-     * Beim Klick auf den Menüpunkt Daten -> von Datei einlesen
+     * Author: Dominik Beim Klick auf den Menüpunkt Daten -> von Datei einlesen
      * öffnet sich ein FileChooser, in dem man die .CSV- Datei auswählt, die die
      * zu importierenden Koordinaten enthält. Erfolgt der Import problemlos,
      * wird angezeigt wie viele Locations importiert wurden, danach kann man
@@ -562,7 +583,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                 br = new BufferedReader(new FileReader(f));
 
                 String line = "";
-                line = br.readLine();
+             
                 while ((line = br.readLine()) != null) {
 
                     line = line.replace("\"", "");
@@ -570,7 +591,12 @@ public class EingabeGUI extends javax.swing.JFrame {
                     String[] splits = line.split(";");
                     Location l = new Location();
                     if (format == 0) {
-                        l = new Location("---", Double.parseDouble(splits[0]), Double.parseDouble(splits[1]), 0.0);
+                        if (splits.length == 4) {
+                            l = new Location("-", Double.parseDouble(splits[1]), Double.parseDouble(splits[2]), 0.0);
+                        } else if (splits.length == 2) {
+                            l = new Location("-", Double.parseDouble(splits[0]), Double.parseDouble(splits[1]), 0.0);
+                        }
+
                     } else if (format == 1) {
                         l = new Location(splits[0], Double.parseDouble(splits[1]), Double.parseDouble(splits[2]), Double.parseDouble(splits[3]));
                     }
@@ -598,6 +624,9 @@ public class EingabeGUI extends javax.swing.JFrame {
                     optionen2,
                     optionen2[0]);
             this.locations = locsfromfile;
+            this.startloc = locations.getFirst();
+            this.zielloc = locations.getLast();
+            this.fillTextfields();
             switch (todo) {
                 case 0:
 
@@ -743,6 +772,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JLabel lab_bitteklicken;
+    private javax.swing.JLabel labstatus;
     private javax.swing.JMenuItem miDataExport;
     private javax.swing.JMenuItem miDataImport;
     private javax.swing.JMenuItem mi_Neu;
