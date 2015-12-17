@@ -56,8 +56,8 @@ public class EingabeGUI extends javax.swing.JFrame {
      * Creates new form EingabeGUI
      */
     private GeocodingAPI geo;
-    private Location a;
-    private Location b;
+    private Location startloc;
+    private Location zielloc;
     private LinkedList<Location> locations = new LinkedList<>();
 
     public EingabeGUI() {
@@ -392,111 +392,101 @@ public class EingabeGUI extends javax.swing.JFrame {
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
 //Author Dominik, Veronika
         try {
-            // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
-            if (!this.tf_OrtsnameA.getText().equals("")) {
-                a = geo.OrtToKoord(this.tf_OrtsnameA.getText());
-                this.tf_XKoordA.setText(a.getxKoord() + "");
-                this.tf_YKoordA.setText(a.getyKoord() + "");
-            } else if (!this.tf_XKoordA.getText().equals("") && !this.tf_YKoordA.getText().equals("")) {
-                String xS = this.tf_XKoordA.getText();
-                String yS = this.tf_YKoordA.getText();
-                double x = Double.parseDouble(xS);
-                double y = Double.parseDouble(yS);
-                double[] dfeld
-                        = {
-                            x, y
-                        };
-                a = geo.KoordToOrt(dfeld);
-                this.tf_OrtsnameA.setText(a.getName());
-            } else {
-                JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
-                return;
-            }
 
-            if (!this.tf_OrtsnameB.getText().equals("")) {
-                b = geo.OrtToKoord(this.tf_OrtsnameB.getText());
-                this.tf_XKoordB.setText(b.getxKoord() + "");
-                this.tf_YKoordB.setText(b.getyKoord() + "");
-            } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
-                String xS = this.tf_XKoordB.getText();
-                double x = Double.parseDouble(xS);
-                String yS = this.tf_YKoordB.getText();
-                double y = Double.parseDouble(yS);
-                double[] dfeld
-                        = {
-                            x, y
-                        };
-                b = geo.KoordToOrt(dfeld);
-                this.tf_OrtsnameB.setText(b.getName());
-            } else {
-                JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
-                return;
-            }
+            this.fillTextfields();
 
-            /*
-            
-             */
-            String dur = geo.LocationToDistance(a, b);
-            String[] spl = dur.split("-");
-            this.lab_Distance.setText(spl[1]);
-            this.lab_Duration.setText(spl[0]);
+            String[] durationarray = geo.LocationToDistance(startloc, zielloc);
+         
+            this.lab_Distance.setText(durationarray[1]);
+            this.lab_Duration.setText(durationarray[0]);
             //locations = geo.getWaypoints(a.getName(), b.getName());
             // ~Patrizia
-            LinkedList<Location> lList = geo.getWaypoints(a.getName(), b.getName());
+            LinkedList<Location> lList = geo.getWaypoints(startloc.getName(), zielloc.getName());
+            locations = lList;
             locations = geo.getWaypointsMitRoadsAPI(lList);
             System.out.println("Länge der Liste: " + locations.size());
             locations = geo.loescheDoppelteWerte(locations);
             System.out.println("Länge der Liste nach Löschen: " + locations.size());
             SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
 
-            GeoApiContext apicontext = new GeoApiContext();
-            apicontext.setApiKey(geo.apiKey);
-
-            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
-            LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
-
+//            GeoApiContext apicontext = new GeoApiContext();
+//            apicontext.setApiKey(geo.apiKey);
+//            apicontext.setQueryRateLimit(100,0);
+//
+//            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
+//            LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
 //            Map<String, SpeedLimit> speedlimitMap = snap.getSpeedLimits(apicontext, snappedList);
 //
 //            for (String key : speedlimitMap.keySet()) {
 //                System.out.print("Key: " + key + " - ");
 //                System.out.print("Value: " + speedlimitMap.get(key) + "\n");
 //            }
-        
-
             //locations.add(a);
-        //locations.add(b);
-        //this.addWaypoint(locations);
-        // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
-        // ~Veronika
-        GraphingData_small diagramm = new GraphingData_small();
-        LinkedList<Double> hoehen = this.locationsToStringList();
-        diagramm.setDaten(hoehen);
-        this.panhoehe.add(diagramm, BorderLayout.CENTER);
-        this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
-        panhoehe.repaint();
-        paintRoute(list);
-        this.addWaypoint(list);
-    }
-    catch (XmlPullParserException ex
-
-    
-        ) {
+            //locations.add(b);
+            //this.addWaypoint(locations);
+            // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
+            // ~Veronika
+            GraphingData_small diagramm = new GraphingData_small();
+            LinkedList<Double> hoehen = this.locationsToStringList();
+            diagramm.setDaten(hoehen);
+            this.panhoehe.add(diagramm, BorderLayout.CENTER);
+            this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
+            panhoehe.repaint();
+//            paintRoute(list);
+//            this.addWaypoint(list);
+        } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    catch (IOException ex
-
-    
-        ) {
+        } catch (IOException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    catch (Exception ex
-
-    
-        ) {
+        } catch (Exception ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        }
 
     }//GEN-LAST:event_mi_StartActionPerformed
+
+    private void fillTextfields() {
+        // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
+        if (!this.tf_OrtsnameA.getText().equals("")) {
+            startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText());
+            this.tf_XKoordA.setText(startloc.getxKoord() + "");
+            this.tf_YKoordA.setText(startloc.getyKoord() + "");
+        } else if (!this.tf_XKoordA.getText().isEmpty() && !this.tf_YKoordA.getText().isEmpty()) {
+            String xS = this.tf_XKoordA.getText();
+            String yS = this.tf_YKoordA.getText();
+            double x = Double.parseDouble(xS);
+            double y = Double.parseDouble(yS);
+            double[] dfeld
+                    = {
+                        x, y
+                    };
+            //a = geo.KoordToOrt(dfeld);
+            this.tf_OrtsnameA.setText(startloc.getName());
+        } else {
+            JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
+            return;
+        }
+
+        if (!this.tf_OrtsnameB.getText().equals("")) {
+            zielloc = geo.OrtToKoord(this.tf_OrtsnameB.getText());
+            this.tf_XKoordB.setText(zielloc.getxKoord() + "");
+            this.tf_YKoordB.setText(zielloc.getyKoord() + "");
+        } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
+            String xS = this.tf_XKoordB.getText();
+            double x = Double.parseDouble(xS);
+            String yS = this.tf_YKoordB.getText();
+            double y = Double.parseDouble(yS);
+            double[] dfeld
+                    = {
+                        x, y
+                    };
+            zielloc = geo.KoordToOrt(dfeld);
+            this.tf_OrtsnameB.setText(zielloc.getName());
+        } else {
+            JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
+            return;
+        }
+    }
+
 
     private void panhoeheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panhoeheMouseClicked
         // Onklick event für das Höhenpanel.
@@ -534,7 +524,8 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mi_NeuActionPerformed
     /**
-     * Author: Dominik Beim Klick auf den Menüpunkt Daten -> von Datei einlesen
+     * Author: Dominik 
+     * Beim Klick auf den Menüpunkt Daten -> von Datei einlesen
      * öffnet sich ein FileChooser, in dem man die .CSV- Datei auswählt, die die
      * zu importierenden Koordinaten enthält. Erfolgt der Import problemlos,
      * wird angezeigt wie viele Locations importiert wurden, danach kann man
@@ -586,19 +577,13 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                     locsfromfile.add(l);
 
-                
-
-}
+                }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(Level.SEVERE, null, ex);
-            } 
-
-catch (IOException ex) {
-                Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EingabeGUI.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EingabeGUI.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
 
             JOptionPane.showMessageDialog(null, locsfromfile.size() + " Locations wurden erfolgreich importiert");
@@ -630,8 +615,7 @@ catch (IOException ex) {
         }
     }//GEN-LAST:event_miDataImportActionPerformed
     /**
-     * //Author Dominik
-     * Diese Funktion exportiert die vorhandenen Locations.
+     * //Author Dominik Diese Funktion exportiert die vorhandenen Locations.
      * Anfangs kann man wiederum wählen, in welchem Format man die Daten
      * speichern will (Nur Koordinatenpaar x;y oder als Location mit
      * Namen;x;y;höhe). Danach kann man mittels FileChooser aussuchen, wo man
@@ -681,18 +665,12 @@ catch (IOException ex) {
                 bw.close();
                 JOptionPane.showMessageDialog(null, i + " Locations wurden erfolgreich exportiert");
 
-            
-
-} catch (FileNotFoundException ex) {
-                Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(Level.SEVERE, null, ex);
-            } 
-
-catch (IOException ex) {
-                Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EingabeGUI.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EingabeGUI.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -712,32 +690,21 @@ catch (IOException ex) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EingabeGUI.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EingabeGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(EingabeGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(EingabeGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(EingabeGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

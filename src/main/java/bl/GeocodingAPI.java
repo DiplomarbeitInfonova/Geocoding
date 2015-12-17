@@ -83,7 +83,7 @@ public class GeocodingAPI {
      * @param b
      * @return 
      */
-    public String LocationToDistance(Location a, Location b) {
+    public String[] LocationToDistance(Location a, Location b) {
         String request = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord();
         String response = "";
         try {
@@ -96,8 +96,8 @@ public class GeocodingAPI {
         } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return response;
+       
+        return response.split("-");
     }
 
     
@@ -170,7 +170,7 @@ public class GeocodingAPI {
         }
         request = request + "&interpolate=true&key=" + apiKey;
 
-        System.out.println("request: " + request);
+        System.out.println("Roads API request: " + request);
 
         LinkedList<Location> response = new LinkedList<Location>();
         try {
@@ -208,7 +208,7 @@ public class GeocodingAPI {
                 if (i != j) {
                     if (l.getxKoord() == list.get(j).getxKoord() && l.getyKoord() == list.get(j).getyKoord()) {
                         list.remove(i);
-                        j--;
+                       
                     }
                 }
             }

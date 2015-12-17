@@ -53,10 +53,10 @@ public class SnapToRoadsAPI {
             // maximum and we want to ensure some overlap so the API can infer a good location for
             // the first few points in each request.
             if (offset > 0) {
-                offset -= snappedListe.size();   // Rewind to include some previous points
+                offset -= 5;   // Rewind to include some previous points
             }
             int lowerBound = offset;
-            int upperBound = Math.min(offset + snappedListe.size(), snappedListe.size());
+            int upperBound = Math.min(offset + 100, snappedListe.size());
 
             // Grab the data we need for this page.
             LatLng[] page = snappedListe
@@ -69,7 +69,7 @@ public class SnapToRoadsAPI {
             SnappedPoint[] points = RoadsApi.snapToRoads(context, page).await();
             boolean passedOverlap = false;
             for (SnappedPoint point : points) {
-                if (offset == 0 || point.originalIndex >= snappedListe.size() - 1) {
+                if (offset == 0 || point.originalIndex >= 100 - 1) {
                     passedOverlap = true;
                 }
                 if (passedOverlap) {
