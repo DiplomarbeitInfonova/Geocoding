@@ -29,11 +29,12 @@ public class HoehenPanel extends javax.swing.JFrame {
     public HoehenPanel(LinkedList<Location> ll)
     {
         initComponents();
+        this.setSize(650, 500);
         this.ll=ll;
         GraphingData_big diagramm = new GraphingData_big();
         diagramm.setHoehen(ll);
         this.pan_hoehe.add(diagramm);
-        this.pan_hoehe.repaint();
+        pan_hoehe.paintAll(this.getGraphics());
     }
     /**
      * This method is called from within the constructor to initialize the form.

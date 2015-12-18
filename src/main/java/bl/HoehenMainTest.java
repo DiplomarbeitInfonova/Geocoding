@@ -23,7 +23,7 @@ public class HoehenMainTest {
         // Klasse um ohne zugriff auf Google Maps das große Höhendiagramm auszutesten
         // es werden TestLocations erstellt und der HoehenPanel GUI übergeben
         LinkedList<Location> ll = new LinkedList<Location>();
-        Location l = new Location("Ligist",46.9917246,15.2107184,600);
+        Location l = new Location("Ligist",42.9917246,15.2107184,600);
         Location l2= new Location("Ligist - Steiberg",46.9717246,15.3107184,580);
         Location l3 = new Location("Ligist-Dietenberg",46.9617246,15.3507184,560);
         Location l4 = new Location("Ligist-Grabenwart",46.9517246,15.4057184,480);
@@ -35,6 +35,12 @@ public class HoehenMainTest {
         Location llast = new Location("Soeding",46.8691334,15.4502561,380);
         ll.add(l);
         ll.add(l2);
+        ll.add(l4);
+        ll.add(l5);
+        ll.add(l6);
+        ll.add(l7);
+        ll.add(l8);
+        ll.add(l9);
         ll.add(l3);
         ll.add(l4);
         ll.add(l5);
