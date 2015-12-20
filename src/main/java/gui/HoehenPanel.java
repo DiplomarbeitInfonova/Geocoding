@@ -29,7 +29,8 @@ public class HoehenPanel extends javax.swing.JFrame {
     public HoehenPanel(LinkedList<Location> ll)
     {
         initComponents();
-        this.setSize(650, 500);
+       
+        this.setSize(800, 650);
         this.ll=ll;
         GraphingData_big diagramm = new GraphingData_big();
         diagramm.setHoehen(ll);

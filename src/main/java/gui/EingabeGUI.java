@@ -115,7 +115,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      *
      */
     public void paintRoute(LinkedList<Location> locations) {
-//Autor Dominik
+    //Autor Dominik
         EingabeGUI.updateStatus("Start des Zeichnens der Route");
         final List<GeoPosition> region = new ArrayList<>();
 
@@ -139,11 +139,11 @@ public class EingabeGUI extends javax.swing.JFrame {
 
                 int lastX = -1;
                 int lastY = -1;
-int i=0;
+                int i = 0;
                 for (GeoPosition gp : region) {
                     //Koordinaten zu Pixeln umrechnen
-                    
-                        Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
+
+                    Point2D pt = EingabeGUI.MainMap.getMainMap().getTileFactory().geoToPixel(gp, EingabeGUI.MainMap.getMainMap().getZoom());
                     if (lastX != -1 && lastY != -1) {
 
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
@@ -405,6 +405,7 @@ int i=0;
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
 //Author Dominik, Veronika
+        
         try {
             this.getLocationsfromTextfields();
             this.fillTextfields();
@@ -463,6 +464,9 @@ int i=0;
        EingabeGUI.labstatus.setText(status);
        EingabeGUI.labstatus.repaint();
     }
+    // Author Veronika
+    // Hier wird überprüft ob die Felder richtg ausgefüllt worden sind
+    // Und danach wird die Location von google abgefragt
     
     private void getLocationsfromTextfields() {
        
@@ -535,7 +539,8 @@ int i=0;
     private void mi_NeuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_NeuActionPerformed
         //Onklick Methode für das Menu Item NeuActionPerformed
         // Will der Benutzer eine neue Abfrage machen wird die Alte Frage verworfen und 
-        // alles auf Anfangszustand zurückgestellt ~Veronika
+        // alles auf Anfangszustand zurückgestellt 
+        //~Veronika
         initComponents();
         this.setLocationRelativeTo(null);
         geo = new GeocodingAPI();
@@ -594,7 +599,7 @@ EingabeGUI.updateStatus("Daten werden importiert");
                 br = new BufferedReader(new FileReader(f));
 
                 String line = "";
-             
+
                 while ((line = br.readLine()) != null) {
 
                     line = line.replace("\"", "");
