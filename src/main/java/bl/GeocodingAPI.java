@@ -2,6 +2,7 @@ package bl;
 
 import beans.Leg;
 import beans.Location;
+import gui.EingabeGUI;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashSet;
@@ -31,6 +32,7 @@ public class GeocodingAPI {
      Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo   
      */
     public Location OrtToKoord(String name) {
+        EingabeGUI.updateStatus("Koordinaten zu Ortsnamen werden abgefragt");
         double[] koordinaten = new double[2];
         Location ort = null;
         name = StringUtils.deleteSpaces(name);
@@ -60,6 +62,7 @@ public class GeocodingAPI {
      * @return 
      */
     public Location KoordToOrt(double[] koordinaten) {
+        EingabeGUI.updateStatus("Koordinaten werden zu Ortsnamen umgewandelt");
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + koordinaten[0] + "," + koordinaten[1] + "&key=" + apiKey;
         Location ort = null;
         try {
@@ -67,6 +70,7 @@ public class GeocodingAPI {
             String answer = sendObject.read();
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
+            
             ort = xmlp.xmlToLocation();
 //            System.out.println("koordtoOrt\n"+ort.toString());
         } catch (MalformedURLException ex) {
@@ -84,6 +88,7 @@ public class GeocodingAPI {
      * @return 
      */
     public String[] LocationToDistance(Location a, Location b) {
+        EingabeGUI.updateStatus("Distanz zwischen Orten wird abgefragt");
         String request = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + a.getxKoord() + "," + a.getyKoord() + "&destinations=" + b.getxKoord() + "," + b.getyKoord();
         String response = "";
         try {
@@ -110,6 +115,7 @@ public class GeocodingAPI {
      * @param l 
      */
     public void getElevationInformation(Location l) {
+        EingabeGUI.updateStatus("Höhendaten zu Ort wird abgefragt");
         String request = "https://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         double response = 0;
         try {
@@ -134,11 +140,13 @@ public class GeocodingAPI {
      * @return Eine Liste mit Locations wird zurückgegeben.
      */
     public LinkedList<Location> getWaypoints(String l1, String l2) {
+        EingabeGUI.updateStatus("Wegpunkte werden von Google abgefragt");
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin=" + l1 + "&destination=" + l2 + "&key=" + apiKey;
         LinkedList<Leg> response = new LinkedList<Leg>();
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
+            EingabeGUI.updateStatus("Anfrage an Google gesendet");
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
             LocationParser parser = new LocationParser();
@@ -159,6 +167,7 @@ public class GeocodingAPI {
      * @throws IOException 
      */
     public LinkedList<Location> getWaypointsMitRoadsAPI(LinkedList<Location> waypoints) throws XmlPullParserException, IOException {
+        EingabeGUI.updateStatus("Wegpunkte werden mittels RoadsAPI erweitert");
         String request = "https://roads.googleapis.com/v1/snapToRoads?path=";
 
         for (int i = 0; i < waypoints.size(); i++) {
@@ -201,6 +210,7 @@ public class GeocodingAPI {
      * @return Die bearbeitete Liste wird zurückgegeben.
      */
     public LinkedList<Location> loescheDoppelteWerte(LinkedList<Location> list) {
+        EingabeGUI.updateStatus("Löschen doppelter Einträge aus der Liste");
         for (int i = 0; i < list.size(); i++) {
             Location l = list.get(i);
 

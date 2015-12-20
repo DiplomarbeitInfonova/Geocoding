@@ -312,6 +312,9 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JLabel" name="labstatus">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

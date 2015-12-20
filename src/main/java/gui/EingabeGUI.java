@@ -71,7 +71,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
-        this.updateStatus("Warten auf Eingabe...");
+        EingabeGUI.updateStatus("Warten auf Eingabe..");
     }
 
     /**
@@ -85,9 +85,12 @@ public class EingabeGUI extends javax.swing.JFrame {
         //Author Dominik
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
+        int i=0;
         for (Location l : locations) {
             if (l != null) {
+                EingabeGUI.updateStatus("Zeichne Wegpunkt "+i+" von "+locations.size());
                 waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
+                i++;
             }
 
         }
@@ -101,6 +104,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         MainMap.getMainMap().setOverlayPainter(painter);
         repaint();
+        EingabeGUI.updateStatus("Zeichnen der Wegpunkte abgeschlossen");
     }
 
     /**
@@ -112,12 +116,13 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     public void paintRoute(LinkedList<Location> locations) {
 //Autor Dominik
-        this.updateStatus("Start des Zeichnens der Route");
+        EingabeGUI.updateStatus("Start des Zeichnens der Route");
         final List<GeoPosition> region = new ArrayList<>();
 
         for (Location location : locations) {
             region.add(new GeoPosition(location.getxKoord(), location.getyKoord()));
         }
+        
         Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
 
             @Override
@@ -142,17 +147,20 @@ int i=0;
                     if (lastX != -1 && lastY != -1) {
 
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
-                         
+                         EingabeGUI.updateStatus("Zeichne Routenpunkt "+i+" von "+region.size());
                          
                         i++;
                     }
+                   
                     lastX = (int) pt.getX();
                     lastY = (int) pt.getY();
 
                 }
+                 EingabeGUI.updateStatus("Zeichnen abgeschlossen");
             }
         };
         MainMap.getMainMap().setOverlayPainter(lineOverlay);
+        EingabeGUI.updateStatus("Zeichnen der Route abgeschlossen");
     }
 
     @SuppressWarnings("unchecked")
@@ -400,7 +408,7 @@ int i=0;
         try {
             this.getLocationsfromTextfields();
             this.fillTextfields();
-            this.updateStatus("Anfrage an Google starten");
+            EingabeGUI.updateStatus("Starten der Abfrage an Google");
             String[] durationarray = geo.LocationToDistance(startloc, zielloc);
 
             this.lab_Distance.setText(durationarray[1]);
@@ -410,9 +418,9 @@ int i=0;
             LinkedList<Location> lList = geo.getWaypoints(startloc.getName(), zielloc.getName());
             locations = lList;
             locations = geo.getWaypointsMitRoadsAPI(lList);
-            System.out.println("Länge der Liste: " + locations.size());
+            //System.out.println("Länge der Liste: " + locations.size());
             locations = geo.loescheDoppelteWerte(locations);
-            System.out.println("Länge der Liste nach Löschen: " + locations.size());
+            //System.out.println("Länge der Liste nach Löschen: " + locations.size());
             SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
 
 //            GeoApiContext apicontext = new GeoApiContext();
@@ -439,6 +447,7 @@ int i=0;
             this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
             panhoehe.repaint();
             paintRoute(locations);
+            EingabeGUI.updateStatus("Zeichnen abgeschlossen");
 //            this.addWaypoint(list);
         } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -450,11 +459,13 @@ int i=0;
 
     }//GEN-LAST:event_mi_StartActionPerformed
 
-    public void updateStatus(String status){
-        this.labstatus.setText(status);
+    public static void updateStatus(String status){
+       EingabeGUI.labstatus.setText(status);
+       EingabeGUI.labstatus.repaint();
     }
     
     private void getLocationsfromTextfields() {
+       
         if (!this.tf_OrtsnameA.getText().equals("")) {
             if (startloc == null) {
                 startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText());
@@ -558,7 +569,7 @@ int i=0;
      */
     private void miDataImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDataImportActionPerformed
         //Dominik
-
+EingabeGUI.updateStatus("Daten werden importiert");
         Object[] optionen1 = {"Koordinatenpaar [X;Y]", "Location [Name;X;Y;Höhe]", "Abbrechen"};
         final int format = JOptionPane.showOptionDialog(null,
                 "In welchem Format sind die Locations abgespeichert?",
@@ -627,6 +638,7 @@ int i=0;
             this.startloc = locations.getFirst();
             this.zielloc = locations.getLast();
             this.fillTextfields();
+            EingabeGUI.updateStatus("Datenimport abgeschlossen");
             switch (todo) {
                 case 0:
 
@@ -654,7 +666,7 @@ int i=0;
      */
     private void miDataExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDataExportActionPerformed
         //Dominik
-
+EingabeGUI.updateStatus("Daten werden exportiert");
         Object[] optionen1 = {"Koordinatenpaar [X;Y]", "Location [Name;X;Y;Höhe]", "Abbrechen"};
         final int format = JOptionPane.showOptionDialog(null,
                 "In welchem Format sollen die Locations abgespeichert werden?",
@@ -702,7 +714,7 @@ int i=0;
                         .getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+EingabeGUI.updateStatus("Datenexport abgeschlossen");
     }//GEN-LAST:event_miDataExportActionPerformed
 
     /**
@@ -772,7 +784,7 @@ int i=0;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JLabel lab_bitteklicken;
-    private javax.swing.JLabel labstatus;
+    public static javax.swing.JLabel labstatus;
     private javax.swing.JMenuItem miDataExport;
     private javax.swing.JMenuItem miDataImport;
     private javax.swing.JMenuItem mi_Neu;
@@ -802,6 +814,7 @@ int i=0;
      * @return
      */
     private LinkedList<Double> locationsToStringList() {
+       EingabeGUI.updateStatus("Höhenliste wird erstellt");
         //Aus den Locations wird eine LinkedList vom Typ Double ausgelesen um die Daten in das Höhendiagramm leichter zu verarbeiten
         // ~Veronika
         LinkedList<Double> dlist = new LinkedList<Double>();

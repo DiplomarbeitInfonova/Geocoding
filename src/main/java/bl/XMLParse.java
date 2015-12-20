@@ -3,6 +3,7 @@ package bl;
 
 import beans.Leg;
 import beans.Location;
+import gui.EingabeGUI;
 import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -52,7 +53,7 @@ public class XMLParse
         String locName = "";
 
         Element root = xmlDoc.getDocumentElement();
-
+        
         NodeList results = root.getElementsByTagName("result");
         for (int i = 0; i < results.getLength(); i++)
         {
@@ -177,7 +178,7 @@ public class XMLParse
      */
     public LinkedList<Leg> xmlFromDistanceAPItoLocations()
     {
-
+EingabeGUI.updateStatus("Antwort von Google wird verarbeitet");
         LinkedList<Leg> list = new LinkedList<Leg>();
         Element root = xmlDoc.getDocumentElement();
         NodeList namenList = root.getElementsByTagName("step");
