@@ -7,6 +7,9 @@ package GoogleMaps;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,16 +20,20 @@ import java.util.logging.Logger;
 public class MapsGUI extends javax.swing.JFrame {
 
     private static final String fileName = System.getProperty("user.dir")
-            + File.separator + "src" + File.separator + "GoogleMaps" + File.separator + "maps.html";
-    
+            + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "GoogleMaps" + File.separator + "maps.html";
+
     /**
      * Creates new form MapsGUI
      */
     public MapsGUI() {
         initComponents();
         try {
-            pane.setPage(fileName);
-        } catch (IOException ex) {
+            File file = new File(fileName);
+            URI s = file.toURI();
+            URL url = s.toURL();
+            pane.setPage(url.toURI().toURL());
+
+        } catch (IOException | URISyntaxException ex) {
             Logger.getLogger(MapsGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -40,10 +47,12 @@ public class MapsGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         pane = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().add(jDesktopPane1, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane1.setViewportView(pane);
 
@@ -81,6 +90,7 @@ public class MapsGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MapsGUI().setVisible(true);
             }
@@ -88,6 +98,7 @@ public class MapsGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JEditorPane pane;
     // End of variables declaration//GEN-END:variables
