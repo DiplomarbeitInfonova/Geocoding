@@ -18,6 +18,7 @@ import org.jfree.ui.ApplicationFrame;
 /**
  *
  * @author Veronika
+ * http://www.tutorialspoint.com/jfreechart/jfreechart_line_chart.htm 
  */
 public class LineChart_Test extends ApplicationFrame{
 
@@ -54,8 +55,5 @@ public class LineChart_Test extends ApplicationFrame{
         return dataset;
     }
     
-    public static void main(String[] args) {
-        
-    }
-    
+   
 }
