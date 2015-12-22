@@ -9,14 +9,11 @@ import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData_small;
 import bl.SnapToRoadsAPI;
-import com.google.maps.GeoApiContext;
-import com.google.maps.model.SnappedPoint;
-import com.google.maps.model.SpeedLimit;
+import dal.CSVHandler;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
@@ -31,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,10 +52,11 @@ public class EingabeGUI extends javax.swing.JFrame {
     /**
      * Creates new form EingabeGUI
      */
-    private GeocodingAPI geo;
+    public GeocodingAPI geo;
     private Location startloc;
     private Location zielloc;
     private LinkedList<Location> locations = new LinkedList<>();
+    private CSVHandler csvhandler;
 
     public EingabeGUI() {
         initComponents();
@@ -67,6 +64,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         geo = new GeocodingAPI();
         this.rb_2D.setSelected(true);
         this.MainMap.setDefaultProvider(OpenStreetMaps);
+        csvhandler = new CSVHandler();
         MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
         ButtonGroup rbgroup = new ButtonGroup();
         rbgroup.add(rb_2D);
@@ -85,10 +83,10 @@ public class EingabeGUI extends javax.swing.JFrame {
         //Author Dominik
         //Ein Set von Waypoints wird erstellt und die Locations werden eingefügt
         Set<Waypoint> waypoints = new HashSet<Waypoint>();
-        int i=0;
+        int i = 0;
         for (Location l : locations) {
             if (l != null) {
-                EingabeGUI.updateStatus("Zeichne Wegpunkt "+i+" von "+locations.size());
+                EingabeGUI.updateStatus("Zeichne Wegpunkt " + i + " von " + locations.size());
                 waypoints.add(new DefaultWaypoint(new GeoPosition(l.getxKoord(), l.getyKoord())));
                 i++;
             }
@@ -122,7 +120,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         for (Location location : locations) {
             region.add(new GeoPosition(location.getxKoord(), location.getyKoord()));
         }
-        
+
         Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
 
             @Override
@@ -147,16 +145,16 @@ public class EingabeGUI extends javax.swing.JFrame {
                     if (lastX != -1 && lastY != -1) {
 
                         g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
-                         EingabeGUI.updateStatus("Zeichne Routenpunkt "+i+" von "+region.size());
-                         
+                        EingabeGUI.updateStatus("Zeichne Routenpunkt " + i + " von " + region.size());
+
                         i++;
                     }
-                   
+
                     lastX = (int) pt.getX();
                     lastY = (int) pt.getY();
 
                 }
-                 EingabeGUI.updateStatus("Zeichnen abgeschlossen");
+                EingabeGUI.updateStatus("Zeichnen abgeschlossen");
             }
         };
         MainMap.getMainMap().setOverlayPainter(lineOverlay);
@@ -407,22 +405,23 @@ public class EingabeGUI extends javax.swing.JFrame {
 //Author Dominik, Veronika
         
         try {
-            this.getLocationsfromTextfields();
-            this.fillTextfields();
-            EingabeGUI.updateStatus("Starten der Abfrage an Google");
-            String[] durationarray = geo.LocationToDistance(startloc, zielloc);
+            EingabeGUI.updateStatus("Verarbeitung der Daten startet");
+            if (this.getLocationsfromTextfields()) {
+                this.fillTextfields();
+                EingabeGUI.updateStatus("Starten der Abfrage an Google");
+                String[] durationarray = geo.LocationToDistance(startloc, zielloc);
 
-            this.lab_Distance.setText(durationarray[1]);
-            this.lab_Duration.setText(durationarray[0]);
-            //locations = geo.getWaypoints(a.getName(), b.getName());
-            // ~Patrizia
-            LinkedList<Location> lList = geo.getWaypoints(startloc.getName(), zielloc.getName());
-            locations = lList;
-            locations = geo.getWaypointsMitRoadsAPI(lList);
-            //System.out.println("Länge der Liste: " + locations.size());
-            locations = geo.loescheDoppelteWerte(locations);
-            //System.out.println("Länge der Liste nach Löschen: " + locations.size());
-            SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
+                this.lab_Distance.setText(durationarray[1]);
+                this.lab_Duration.setText(durationarray[0]);
+                //locations = geo.getWaypoints(a.getName(), b.getName());
+                // ~Patrizia
+                LinkedList<Location> lList = geo.getWaypoints(startloc.getName(), zielloc.getName());
+                locations = lList;
+                locations = geo.getWaypointsMitRoadsAPI(lList);
+                //System.out.println("Länge der Liste: " + locations.size());
+                locations = geo.loescheDoppelteWerte(locations);
+                //System.out.println("Länge der Liste nach Löschen: " + locations.size());
+                SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
 
 //            GeoApiContext apicontext = new GeoApiContext();
 //            apicontext.setApiKey(geo.apiKey);
@@ -436,20 +435,21 @@ public class EingabeGUI extends javax.swing.JFrame {
 //                System.out.print("Key: " + key + " - ");
 //                System.out.print("Value: " + speedlimitMap.get(key) + "\n");
 //            }
-            //locations.add(a);
-            //locations.add(b);
-            //this.addWaypoint(locations);
-            // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
-            // ~Veronika
-            GraphingData_small diagramm = new GraphingData_small();
-            LinkedList<Double> hoehen = this.locationsToStringList();
-            diagramm.setDaten(hoehen);
-            this.panhoehe.add(diagramm, BorderLayout.CENTER);
-            this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
-            panhoehe.repaint();
-            paintRoute(locations);
-            EingabeGUI.updateStatus("Zeichnen abgeschlossen");
+                //locations.add(a);
+                //locations.add(b);
+                //this.addWaypoint(locations);
+                // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
+                // ~Veronika
+                GraphingData_small diagramm = new GraphingData_small();
+                LinkedList<Double> hoehen = this.locationsToStringList();
+                diagramm.setDaten(hoehen);
+                this.panhoehe.add(diagramm, BorderLayout.CENTER);
+                this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
+                panhoehe.repaint();
+                paintRoute(locations);
+                EingabeGUI.updateStatus("Zeichnen abgeschlossen");
 //            this.addWaypoint(list);
+            }
         } catch (XmlPullParserException ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -460,16 +460,22 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mi_StartActionPerformed
 
-    public static void updateStatus(String status){
-       EingabeGUI.labstatus.setText(status);
-       EingabeGUI.labstatus.repaint();
+    /**
+     * Author Dominik Diese Methode befüllt das Feld zur Statuseingabe in der
+     * GUI mit der übergebenen Meldung.
+     *
+     * @param status
+     */
+    public static void updateStatus(String status) {
+        EingabeGUI.labstatus.setText(status);
+        EingabeGUI.labstatus.repaint();
     }
     // Author Veronika
     // Hier wird überprüft ob die Felder richtg ausgefüllt worden sind
     // Und danach wird die Location von google abgefragt
     
-    private void getLocationsfromTextfields() {
-       
+    private boolean getLocationsfromTextfields() {
+       boolean correctlyfilled=true;
         if (!this.tf_OrtsnameA.getText().equals("")) {
             if (startloc == null) {
                 startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText());
@@ -487,7 +493,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             startloc = geo.KoordToOrt(dfeld);
         } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
-            return;
+            correctlyfilled = false;
         }
 
         if (!this.tf_OrtsnameB.getText().equals("")) {
@@ -508,12 +514,14 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
-            return;
+            correctlyfilled = false;
         }
+        return correctlyfilled;
     }
 
     private void fillTextfields() {
         // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
+
         this.tf_XKoordA.setText(startloc.getxKoord() + "");
         this.tf_YKoordA.setText(startloc.getyKoord() + "");
         this.tf_OrtsnameA.setText(startloc.getName());
@@ -574,7 +582,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     private void miDataImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDataImportActionPerformed
         //Dominik
-EingabeGUI.updateStatus("Daten werden importiert");
+        EingabeGUI.updateStatus("Daten werden importiert");
         Object[] optionen1 = {"Koordinatenpaar [X;Y]", "Location [Name;X;Y;Höhe]", "Abbrechen"};
         final int format = JOptionPane.showOptionDialog(null,
                 "In welchem Format sind die Locations abgespeichert?",
@@ -584,81 +592,47 @@ EingabeGUI.updateStatus("Daten werden importiert");
                 null,
                 optionen1,
                 optionen1[0]);
-        if (format != 2) {
-            JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
-            fc.setDialogTitle("Quelldatei auswählen");
-            fc.showOpenDialog(null);
 
-            File f = fc.getSelectedFile();
-            BufferedReader br;
-            LinkedList<Location> locsfromfile = new LinkedList<Location>();
+        locations = this.csvhandler.importLocsfromCSV(format);
 
-            try {
+        EingabeGUI.updateStatus("Daten wurden imporiert");
+        JOptionPane.showMessageDialog(null, locations.size() + " Locations wurden erfolgreich importiert");
+        //, new Object[]{"Route zeichen","Waypoint- Marker setzen","Abbrechen"}
+        Object[] optionen2 = {"Route zeichen", "Waypoint- Marker setzen", "Abbrechen"};
+        int todo = JOptionPane.showOptionDialog(null,
+                "Welche Aktion soll durchgeführt werden?",
+                "Aktion auswählen",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                optionen2,
+                optionen2[0]);
 
-                br = new BufferedReader(new FileReader(f));
+        this.startloc = locations.getFirst();
+        this.zielloc = locations.getLast();
+        this.fillTextfields();
+        EingabeGUI.updateStatus("Datenimport abgeschlossen");
+        GraphingData_small diagramm = new GraphingData_small();
+                LinkedList<Double> hoehen = this.locationsToStringList();
+                diagramm.setDaten(hoehen);
+                this.panhoehe.add(diagramm, BorderLayout.CENTER);
+                this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
+                panhoehe.repaint();
+        switch (todo) {
+            case 0:
 
-                String line = "";
+                this.paintRoute(locations);
+                break;
+            case 1:
 
-                while ((line = br.readLine()) != null) {
-
-                    line = line.replace("\"", "");
-
-                    String[] splits = line.split(";");
-                    Location l = new Location();
-                    if (format == 0) {
-                        if (splits.length == 4) {
-                            l = new Location("-", Double.parseDouble(splits[1]), Double.parseDouble(splits[2]), 0.0);
-                        } else if (splits.length == 2) {
-                            l = new Location("-", Double.parseDouble(splits[0]), Double.parseDouble(splits[1]), 0.0);
-                        }
-
-                    } else if (format == 1) {
-                        l = new Location(splits[0], Double.parseDouble(splits[1]), Double.parseDouble(splits[2]), Double.parseDouble(splits[3]));
-                    }
-
-                    locsfromfile.add(l);
-
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(EingabeGUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(EingabeGUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-
-            JOptionPane.showMessageDialog(null, locsfromfile.size() + " Locations wurden erfolgreich importiert");
-            //, new Object[]{"Route zeichen","Waypoint- Marker setzen","Abbrechen"}
-            Object[] optionen2 = {"Route zeichen", "Waypoint- Marker setzen", "Abbrechen"};
-            int todo = JOptionPane.showOptionDialog(null,
-                    "Welche Aktion soll durchgeführt werden?",
-                    "Aktion auswählen",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    optionen2,
-                    optionen2[0]);
-            this.locations = locsfromfile;
-            this.startloc = locations.getFirst();
-            this.zielloc = locations.getLast();
-            this.fillTextfields();
-            EingabeGUI.updateStatus("Datenimport abgeschlossen");
-            switch (todo) {
-                case 0:
-
-                    this.paintRoute(locations);
-                    break;
-                case 1:
-
-                    this.addWaypoint(locsfromfile);
-                    break;
-                case 2:
-                    break;
-                default:
-                    break;
-            }
+                this.addWaypoint(locations);
+                break;
+            case 2:
+                break;
+            default:
+                break;
         }
+
     }//GEN-LAST:event_miDataImportActionPerformed
     /**
      * //Author Dominik Diese Funktion exportiert die vorhandenen Locations.
@@ -671,7 +645,7 @@ EingabeGUI.updateStatus("Daten werden importiert");
      */
     private void miDataExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDataExportActionPerformed
         //Dominik
-EingabeGUI.updateStatus("Daten werden exportiert");
+        EingabeGUI.updateStatus("Daten werden exportiert");
         Object[] optionen1 = {"Koordinatenpaar [X;Y]", "Location [Name;X;Y;Höhe]", "Abbrechen"};
         final int format = JOptionPane.showOptionDialog(null,
                 "In welchem Format sollen die Locations abgespeichert werden?",
@@ -682,44 +656,8 @@ EingabeGUI.updateStatus("Daten werden exportiert");
                 optionen1,
                 optionen1[0]);
 
-        if (format != 2) {
-            JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources"));
-            fc.setDialogTitle("Zieldatei auswählen");
-            fc.showSaveDialog(null);
-
-            File f = fc.getSelectedFile();
-
-            BufferedWriter bw;
-
-            try {
-
-                bw = new BufferedWriter(new FileWriter(f));
-
-                String line = "";
-                int i;
-                for (i = 0; i < locations.size(); i++) {
-                    if (format == 0) {
-                        bw.write(locations.get(i).getxKoord() + ";" + locations.get(i).getyKoord());
-                    } else if (format == 1) {
-                        bw.write(locations.get(i).toCSVRow());
-                    }
-
-                    bw.newLine();
-                }
-
-                bw.close();
-                JOptionPane.showMessageDialog(null, i + " Locations wurden erfolgreich exportiert");
-
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(EingabeGUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(EingabeGUI.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-EingabeGUI.updateStatus("Datenexport abgeschlossen");
+        this.csvhandler.exportLocstoCSV(format, locations);
+        EingabeGUI.updateStatus("Datenexport abgeschlossen");
     }//GEN-LAST:event_miDataExportActionPerformed
 
     /**
@@ -819,7 +757,7 @@ EingabeGUI.updateStatus("Datenexport abgeschlossen");
      * @return
      */
     private LinkedList<Double> locationsToStringList() {
-       EingabeGUI.updateStatus("Höhenliste wird erstellt");
+        EingabeGUI.updateStatus("Höhenliste wird erstellt");
         //Aus den Locations wird eine LinkedList vom Typ Double ausgelesen um die Daten in das Höhendiagramm leichter zu verarbeiten
         // ~Veronika
         LinkedList<Double> dlist = new LinkedList<Double>();
