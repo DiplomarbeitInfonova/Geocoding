@@ -59,8 +59,8 @@ public class GraphingData_big extends JPanel {
         // y/(getMax()/100)
         // z ist der Abstand zwischen den hunderter Schritten auf der y-Ache
         // Zeichnen der Einheiten auf der y-Achse
-        int z = (h - (PAD * 2)) / ((int) getMax() / 100);
-        for (int i = 0; i < getMax() - 1 / 100; i++) {
+        int z = (h - (PAD * 2)) / (((int) getMax() / 100)+1);
+        for (int i = 1; i < (getMax() - 1) / 100; i++) {
 
             g2.draw(new Line2D.Double(PAD - 5, (h - PAD) - (z * i), PAD + 5, (h - PAD) - (z * i)));
             g2.drawString(i * 100 + "", PAD / 2, (h - PAD) - (z * i) + 5);
@@ -72,7 +72,7 @@ public class GraphingData_big extends JPanel {
         double scale = (double) (h - 2 * PAD) / getMax();
         g2.setPaint(Color.RED.brighter());
 
-        for (int i = 0; i < hoehen.size() - 1; i++) {
+        for (int i = 0; i < hoehen.size()-1; i++) {
             // Sollte keine höhe zurückgegeben worden sein, wird die Höhe des vorherigen Punkes verwendet
             double hoehe = hoehen.get(i).getHoehe();
             if (hoehen.get(i).getHoehe() == 0) {
@@ -81,7 +81,7 @@ public class GraphingData_big extends JPanel {
 
             float x1 = (float) (PAD + i * xInc);
             float y1 = (float) (h - PAD - scale * hoehen.get(i).getHoehe());
-            if (i % 8 == 0) {
+            if (i%7==0&&!hoehen.get(i).equals(1)) {
                 g2.setPaint(Color.BLACK);
                 // Jeder 5. Punkt wird beschriftet
                 g2.drawString(hoehen.get(i).getHoehe() + "", x1 - 15, (y1 + 10));
@@ -90,6 +90,17 @@ public class GraphingData_big extends JPanel {
                 g2.drawString(hoehen.get(i).getName(), x1-10, h-PAD+20);
                 g2.setPaint(Color.RED.brighter());
             }
+             if(i==(hoehen.size()-2))
+            {
+                g2.setPaint(Color.BLACK);
+                // Jeder 5. Punkt wird beschriftet
+                g2.drawString(hoehen.get(i).getHoehe() + "", x1 - 15, (y1 + 10));
+                // Bei jedem 5. Punkt wird eine Markierung bei der x-Achse gesetzt
+                g2.draw(new Line2D.Double(x1, h - PAD + 5, x1, h - PAD - 5));
+                g2.drawString(hoehen.get(i).getName(), x1-10, h-PAD+20);
+                g2.setPaint(Color.RED.brighter());
+            }
+            
             double x2 = PAD + (i + 1) * xInc;
             double y2 = h - PAD - scale * hoehen.get(i + 1).getHoehe();
             g2.draw(new Line2D.Double(x1, y1, x2, y2));
