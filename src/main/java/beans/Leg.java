@@ -3,6 +3,7 @@ package beans;
 /**
  *
  * @author patzineubi
+ * Klasse stellt ein Bein dar
  */
 public class Leg
 {
