@@ -33,7 +33,7 @@ public class XMLParse
 
     public XMLParse(String requestUrl)
     {
-        this.xmlString = requestUrl;
+         this.xmlString = requestUrl;
         try
         {
             xmlDoc = this.loadXMLFromString();
@@ -178,6 +178,10 @@ public class XMLParse
      */
     public LinkedList<Leg> xmlFromDistanceAPItoLocations()
     {
+        System.out.println("DIRECTIONS "
+                + "API "
+                + "RESPONSE"
+                + "----------------------------"+this.xmlString+"\n");
 EingabeGUI.updateStatus("Antwort von Google wird verarbeitet");
         LinkedList<Leg> list = new LinkedList<Leg>();
         Element root = xmlDoc.getDocumentElement();

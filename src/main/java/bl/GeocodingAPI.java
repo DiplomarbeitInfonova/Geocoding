@@ -179,7 +179,7 @@ public class GeocodingAPI {
         }
         request = request + "&interpolate=true&key=" + apiKey;
 
-        System.out.println("Roads API request: " + request);
+        //System.out.println("Roads API request: " + request);
 
         LinkedList<Location> response = new LinkedList<Location>();
         try {

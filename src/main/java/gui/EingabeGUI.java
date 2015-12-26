@@ -403,9 +403,10 @@ public class EingabeGUI extends javax.swing.JFrame {
      */
     private void mi_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_StartActionPerformed
 //Author Dominik, Veronika
+        EingabeGUI.labstatus.setText("Verarbeite Eingaben");
         
         try {
-            EingabeGUI.updateStatus("Verarbeitung der Daten startet");
+            
             if (this.getLocationsfromTextfields()) {
                 this.fillTextfields();
                 EingabeGUI.updateStatus("Starten der Abfrage an Google");
@@ -415,9 +416,9 @@ public class EingabeGUI extends javax.swing.JFrame {
                 this.lab_Duration.setText(durationarray[0]);
                 //locations = geo.getWaypoints(a.getName(), b.getName());
                 // ~Patrizia
-                LinkedList<Location> lList = geo.getWaypoints(startloc.getName(), zielloc.getName());
-                locations = lList;
-                locations = geo.getWaypointsMitRoadsAPI(lList);
+                locations = geo.getWaypoints(startloc.getName(), zielloc.getName());
+                
+                locations = geo.getWaypointsMitRoadsAPI(locations);
                 //System.out.println("Länge der Liste: " + locations.size());
                 locations = geo.loescheDoppelteWerte(locations);
                 //System.out.println("Länge der Liste nach Löschen: " + locations.size());
@@ -541,6 +542,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         if (locations.size() != 0) {
             HoehenPanel hoehenpanel = new HoehenPanel(locations);
             hoehenpanel.setVisible(true);
+            
         }
     }//GEN-LAST:event_panhoeheMouseClicked
 
