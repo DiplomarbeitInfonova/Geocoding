@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  *
- * @author patzineubi
+ * @author patrizianeubauer
  *
  */
 public class SnapToRoadsAPI {
