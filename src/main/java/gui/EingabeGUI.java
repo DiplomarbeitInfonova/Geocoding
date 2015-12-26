@@ -449,6 +449,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                 panhoehe.repaint();
                 paintRoute(locations);
                 EingabeGUI.updateStatus("Zeichnen abgeschlossen");
+                this.printCounters();
 //            this.addWaypoint(list);
             }
         } catch (XmlPullParserException ex) {
@@ -461,6 +462,14 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mi_StartActionPerformed
 
+    public void printCounters(){
+        System.out.println("Counter- Statistics\n---\n"
+                + "GeocodingAPI: "+GeocodingAPI.geocodingcounter+"\n"
+                + "DirectionsAPI: "+GeocodingAPI.directionscounter+"\n"
+                + "ElevationAPI: "+GeocodingAPI.elevationcounter+"\n"
+                + "DistanceMatrixAPI: "+GeocodingAPI.distancematrixcounter+"\n---");
+    }
+    
     /**
      * Author Dominik Diese Methode befüllt das Feld zur Statuseingabe in der
      * GUI mit der übergebenen Meldung.
@@ -540,9 +549,10 @@ public class EingabeGUI extends javax.swing.JFrame {
         // Gibt es schon Locations bzw. Höhen wird eine zweite GUI aufgerufen die mit den Locations weiterarbeitet
         // ~Veronika
         if (locations.size() != 0) {
+          
             HoehenPanel hoehenpanel = new HoehenPanel(locations);
             hoehenpanel.setVisible(true);
-            
+            this.printCounters();
         }
     }//GEN-LAST:event_panhoeheMouseClicked
 
@@ -765,6 +775,11 @@ public class EingabeGUI extends javax.swing.JFrame {
         LinkedList<Double> dlist = new LinkedList<Double>();
 
         for (int i = 0; i < locations.size(); i++) {
+            double akthoehe=locations.get(i).getHoehe();
+            if(akthoehe==0){
+               geo.getElevationInformation(locations.get(i));
+               akthoehe=locations.get(i).getHoehe();
+            }
             dlist.add(locations.get(i).getHoehe());
         }
         return dlist;

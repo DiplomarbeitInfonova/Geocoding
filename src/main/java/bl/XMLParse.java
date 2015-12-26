@@ -236,7 +236,7 @@ EingabeGUI.updateStatus("Antwort von Google wird verarbeitet");
                     f_endloclat, f_endloclng
                 };
 
-                Location l = a.KoordToOrt(koordinaten);
+                Location l = new Location(koordinaten);
 
                 a.getElevationInformation(l);
                 double d_elevation = l.getHoehe();
@@ -273,7 +273,7 @@ EingabeGUI.updateStatus("Antwort von Google wird verarbeitet");
                 double lng = Double.parseDouble(longitude);
                 koordinaten[0] = lat;
                 koordinaten[1] = lng;
-                Location l = geo.KoordToOrt(koordinaten);
+                Location l = new Location(koordinaten);
                 geo.getElevationInformation(l);
                 list.add(l);  
             }

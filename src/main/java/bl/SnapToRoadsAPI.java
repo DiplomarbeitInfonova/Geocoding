@@ -101,7 +101,7 @@ public class SnapToRoadsAPI {
             koordinaten[1] = point.location.lng;
             System.out.println(point.location.lat + " " + point.location.lng);
 
-            list.add(i, geo.KoordToOrt(koordinaten));
+            list.add(i, new Location("",koordinaten[0],koordinaten[1],0));
             i++;
         }
 

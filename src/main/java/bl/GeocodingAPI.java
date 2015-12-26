@@ -23,7 +23,10 @@ public class GeocodingAPI {
 
     private XMLParse xmlp;
     public final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
-
+    public static int geocodingcounter=0;
+    public static int distancematrixcounter=0;
+    public static int elevationcounter=0;
+   public static int directionscounter=0;
     /*
      Die Methode findet zum eingegeben Ort die passenden
      x- und y- Koordinaten und liefert diese in einem 
@@ -49,6 +52,7 @@ public class GeocodingAPI {
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
+         GeocodingAPI.geocodingcounter+=1;
         return ort;
     }
 
@@ -68,6 +72,7 @@ public class GeocodingAPI {
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
+            GeocodingAPI.geocodingcounter+=1;
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             
@@ -76,6 +81,7 @@ public class GeocodingAPI {
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
         }
+        
         return ort;
     }
 
@@ -94,6 +100,7 @@ public class GeocodingAPI {
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
+             GeocodingAPI.distancematrixcounter+=1;
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlToDistanceAndDuration();
@@ -101,7 +108,7 @@ public class GeocodingAPI {
         } catch (MalformedURLException ex) {
             Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+      
         return response.split("-");
     }
 
@@ -114,13 +121,18 @@ public class GeocodingAPI {
      * Langitude- Koordinaten wird die Seehöhe zurückgegeben. 
      * @param l 
      */
-    public void getElevationInformation(Location l) {
+    public double getElevationInformation(Location l) {
+        /*
+        48,208423 
+	 y-Koord: 16,373996 
+        */
         EingabeGUI.updateStatus("Höhendaten zu Ort wird abgefragt");
         String request = "https://maps.googleapis.com/maps/api/elevation/xml?locations=" + l.getxKoord() + "," + l.getyKoord() + "&key=" + apiKey;
         double response = 0;
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
+            GeocodingAPI.elevationcounter+=1;
             xmlp = new XMLParse(answer);
             response = xmlp.xmlElevationInformation();
         } catch (MalformedURLException ex) {
@@ -129,6 +141,8 @@ public class GeocodingAPI {
         }
 //        System.out.println(response);
         l.setHoehe(response);
+        return response;
+        
     }
 
     
@@ -141,11 +155,14 @@ public class GeocodingAPI {
      */
     public LinkedList<Location> getWaypoints(String l1, String l2) {
         EingabeGUI.updateStatus("Wegpunkte werden von Google abgefragt");
+        
         String request = "https://maps.googleapis.com/maps/api/directions/xml?origin=" + l1 + "&destination=" + l2 + "&key=" + apiKey;
         LinkedList<Leg> response = new LinkedList<Leg>();
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
+            GeocodingAPI.directionscounter+=1;
+            
             EingabeGUI.updateStatus("Anfrage an Google gesendet");
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
@@ -243,7 +260,7 @@ public class GeocodingAPI {
                 = {
                     47.066667, 15.433333
                 };
-        Location l = api.KoordToOrt(k);
+       // Location l = api.KoordToOrt(k);
 //        System.out.println(l.toString());
 
 //        for(int i = 0; i < test.size(); i++)
