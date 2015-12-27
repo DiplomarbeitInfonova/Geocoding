@@ -218,7 +218,6 @@ public class XMLParse
                 
                 NodeList polyline_points = elem_polyline.getElementsByTagName("points");
                 Element elem_polyline_points = (Element) polyline_points.item(k);
-                System.out.println(elem_polyline_points.toString());
                 
                 Element html_instr = (Element) html_instruction.item(k);
                 
