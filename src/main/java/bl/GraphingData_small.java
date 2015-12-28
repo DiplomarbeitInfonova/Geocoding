@@ -47,6 +47,8 @@ public class GraphingData_small extends JPanel
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
+        // aussortieren
+        daten = sotiereAus();
         // Höhe und Breite des Panels ermitteln
         int w = getWidth();
         int h = getHeight();
@@ -106,5 +108,17 @@ public class GraphingData_small extends JPanel
             }
         }
         return max;
+    }
+
+    private LinkedList<Double> sotiereAus() {
+        LinkedList<Double> newlist = new LinkedList<Double>();
+        for(double d : daten)
+        {
+            if(d!=0)
+            {
+                newlist.add(d);
+            }
+        }
+        return newlist;
     }
 }

@@ -8,6 +8,7 @@ package gui;
 import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData_small;
+import bl.LineChart_Test;
 import bl.SnapToRoadsAPI;
 import dal.CSVHandler;
 import java.awt.BasicStroke;
@@ -113,7 +114,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      *
      */
     public void paintRoute(LinkedList<Location> locations) {
-    //Autor Dominik
+        //Autor Dominik
         EingabeGUI.updateStatus("Start des Zeichnens der Route");
         final List<GeoPosition> region = new ArrayList<>();
 
@@ -483,7 +484,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     // Author Veronika
     // Hier wird überprüft ob die Felder richtg ausgefüllt worden sind
     // Und danach wird die Location von google abgefragt
-    
+
     private boolean getLocationsfromTextfields() {
        boolean correctlyfilled=true;
         if (!this.tf_OrtsnameA.getText().equals("")) {

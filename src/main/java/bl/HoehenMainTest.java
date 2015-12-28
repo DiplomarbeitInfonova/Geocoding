@@ -32,7 +32,7 @@ public class HoehenMainTest {
         Location l7 = new Location("Krottendorf-Gaisfeld",46.8917246,15.4307184,450);
         Location l8 = new Location("St. Johann",46.8717246,15.4407184,480);
         Location l9 = new Location("Köppling",46.8617246,15.4417184,300);
-        Location llast = new Location("Soeding",46.8691334,15.4502561,0);
+        Location llast = new Location("Soeding",46.8691334,15.4502561,1);
         ll.add(l);
         ll.add(l2);
         ll.add(l4);
@@ -49,13 +49,13 @@ public class HoehenMainTest {
         ll.add(l8);
         ll.add(l9);
         ll.add(llast);
-//        HoehenPanel pan = new HoehenPanel(ll);
-//        pan.setVisible(true);
-        LineChart_Test chart = new LineChart_Test("Hoehen");
-        chart.setHoehen(ll);
-        chart.paint();
-        chart.pack();
-        chart.setVisible(true);
+        HoehenPanel pan = new HoehenPanel(ll);
+        pan.setVisible(true);
+//        LineChart_Test chart = new LineChart_Test("Hoehen");
+//        chart.setHoehen(ll);
+//        chart.paint();
+//        chart.pack();
+//        chart.setVisible(true);
     }
     
 }
