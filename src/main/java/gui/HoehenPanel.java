@@ -6,6 +6,7 @@
 package gui;
 
 import beans.Location;
+import bl.GeocodingAPI;
 import bl.GraphingData_big;
 import java.util.LinkedList;
 
@@ -96,17 +97,21 @@ public class HoehenPanel extends javax.swing.JFrame {
         });
     }
     
-    private LinkedList<Locations> bereiteListeVor()
+    private LinkedList<Location> bereiteListeVor()
     {
+        aufbereitete_Liste=new LinkedList<Location>();
         String name;
         Location l;
+        int intervall=ll.size()/10;
         for (int i = 0; i < ll.size(); i++)
         {
-            if(i&(ll.size()/10==0))
+            if((i%intervall)==0)
             {
+              
                 l=ll.get(i);
-                name = geo_api.KoordToOrt(l.getKoordArray()).getName();
-                l.setName(name);
+                  System.out.println(i+".tes Element wird gezeichnet: "+l.toString());
+                //name = geo_api.KoordToOrt(l.getKoordArray()).getName();
+                //l.setName(name);
                 aufbereitete_Liste.add(l);
             }
         }

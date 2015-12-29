@@ -83,24 +83,23 @@ public class GraphingData_big extends JPanel {
         double scale = (double) (h - 2 * PAD) / getMax();
         g2.setPaint(Color.RED.brighter());
         double lastx=0;
-
-        for (int i = 0; i < hoehen.size() - 1; i++) {
-            
+        System.out.println("Größe des Höhenarrays: "+hoehen.size());
+        for (int i = 0; i < hoehen.size() - 1; i++) {     
            
             
 
                 float x1 = (float) (PAD + i * xInc);
                 float y1 = (float) (h - PAD - scale * hoehen.get(i).getHoehe());
-                if (i%(hoehen.size/10)==0) {
-                    System.out.println("i-tes Element eingezeichnet in Graphing_Data big: "+i);
+               // if (i%(hoehen.size()/10)==0) {
+                    //System.out.println("i-tes Element eingezeichnet in Graphing_Data big: "+i);
                     g2.setPaint(Color.BLACK);
                     // Jeder 5. Punkt wird beschriftet
                     g2.drawString(hoehen.get(i).getHoehe() + "", x1 - 15, (y1 + 10));
                     // Bei jedem 5. Punkt wird eine Markierung bei der x-Achse gesetzt
                     g2.draw(new Line2D.Double(x1, h - PAD + 5, x1, h - PAD - 5));
-                    g2.drawString(new GeocodingAPI().KoordToOrt(hoehen.get(i).getKoordArray()).getName(), x1 - 10, h - PAD + 20);
+                    g2.drawString(hoehen.get(i).getName(), x1 - 10, h - PAD + 20);
                     g2.setPaint(Color.RED.brighter());
-                }
+                //}
                 
 //                if (i == (hoehen.size() - 2)) {
 //                    g2.setPaint(Color.BLACK);

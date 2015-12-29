@@ -166,8 +166,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         panControls = new javax.swing.JPanel();
         panA = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -211,9 +209,6 @@ public class EingabeGUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         miDataImport = new javax.swing.JMenuItem();
         miDataExport = new javax.swing.JMenuItem();
-
-        jMenuItem1.setText("Nach Hier");
-        jPopupMenu1.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1600, 1000));
@@ -728,7 +723,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -736,7 +730,6 @@ public class EingabeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JLabel lab_Distance;
     private javax.swing.JLabel lab_Duration;
     private javax.swing.JLabel lab_bitteklicken;
