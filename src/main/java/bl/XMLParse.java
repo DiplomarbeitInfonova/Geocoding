@@ -67,9 +67,14 @@ public class XMLParse
                 String name = responseName.split("\n")[1];
                 String type = responseName.split("\n")[3];
 //                System.out.println("Name: "+name+"|Type: "+type);
-                if (type.trim().equals("locality") || type.trim() == "locality")
+                if (type.trim() == "locality"||type.trim().equals("locality"))
                 {
                     locName = name;
+                }
+                if(locName.isEmpty()){
+                    if(type.trim().equals("administrative_area_level_3") || type.trim() == "administrative_area_level_3"){
+                        locName=name;
+                    }
                 }
             }
 

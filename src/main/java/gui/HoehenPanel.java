@@ -17,25 +17,23 @@ import java.util.LinkedList;
 public class HoehenPanel extends javax.swing.JFrame {
 
     /**
-     * GUI Klasse für das genaue HöhenPanel
-     * Greift auf die Java-Klasse GraphinData_big zu und binded dieses Panel ein
-     * ~ Veronika  
+     * GUI Klasse für das genaue HöhenPanel Greift auf die Java-Klasse
+     * GraphinData_big zu und binded dieses Panel ein ~ Veronika
      */
-    
     private LinkedList<Location> aufbereitete_Liste;
     private LinkedList<Location> ll;
     private GeocodingAPI geo_api;
+
     public HoehenPanel() {
         initComponents();
-        
+
     }
 
-    public HoehenPanel(LinkedList<Location> ll)
-    {
+    public HoehenPanel(LinkedList<Location> ll) {
         initComponents();
-       
+
         this.setSize(800, 650);
-        this.ll=ll;
+        this.ll = ll;
         geo_api = new GeocodingAPI();
         aufbereitete_Liste = this.bereiteListeVor();
         GraphingData_big diagramm = new GraphingData_big();
@@ -43,6 +41,7 @@ public class HoehenPanel extends javax.swing.JFrame {
         this.pan_hoehe.add(diagramm);
         pan_hoehe.paintAll(this.getGraphics());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,27 +95,48 @@ public class HoehenPanel extends javax.swing.JFrame {
             }
         });
     }
-    
-    private LinkedList<Location> bereiteListeVor()
-    {
-        aufbereitete_Liste=new LinkedList<Location>();
+
+    private LinkedList<Location> bereiteListeVor() {
+        aufbereitete_Liste = new LinkedList<Location>();
         String name;
         Location l;
-        int intervall=ll.size()/10;
-        for (int i = 0; i < ll.size(); i++)
-        {
-            if((i%intervall)==0)
-            {
-              
-                l=ll.get(i);
-                  System.out.println(i+".tes Element wird gezeichnet: "+l.toString());
-                //name = geo_api.KoordToOrt(l.getKoordArray()).getName();
-                //l.setName(name);
+
+        if (ll.size() <= 10) {
+            //Alle Elemente anzeigen 
+            for (int i = 0; i < ll.size(); i++) {
+
+                l = ll.get(i);
+                System.out.println(i + ".tes Element wird gezeichnet: " + l.toString());
+                if (l.getName().isEmpty()) {
+                    System.out.println(i + ".tes Element ohne namen:");
+                    name = geo_api.KoordToOrt(l.getKoordArray()).getName();
+                    System.out.println("Name geholt: " + name);
+                    l.setName(name);
+                }
+
+                aufbereitete_Liste.add(l);
+
+            }
+            return aufbereitete_Liste;
+        }
+        int intervall = ll.size() / 10;
+
+        for (int i = 0; i < ll.size(); i++) {
+            if ((i % intervall) == 0) {
+
+                l = ll.get(i);
+                System.out.println(i + ".tes Element wird gezeichnet: " + l.toString());
+                if (l.getName().isEmpty()) {
+                    System.out.println(i + ".tes Element ohne namen:");
+                    name = geo_api.KoordToOrt(l.getKoordArray()).getName();
+                    System.out.println("Name geholt: " + name);
+                    l.setName(name);
+                }
+
                 aufbereitete_Liste.add(l);
             }
         }
-        
-        
+
         return aufbereitete_Liste;
     }
 
