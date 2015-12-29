@@ -20,7 +20,10 @@ public class HoehenPanel extends javax.swing.JFrame {
      * Greift auf die Java-Klasse GraphinData_big zu und binded dieses Panel ein
      * ~ Veronika  
      */
+    
+    private LinkedList<Location> aufbereitete_Liste;
     private LinkedList<Location> ll;
+    private GeocodingAPI geo_api;
     public HoehenPanel() {
         initComponents();
         
@@ -32,8 +35,10 @@ public class HoehenPanel extends javax.swing.JFrame {
        
         this.setSize(800, 650);
         this.ll=ll;
+        geo_api = new GeocodingAPI();
+        aufbereitete_Liste = this.bereiteListeVor();
         GraphingData_big diagramm = new GraphingData_big();
-        diagramm.setHoehen(ll);
+        diagramm.setHoehen(aufbereitete_Liste);
         this.pan_hoehe.add(diagramm);
         pan_hoehe.paintAll(this.getGraphics());
     }
@@ -89,6 +94,25 @@ public class HoehenPanel extends javax.swing.JFrame {
                 new HoehenPanel().setVisible(true);
             }
         });
+    }
+    
+    private LinkedList<Locations> bereiteListeVor()
+    {
+        String name;
+        Location l;
+        for (int i = 0; i < ll.size(); i++)
+        {
+            if(i&(ll.size()/10==0))
+            {
+                l=ll.get(i);
+                name = geo_api.KoordToOrt(l.getKoordArray()).getName();
+                l.setName(name);
+                aufbereitete_Liste.add(l);
+            }
+        }
+        
+        
+        return aufbereitete_Liste;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
