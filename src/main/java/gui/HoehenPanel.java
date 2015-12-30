@@ -122,9 +122,10 @@ public class HoehenPanel extends javax.swing.JFrame {
         int intervall = ll.size() / 10;
 
         for (int i = 0; i < ll.size(); i++) {
+            l = ll.get(i);
             if ((i % intervall) == 0) {
 
-                l = ll.get(i);
+                
                 System.out.println(i + ".tes Element wird gezeichnet: " + l.toString());
                 if (l.getName().isEmpty()) {
                     System.out.println(i + ".tes Element ohne namen:");
@@ -133,8 +134,9 @@ public class HoehenPanel extends javax.swing.JFrame {
                     l.setName(name);
                 }
 
-                aufbereitete_Liste.add(l);
+                
             }
+            aufbereitete_Liste.add(l);
         }
 
         return aufbereitete_Liste;

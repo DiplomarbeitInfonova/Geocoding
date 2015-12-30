@@ -449,7 +449,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                 // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
                 // ~Veronika
                 GraphingData_small diagramm = new GraphingData_small();
-                LinkedList<Double> hoehen = this.locationsToStringList();
+                LinkedList<Double> hoehen = this.locationsToDoubleList();
                 diagramm.setDaten(hoehen);
                 this.panhoehe.add(diagramm, BorderLayout.CENTER);
                 this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
@@ -632,7 +632,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         this.fillTextfields();
         EingabeGUI.updateStatus("Datenimport abgeschlossen");
         GraphingData_small diagramm = new GraphingData_small();
-                LinkedList<Double> hoehen = this.locationsToStringList();
+                LinkedList<Double> hoehen = this.locationsToDoubleList();
                 diagramm.setDaten(hoehen);
                 this.panhoehe.add(diagramm, BorderLayout.CENTER);
                 this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
@@ -773,7 +773,7 @@ public class EingabeGUI extends javax.swing.JFrame {
      *
      * @return
      */
-    private LinkedList<Double> locationsToStringList() {
+    private LinkedList<Double> locationsToDoubleList() {
         EingabeGUI.updateStatus("Höhenliste wird erstellt");
         //Aus den Locations wird eine LinkedList vom Typ Double ausgelesen um die Daten in das Höhendiagramm leichter zu verarbeiten
         // ~Veronika

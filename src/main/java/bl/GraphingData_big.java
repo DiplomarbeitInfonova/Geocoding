@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Veronika
+ * @author Veronika, David
  */
 public class GraphingData_big extends JPanel {
 
@@ -74,6 +74,7 @@ public class GraphingData_big extends JPanel {
             g2.setStroke(dashed);
             g2.drawLine(PAD + 5, (h - PAD) - (z * i), w - PAD, (h - PAD) - (z * i));
             g2.setPaint(Color.black);
+            // Zurücksetzen auf normale Linie
             g2.setStroke(new BasicStroke(1.5f));
         }
 
@@ -84,13 +85,15 @@ public class GraphingData_big extends JPanel {
         g2.setPaint(Color.RED.brighter());
         double lastx=0;
         System.out.println("Größe des Höhenarrays: "+hoehen.size());
+        int intervall = hoehen.size() / 10;
         for (int i = 0; i < hoehen.size() - 1; i++) {     
            
             
 
                 float x1 = (float) (PAD + i * xInc);
                 float y1 = (float) (h - PAD - scale * hoehen.get(i).getHoehe());
-               // if (i%(hoehen.size()/10)==0) {
+                
+                if (i%intervall==0) {
                     //System.out.println("i-tes Element eingezeichnet in Graphing_Data big: "+i);
                     g2.setPaint(Color.BLACK);
                     // Jeder 5. Punkt wird beschriftet
@@ -99,17 +102,8 @@ public class GraphingData_big extends JPanel {
                     g2.draw(new Line2D.Double(x1, h - PAD + 5, x1, h - PAD - 5));
                     g2.drawString(hoehen.get(i).getName(), x1 - 10, h - PAD + 20);
                     g2.setPaint(Color.RED.brighter());
-                //}
-                
-//                if (i == (hoehen.size() - 2)) {
-//                    g2.setPaint(Color.BLACK);
-//                    // Jeder 5. Punkt wird beschriftet
-//                    g2.drawString(hoehen.get(i).getHoehe() + "", x1 - 15, (y1 + 10));
-//                    // Bei jedem 5. Punkt wird eine Markierung bei der x-Achse gesetzt
-//                    g2.draw(new Line2D.Double(x1, h - PAD + 5, x1, h - PAD - 5));
-//                    g2.drawString(new GeocodingAPI().KoordToOrt(hoehen.get(i).getKoordArray()).getName(), x1 - 10, h - PAD + 20);
-//                    g2.setPaint(Color.RED.brighter());
-//                }
+                }
+
 
                 double x2 = PAD + (i + 1) * xInc;
                 double y2 = h - PAD - scale * hoehen.get(i + 1).getHoehe();
@@ -118,6 +112,7 @@ public class GraphingData_big extends JPanel {
             
 
         }
+        // Der letzte Punkt soll immer Markiert werden
         g2.setColor(Color.black);
         g2.draw(new Line2D.Double(lastx, h - PAD + 5, lastx, h - PAD - 5));
         g2.drawString(hoehen.get(hoehen.size()-1).getName(), (int) (lastx - 10), h - PAD + 20);
