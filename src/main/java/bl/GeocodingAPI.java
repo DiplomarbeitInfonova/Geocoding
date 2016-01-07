@@ -118,7 +118,7 @@ public class GeocodingAPI
 
         } catch (MalformedURLException ex)
         {
-            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Fehler beim berechnen der Distanz");
         }
 
         return response.split("-");
@@ -150,10 +150,10 @@ public class GeocodingAPI
             response = xmlp.xmlElevationInformation();
         } catch (MalformedURLException ex)
         {
-//            System.out.println(ex);
-            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+
+            JOptionPane.showMessageDialog(null, "Fehler beim herausfiltern der Höhe");
         }
-//        System.out.println(response);
+
         l.setHoehe(response);
         return response;
 
@@ -186,7 +186,7 @@ public class GeocodingAPI
 
         } catch (MalformedURLException ex)
         {
-            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Fehler beim herausfiltern der Waypoints");
         }
         return null;
     }
@@ -233,12 +233,9 @@ public class GeocodingAPI
             xmlp = new XMLParse(xml);
             response = xmlp.xmlFromRoadsAPI();
 
-        } catch (MalformedURLException ex)
+        } catch (MalformedURLException | JSONException ex)
         {
-            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex)
-        {
-            Logger.getLogger(GeocodingAPI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Fehler beim Herausholen der Waypoints mit der RoadsAPI");
         }
         return response;
     }
