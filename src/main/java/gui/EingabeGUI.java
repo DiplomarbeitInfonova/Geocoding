@@ -163,8 +163,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         panControls = new javax.swing.JPanel();
         panA = new javax.swing.JPanel();
@@ -308,10 +307,8 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         panControls.add(panInfos);
 
-        panhoehe.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        panhoehe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 panhoeheMouseClicked(evt);
             }
         });
@@ -331,20 +328,16 @@ public class EingabeGUI extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         mi_Start.setText("Start");
-        mi_Start.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        mi_Start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mi_StartActionPerformed(evt);
             }
         });
         jMenu1.add(mi_Start);
 
         mi_Neu.setText("Neue Abfrage");
-        mi_Neu.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        mi_Neu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mi_NeuActionPerformed(evt);
             }
         });
@@ -355,20 +348,16 @@ public class EingabeGUI extends javax.swing.JFrame {
         jMenu2.setText("Daten");
 
         miDataImport.setText("Daten importieren");
-        miDataImport.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        miDataImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miDataImportActionPerformed(evt);
             }
         });
         jMenu2.add(miDataImport);
 
         miDataExport.setText("Daten exportieren");
-        miDataExport.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        miDataExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miDataExportActionPerformed(evt);
             }
         });
