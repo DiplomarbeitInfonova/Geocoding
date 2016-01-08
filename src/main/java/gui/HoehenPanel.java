@@ -99,17 +99,19 @@ public class HoehenPanel extends javax.swing.JFrame {
     private LinkedList<Location> bereiteListeVor() {
         aufbereitete_Liste = new LinkedList<Location>();
         String name;
-        
-
+        int i=0;
         for(Location loc:ll)
         {
-            if(loc.getHoehe()!=0)
+            if(loc.getHoehe() != 0)
             {
                  name = geo_api.KoordToOrt(loc.getKoordArray()).getName();
                     System.out.println("Name geholt: " + name);
                     loc.setName(name);
+                    aufbereitete_Liste.add(loc);
+                    i++;
             }
         }
+        
 //        if (ll.size() <= 10) {
 //            //Alle Elemente anzeigen 
 //            for (int i = 0; i < ll.size(); i++) {

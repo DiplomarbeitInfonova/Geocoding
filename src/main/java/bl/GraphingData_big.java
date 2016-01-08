@@ -97,7 +97,7 @@ public class GraphingData_big extends JPanel {
                     //System.out.println("i-tes Element eingezeichnet in Graphing_Data big: "+i);
                     g2.setPaint(Color.BLACK);
                     // Jeder 5. Punkt wird beschriftet
-                    g2.drawString(hoehen.get(i).getHoehe() + "", x1 - 15, (y1 + 10));
+                    //g2.drawString(hoehen.get(i).getHoehe() + "", x1 - 15, (y1 + 10));
                     // Bei jedem 5. Punkt wird eine Markierung bei der x-Achse gesetzt
                     g2.draw(new Line2D.Double(x1, h - PAD + 5, x1, h - PAD - 5));
                     g2.drawString(hoehen.get(i).getName(), x1 - 10, h - PAD + 20);

@@ -72,7 +72,8 @@ public class GeocodingAPI
      */
     public Location KoordToOrt(double[] koordinaten)
     {
-        EingabeGUI.updateStatus("Koordinaten werden zu Ortsnamen umgewandelt");
+        
+        //EingabeGUI.updateStatus("Koordinaten werden zu Ortsnamen umgewandelt");
         String requestUrl = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + koordinaten[0] + "," + koordinaten[1] + "&key=" + apiKey;
         Location ort = null;
         try
