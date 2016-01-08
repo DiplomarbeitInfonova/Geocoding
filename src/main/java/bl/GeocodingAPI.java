@@ -166,7 +166,7 @@ public class GeocodingAPI
      * @param l2
      * @return Eine Liste mit Locations wird zurückgegeben.
      */
-    public LinkedList<Location> getWaypoints(String l1, String l2)
+    public LinkedList<Leg> getWaypoints(String l1, String l2)
     {
         EingabeGUI.updateStatus("Wegpunkte werden von Google abgefragt");
 
@@ -181,8 +181,9 @@ public class GeocodingAPI
             EingabeGUI.updateStatus("Anfrage an Google gesendet");
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
-            LocationParser parser = new LocationParser();
-            return parser.LegtoLocation(response);
+//            LocationParser parser = new LocationParser();
+//            return parser.LegtoLocation(response);
+            return response;
 
         } catch (MalformedURLException ex)
         {
@@ -272,8 +273,8 @@ public class GeocodingAPI
     public static void main(String[] args) throws XmlPullParserException, IOException
     {
 
-        GeocodingAPI api = new GeocodingAPI();
-        LinkedList<Location> test = api.getWaypoints("Mureck", "Ligist");
+//        GeocodingAPI api = new GeocodingAPI();
+//        LinkedList<Location> test = api.getWaypoints("Mureck", "Ligist");
 //        for (int i = 0; i < test.size(); i++)
 //        {
 //            System.out.println("ag: "+test.get(i).toString() + "\n");
@@ -302,19 +303,19 @@ public class GeocodingAPI
 //        {
 //            System.out.println(test.get(i).getxKoord()+" "+test.get(i).getyKoord());
 //        }
-        LinkedList<Location> list = api.getWaypointsMitRoadsAPI(test);
-
-        for (int i = 0; i < list.size(); i++)
-        {
-            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
-        }
-
-        api.loescheDoppelteWerte(list);
-        System.out.println("nach dem Löschen: ");
-        for (int i = 0; i < list.size(); i++)
-        {
-            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
-        }
+//        LinkedList<Location> list = api.getWaypointsMitRoadsAPI(test);
+//
+//        for (int i = 0; i < list.size(); i++)
+//        {
+//            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
+//        }
+//
+//        api.loescheDoppelteWerte(list);
+//        System.out.println("nach dem Löschen: ");
+//        for (int i = 0; i < list.size(); i++)
+//        {
+//            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
+//        }
 
     }
 }
