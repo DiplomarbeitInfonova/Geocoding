@@ -432,8 +432,9 @@ public class EingabeGUI extends javax.swing.JFrame {
                     if (legs.get(l).getPolyline() != null || legs.get(l).getPolyline() != "") 
                     {
                         System.out.println("Polyline: "+legs.get(l).getPolyline());
-                        helplocation = decodePoly(legs.get(l).getPolyline());
-
+                        helplocation = decodePoly(legs.get(l).getPolyline(),7);
+                        //helplocation = decode(legs.get(l).getPolyline(),7,true);
+                        
                         for (int i = 0; i < helplocation.size(); i++) {
                             //System.out.println(helplocation.get(i).getxKoord()+" "+helplocation.get(i).getyKoord());
                             locations.add(helplocation.get(i));
@@ -472,6 +473,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                 this.panhoehe.add(diagramm, BorderLayout.CENTER);
                 this.lab_bitteklicken.setText("Für mehr Informationen bitte hier klicken");
                 panhoehe.repaint();
+                System.out.println(locations.size());
                 paintRoute(locations);
                 EingabeGUI.updateStatus("Zeichnen abgeschlossen");
                 this.printCounters();
@@ -804,16 +806,53 @@ public class EingabeGUI extends javax.swing.JFrame {
         return dlist;
     }
     
-    private LinkedList<Location> decodePoly(String encoded) {
+//    private LinkedList<Location> decodePoly(String encoded) {
+//
+//        LinkedList<Location> poly = new LinkedList<>();
+//        int index = 0, len = encoded.length();
+//        int lat = 0, lng = 0;
+//
+//        while (index < len) {
+//            int b, shift = 0, result = 0;
+//            do {
+//                b = encoded.charAt(index++) - 63;
+//                result |= (b & 0x1f) << shift;
+//                shift += 5;
+//            } while (b >= 0x20);
+//            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+//            lat += dlat;
+//
+//            shift = 0;
+//            result = 0;
+//            do {
+//                b = encoded.charAt(index++) - 63;
+//                result |= (b & 0x1f) << shift;
+//                shift += 5;
+//            } while (b >= 0x20);
+//            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+//            lng += dlng;
+//            
+//            double [] feld = new double[2];
+//            feld[0] = (int)(((double) lat / 1E5) * 1E6);
+//            feld[1] = (int)(((double) lng / 1E5) * 1E6);
+//            System.out.println(feld[0]+" "+feld[1]);
+//           
+//            Location l = new Location("a",feld[0],feld[1],200);
+//            poly.add(l);    
+//        }
+//        return poly;
+//    }
 
-        LinkedList<Location> poly = new LinkedList<>();
-        int index = 0, len = encoded.length();
-        int lat = 0, lng = 0;
+    public static LinkedList<Location> decodePoly(String encodedString, int precision) {
+        LinkedList<Location> polyline = new LinkedList<>();
+        int index = 0;
+        int len = encodedString.length();
+        double lat = 0, lng = 0;
 
         while (index < len) {
             int b, shift = 0, result = 0;
             do {
-                b = encoded.charAt(index++) - 63;
+                b = encodedString.charAt(index++) - 63;
                 result |= (b & 0x1f) << shift;
                 shift += 5;
             } while (b >= 0x20);
@@ -823,22 +862,67 @@ public class EingabeGUI extends javax.swing.JFrame {
             shift = 0;
             result = 0;
             do {
-                b = encoded.charAt(index++) - 63;
+                b = encodedString.charAt(index++) - 63;
                 result |= (b & 0x1f) << shift;
                 shift += 5;
             } while (b >= 0x20);
             int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
             lng += dlng;
-            
-            double [] feld = new double[2];
-            feld[0] = (int) (((double) lat / 1E5) * 1E6);
-            feld[1] = ((int) ((double) lng / 1E5) * 1E6);
-            System.out.println(feld[0]+" "+feld[1]);
-           
-            Location l = new Location("a",feld[0],feld[1],200);
-            poly.add(l);    
-        }
-        return poly;
-    }
 
+            Location p = new Location("a",lat/100000, lng/100000,200);
+            System.out.println(p.toString());
+            polyline.add(p);
+        }
+
+        return polyline;
+    }
+    
+    // mit Höhe
+    public static LinkedList<Location> decode(String encodedString, int precision, boolean hasAltitude) {
+        int index = 0;
+        int len = encodedString.length();
+        int lat = 0, lng = 0, alt = 0;
+        LinkedList<Location> polyline = new LinkedList<>();
+        	//capacity estimate: polyline size is roughly 1/3 of string length for a 5digits encoding, 1/5 for 10digits. 
+
+        while (index < len) {
+            int b, shift, result;
+            shift = result = 0;
+            do {
+                b = encodedString.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = result = 0;
+            do {
+                b = encodedString.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            if (hasAltitude){
+                shift = result = 0;
+                do {
+                    b = encodedString.charAt(index++) - 63;
+                    result |= (b & 0x1f) << shift;
+                    shift += 5;
+                } while (b >= 0x20);
+                int dalt = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+                alt += dalt;
+            }
+            
+            Location p = new Location("a",lat*precision, lng*precision, alt/100);
+            polyline.add(p);
+        }
+        
+        //Log.d("BONUSPACK", "decode:string="+len+" points="+polyline.size());
+
+        return polyline;
+    }
+    
 }
