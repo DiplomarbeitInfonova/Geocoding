@@ -465,6 +465,10 @@ public class EingabeGUI extends javax.swing.JFrame {
                 //locations.add(a);
                 //locations.add(b);
                 //this.addWaypoint(locations);
+                
+                // Die Höhen werden von der ElevationAPI geholt
+                holeHoehen();
+                
                 // Ein Höhendiagramm wird erstellt und in das Panel eingebunden.
                 // ~Veronika
                 GraphingData_small diagramm = new GraphingData_small();
@@ -784,7 +788,7 @@ public class EingabeGUI extends javax.swing.JFrame {
 // Author Veronika
     /**
      * Diese Methode fügt alle Höhen der Locations- Membervariable zu einer
-     * Liste von Strings zusammen. Diese wird somit verwendet um das
+     * Liste von Double werten zusammen. Diese wird somit verwendet um das
      * Höhendiagramm zu zeichnen.
      *
      * @return
@@ -797,10 +801,10 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         for (int i = 0; i < locations.size(); i++) {
             double akthoehe=locations.get(i).getHoehe();
-            if(akthoehe==0){
-               geo.getElevationInformation(locations.get(i));
-               akthoehe=locations.get(i).getHoehe();
-            }
+//            if(akthoehe==0){
+//               geo.getElevationInformation(locations.get(i));
+//               akthoehe=locations.get(i).getHoehe();
+//            }
             dlist.add(locations.get(i).getHoehe());
         }
         return dlist;
@@ -869,7 +873,7 @@ public class EingabeGUI extends javax.swing.JFrame {
             int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
             lng += dlng;
 
-            Location p = new Location("a",lat/100000, lng/100000,200);
+            Location p = new Location("",lat/100000, lng/100000);
             System.out.println(p.toString());
             polyline.add(p);
         }
@@ -916,13 +920,26 @@ public class EingabeGUI extends javax.swing.JFrame {
                 alt += dalt;
             }
             
-            Location p = new Location("a",lat*precision, lng*precision, alt/100);
+            Location p = new Location("",lat*precision, lng*precision, alt/100);
             polyline.add(p);
         }
         
         //Log.d("BONUSPACK", "decode:string="+len+" points="+polyline.size());
 
         return polyline;
+    }
+
+    private void holeHoehen() {
+       int intervall = locations.size()/100;
+        for (int i = 0; i < locations.size(); i++) {
+            if(i%intervall==0)
+            {
+                Location l= locations.get(i);
+                double hoehe = geo.getElevationInformation(l);
+                l.setHoehe(hoehe);
+                locations.set(i, l);
+            }
+        }
     }
     
 }
