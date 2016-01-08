@@ -5,6 +5,7 @@
  */
 package gui;
 
+import beans.Leg;
 import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData_small;
@@ -56,6 +57,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     private Location startloc;
     private Location zielloc;
     private LinkedList<Location> locations = new LinkedList<>();
+    private LinkedList<Leg> legs = new LinkedList<>();
     private CSVHandler csvhandler;
 
     public EingabeGUI() {
@@ -411,14 +413,42 @@ public class EingabeGUI extends javax.swing.JFrame {
                 this.lab_Duration.setText(durationarray[0]);
                 //locations = geo.getWaypoints(a.getName(), b.getName());
                 // ~Patrizia
-                locations = geo.getWaypoints(startloc.getName(), zielloc.getName());
+                //locations = geo.getWaypoints(startloc.getName(), zielloc.getName());
                 
+                legs = geo.getWaypoints(startloc.getName(), zielloc.getName());
+                // ~Patrizia
+                /*
+                * Dieser Abschnitt ist für das Aufrufen des Polyline-Algos
+                */
+                legs = geo.getWaypoints(startloc.getName(), zielloc.getName());
+                
+                for(Leg leg:legs)
+                {
+                    System.out.println(leg.toString());
+                }
+
+                LinkedList<Location> helplocation = new LinkedList<>();
+                for (int l = 0; l < legs.size(); l++) {
+                    if (legs.get(l).getPolyline() != null || legs.get(l).getPolyline() != "") 
+                    {
+                        System.out.println("Polyline: "+legs.get(l).getPolyline());
+                        helplocation = decodePoly(legs.get(l).getPolyline());
+
+                        for (int i = 0; i < helplocation.size(); i++) {
+                            //System.out.println(helplocation.get(i).getxKoord()+" "+helplocation.get(i).getyKoord());
+                            locations.add(helplocation.get(i));
+                        }
+                    }
+                }
+                System.out.println("Location-Size: " + locations.size());
+                
+                /*
                 locations = geo.getWaypointsMitRoadsAPI(locations);
                 //System.out.println("Länge der Liste: " + locations.size());
                 locations = geo.loescheDoppelteWerte(locations);
                 //System.out.println("Länge der Liste nach Löschen: " + locations.size());
                 SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
-
+*/
 //            GeoApiContext apicontext = new GeoApiContext();
 //            apicontext.setApiKey(geo.apiKey);
 //            apicontext.setQueryRateLimit(100,0);
@@ -447,10 +477,6 @@ public class EingabeGUI extends javax.swing.JFrame {
                 this.printCounters();
 //            this.addWaypoint(list);
             }
-        } catch (XmlPullParserException ex) {
-            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -777,4 +803,42 @@ public class EingabeGUI extends javax.swing.JFrame {
         }
         return dlist;
     }
+    
+    private LinkedList<Location> decodePoly(String encoded) {
+
+        LinkedList<Location> poly = new LinkedList<>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+            
+            double [] feld = new double[2];
+            feld[0] = (int) (((double) lat / 1E5) * 1E6);
+            feld[1] = ((int) ((double) lng / 1E5) * 1E6);
+            System.out.println(feld[0]+" "+feld[1]);
+           
+            Location l = new Location("a",feld[0],feld[1],200);
+            poly.add(l);    
+        }
+        return poly;
+    }
+
 }
