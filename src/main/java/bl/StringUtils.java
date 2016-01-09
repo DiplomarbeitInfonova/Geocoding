@@ -36,5 +36,17 @@ public class StringUtils
     {
         return name.replaceAll(" ", ";");
     }
+    
+    public String correctLettersFromAPI(String name)
+    {
+        String correctName=name;
+        correctName = correctName.replaceAll("Ãœ", "Ü");
+        correctName = correctName.replaceAll("Ã¤", "ä");
+        correctName = correctName.replaceAll("Ã¶", "ö");
+        correctName = correctName.replaceAll("Ã–", "Ö");
+        correctName = correctName.replaceAll("ÃŸ", "ß");
+        correctName = correctName.replaceAll("Ã¼", "ü");
+        return correctName;
+    }
 
 }
