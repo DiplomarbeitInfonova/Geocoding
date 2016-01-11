@@ -35,6 +35,8 @@ public class Aufrufzaehler {
     public Aufrufzaehler(String path)
     {
         this.path = path;
+        System.out.println("Aufrufezähler:");
+        System.out.println("Path: "+path);
     }
     
     private void prepareWriting()
@@ -60,6 +62,7 @@ public class Aufrufzaehler {
         
             System.out.println("Aufrufezaehler:");
             System.out.println("Fehler beim Schreiben auf File!!");
+            System.out.println(ex.toString());
         }
     }
     
@@ -86,6 +89,7 @@ public class Aufrufzaehler {
             
             System.out.println("Aufrufzaehler: ");
             System.out.println("File nicht gefunden!!");
+            System.out.println(ex.toString());
             
         }
         
