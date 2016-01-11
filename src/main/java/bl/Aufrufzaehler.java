@@ -30,30 +30,30 @@ public class Aufrufzaehler {
     private String path;
     private final int max = 1000;
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+    private String text;
 
     public Aufrufzaehler(String path)
     {
         this.path = path;
-        this.prepareWriting();
     }
     
     private void prepareWriting()
     {
         Date d = java.util.Calendar.getInstance().getTime();
         
-        String text = sdf.format(d);
+        text = sdf.format(d);
         
-        this.writeOnFile(text);
     }
     
-    private void writeOnFile(String text)
+    public void writeOnFile(String art, int count)
     {
+        this.prepareWriting();
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
             
             counter = 0;
-            counter=GeocodingAPI.directionscounter+GeocodingAPI.distancematrixcounter+GeocodingAPI.elevationcounter+GeocodingAPI.geocodingcounter;
-            text+="-"+counter;
+            counter = count;
+            text+=art + "-"+counter;
             bw.write(text);
             
         } catch (IOException ex) {
