@@ -3,6 +3,7 @@ package bl;
 import beans.Leg;
 import beans.Location;
 import gui.EingabeGUI;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ import org.xmlpull.v1.XmlPullParserException;
 public class GeocodingAPI
 {
 
+    private Aufrufzaehler zaehler = new Aufrufzaehler(System.getProperty("user.dir")+File.separator+"resources"+File.separator+"counter.csv");
     private XMLParse xmlp;
     public final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
     public static int geocodingcounter = 0;
@@ -58,6 +60,8 @@ public class GeocodingAPI
             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
         }
         GeocodingAPI.geocodingcounter += 1;
+        zaehler.writeOnFile("geo", geocodingcounter);
+        
         return ort;
     }
 
@@ -81,6 +85,7 @@ public class GeocodingAPI
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             String answer = sendObject.read();
             GeocodingAPI.geocodingcounter += 1;
+            zaehler.writeOnFile("geo", geocodingcounter);
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
 
@@ -113,6 +118,7 @@ public class GeocodingAPI
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             GeocodingAPI.distancematrixcounter += 1;
+            zaehler.writeOnFile("distance", distancematrixcounter);
 //            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlToDistanceAndDuration();
@@ -147,6 +153,7 @@ public class GeocodingAPI
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             GeocodingAPI.elevationcounter += 1;
+            zaehler.writeOnFile("elevation", elevationcounter);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlElevationInformation();
         } catch (MalformedURLException ex)
@@ -178,6 +185,7 @@ public class GeocodingAPI
             SendToMapsAPI sendObject = new SendToMapsAPI(request);
             String answer = sendObject.read();
             GeocodingAPI.directionscounter += 1;
+            zaehler.writeOnFile("direction", directionscounter);
 
             EingabeGUI.updateStatus("Anfrage an Google gesendet");
             xmlp = new XMLParse(answer);
