@@ -23,7 +23,9 @@ import org.xmlpull.v1.XmlPullParserException;
 public class GeocodingAPI
 {
 
-    private Aufrufzaehler zaehler = new Aufrufzaehler(System.getProperty("user.dir")+File.separator+"resources"+File.separator+"counter.csv");
+    private Aufrufzaehler zaehler = new Aufrufzaehler(System.getProperty("user.dir")+
+                                                        File.separator+"src"+File.separator+"main"+
+                                                        File.separator+"java"+File.separator+"resources"+File.separator+"counter.csv");
     private XMLParse xmlp;
     public final String apiKey = "AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo";
     public static int geocodingcounter = 0;
