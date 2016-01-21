@@ -481,7 +481,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                 paintRoute(locations);
                 EingabeGUI.updateStatus("Zeichnen abgeschlossen");
                 this.printCounters();
-//            this.addWaypoint(list);
+               // this.addWaypoint(locations);
             }
         } catch (Exception ex) {
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -578,6 +578,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         if (locations.size() != 0) {
           
             HoehenPanel hoehenpanel = new HoehenPanel(locations);
+            hoehenpanel.setLocationRelativeTo(null);
             hoehenpanel.setVisible(true);
             this.printCounters();
         }
