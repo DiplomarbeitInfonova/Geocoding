@@ -9,6 +9,7 @@ import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData_big;
 import bl.StringUtils;
+import java.awt.Toolkit;
 import java.util.LinkedList;
 
 /**
@@ -21,9 +22,9 @@ public class HoehenPanel extends javax.swing.JFrame {
      * GUI Klasse für das genaue HöhenPanel Greift auf die Java-Klasse
      * GraphinData_big zu und binded dieses Panel ein ~ Veronika
      */
-    private LinkedList<Location> aufbereitete_Liste;
+
     private LinkedList<Location> ll;
-    private GeocodingAPI geo_api;
+  
 
     public HoehenPanel() {
         initComponents();
@@ -33,12 +34,11 @@ public class HoehenPanel extends javax.swing.JFrame {
     public HoehenPanel(LinkedList<Location> ll) {
         initComponents();
 
-        this.setSize(800, 650);
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, 650);
         this.ll = ll;
-        geo_api = new GeocodingAPI();
-        aufbereitete_Liste = this.bereiteListeVor();
+        
         GraphingData_big diagramm = new GraphingData_big();
-        diagramm.setHoehen(aufbereitete_Liste);
+        diagramm.setHoehen(ll);
         this.pan_hoehe.add(diagramm);
         pan_hoehe.paintAll(this.getGraphics());
     }
@@ -97,69 +97,32 @@ public class HoehenPanel extends javax.swing.JFrame {
         });
     }
 
-    private LinkedList<Location> bereiteListeVor() {
-        aufbereitete_Liste = new LinkedList<Location>();
-        StringUtils su = new StringUtils();
-        String name;
-        int i = 0;
-
-        for (Location loc : ll) {
-            try {
-                if (loc.getHoehe() != 0) {
-                    name = geo_api.KoordToOrt(loc.getKoordArray()).getName();
-
-                    name = su.correctLettersFromAPI(name);
-                    System.out.println("Name geholt: " + name);
-                    loc.setName(name);
-
-                    aufbereitete_Liste.add(loc);
-                    i++;
-                }
-            } catch (java.lang.NullPointerException ex) {
-                System.out.println("Es wurde bei einem Namen Null zurückgegeben!");
-                
-            }
-        }
-
-//        if (ll.size() <= 10) {
-//            //Alle Elemente anzeigen 
-//            for (int i = 0; i < ll.size(); i++) {
+//    private LinkedList<Location> bereiteListeVor() {
+//        aufbereitete_Liste = new LinkedList<Location>();
+//        StringUtils su = new StringUtils();
+//        String name;
+//        int i = 0;
 //
-//                l = ll.get(i);
-//                System.out.println(i + ".tes Element wird gezeichnet: " + l.toString());
-//                if (l.getName().isEmpty()) {
-//                    System.out.println(i + ".tes Element ohne namen:");
-//                    name = geo_api.KoordToOrt(l.getKoordArray()).getName();
-//                    System.out.println("Name geholt: " + name);
-//                    l.setName(name);
+//        for (Location loc : ll) {
+//            try {
+//                if (loc.getHoehe() != 0) {
+//                    name = geo_api.KoordToOrt(loc.getKoordArray()).getName();
+//
+//                    name = su.correctLettersFromAPI(name);
+//                    //System.out.println("Name geholt: " + name);
+//                    loc.setName(name);
+//
+//                    aufbereitete_Liste.add(loc);
+//                    i++;
 //                }
-//
-//                aufbereitete_Liste.add(l);
-//
-//            }
-//            return aufbereitete_Liste;
-//        }
-//        int intervall = ll.size() / 100;
-//
-//        for (int i = 0; i < ll.size(); i++) {
-//            l = ll.get(i);
-//            if ((i % intervall) == 0) {
-//
-//                
-//                System.out.println(i + ".tes Element wird gezeichnet: " + l.toString());
-//                if (l.getName().isEmpty()) {
-//                    System.out.println(i + ".tes Element ohne namen:");
-//                    name = geo_api.KoordToOrt(l.getKoordArray()).getName();
-//                    System.out.println("Name geholt: " + name);
-//                    l.setName(name);
-//                }
-//
+//            } catch (java.lang.NullPointerException ex) {
+//                System.out.println("Es wurde bei einem Namen Null zurückgegeben!");
 //                
 //            }
-//            aufbereitete_Liste.add(l);
 //        }
-        return aufbereitete_Liste;
-    }
+//
+//        return aufbereitete_Liste;
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pan_hoehe;

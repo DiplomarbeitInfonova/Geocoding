@@ -10,6 +10,7 @@ import beans.Location;
 import bl.GeocodingAPI;
 import bl.GraphingData_small;
 import bl.SnapToRoadsAPI;
+import bl.StringUtils;
 import dal.CSVHandler;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -484,7 +485,9 @@ public class EingabeGUI extends javax.swing.JFrame {
                // this.addWaypoint(locations);
             }
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Ein Fehler ist aufgetreten!");
             Logger.getLogger(EingabeGUI.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
 
     }//GEN-LAST:event_mi_StartActionPerformed
@@ -515,7 +518,11 @@ public class EingabeGUI extends javax.swing.JFrame {
        boolean correctlyfilled=true;
         if (!this.tf_OrtsnameA.getText().equals("")) {
             if (startloc == null) {
-                startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText());
+                 if((startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText()))==null)
+                        {
+                             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
+                             correctlyfilled=false;
+                        }
             }
 
         } else if (!this.tf_XKoordA.getText().isEmpty() && !this.tf_YKoordA.getText().isEmpty()) {
@@ -527,7 +534,11 @@ public class EingabeGUI extends javax.swing.JFrame {
                     = {
                         x, y
                     };
-            startloc = geo.KoordToOrt(dfeld);
+            if((startloc = geo.KoordToOrt(dfeld))==null)
+            {
+                JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
+                correctlyfilled=false;
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort A angeben!");
             correctlyfilled = false;
@@ -535,7 +546,11 @@ public class EingabeGUI extends javax.swing.JFrame {
 
         if (!this.tf_OrtsnameB.getText().equals("")) {
             if (zielloc == null) {
-                zielloc = geo.OrtToKoord(this.tf_OrtsnameB.getText());
+                if((zielloc = geo.OrtToKoord(this.tf_OrtsnameB.getText()))==null)
+                        {
+                             JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
+                             correctlyfilled=false;
+                        }
             }
 
         } else if (!this.tf_XKoordB.getText().equals("") && !this.tf_YKoordB.getText().equals("")) {
@@ -547,7 +562,11 @@ public class EingabeGUI extends javax.swing.JFrame {
                     = {
                         x, y
                     };
-            zielloc = geo.KoordToOrt(dfeld);
+            if((zielloc = geo.KoordToOrt(dfeld))==null)
+            {
+                JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
+                correctlyfilled=false;
+            }
 
         } else {
             JOptionPane.showMessageDialog(this, "Bitte Ort B angeben!");
@@ -577,10 +596,11 @@ public class EingabeGUI extends javax.swing.JFrame {
         // ~Veronika
         if (locations.size() != 0) {
           
-            HoehenPanel hoehenpanel = new HoehenPanel(locations);
+            HoehenPanel hoehenpanel = new HoehenPanel(bereiteHoehenListeVor());
             hoehenpanel.setLocationRelativeTo(null);
             hoehenpanel.setVisible(true);
             this.printCounters();
+            
         }
     }//GEN-LAST:event_panhoeheMouseClicked
 
@@ -941,6 +961,33 @@ public class EingabeGUI extends javax.swing.JFrame {
                 locations.set(i, l);
             }
         }
+    }
+
+    private LinkedList<Location> bereiteHoehenListeVor() {
+        LinkedList<Location> aufbereitete_Liste = new LinkedList<Location>();
+        StringUtils su = new StringUtils();
+        String name;
+        int i = 0;
+
+        for (Location loc : locations) {
+            try {
+                if (loc.getHoehe() != 0) {
+                    name = geo.KoordToOrt(loc.getKoordArray()).getName();
+
+                    name = su.correctLettersFromAPI(name);
+                    //System.out.println("Name geholt: " + name);
+                    loc.setName(name);
+
+                    aufbereitete_Liste.add(loc);
+                    i++;
+                }
+            } catch (java.lang.NullPointerException ex) {
+                System.out.println("Es wurde bei einem Namen Null zurückgegeben!");
+                
+            }
+        }
+
+        return aufbereitete_Liste;
     }
     
 }

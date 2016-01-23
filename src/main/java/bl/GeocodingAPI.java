@@ -57,9 +57,13 @@ public class GeocodingAPI
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
             ort.setName(name);
-        } catch (MalformedURLException ex)
+        } catch ( NullPointerException ex1)
         {
-            JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren des Ortes zu Koordinaten");
+            
+           
+            return ort;
+        } catch (MalformedURLException ex) {
+            return ort;
         }
         GeocodingAPI.geocodingcounter += 1;
         zaehler.writeOnFile("geo", geocodingcounter);
@@ -93,9 +97,12 @@ public class GeocodingAPI
 
             ort = xmlp.xmlToLocation();
 //            System.out.println("koordtoOrt\n"+ort.toString());
-        } catch (MalformedURLException ex)
+        } catch (NullPointerException ex)
         {
-            JOptionPane.showMessageDialog(null, "Fehler beim Konvertieren der Koordinaten zum Ort");
+            
+            return ort;
+        } catch (MalformedURLException ex) {
+            return ort;
         }
 
         return ort;
@@ -125,9 +132,11 @@ public class GeocodingAPI
             xmlp = new XMLParse(answer);
             response = xmlp.xmlToDistanceAndDuration();
 
-        } catch (MalformedURLException ex)
+        } catch (MalformedURLException | NullPointerException ex)
         {
-            JOptionPane.showMessageDialog(null, "Fehler beim berechnen der Distanz");
+            String[] s={"",""};
+            return s;
+            
         }
 
         return response.split("-");
@@ -158,10 +167,11 @@ public class GeocodingAPI
             zaehler.writeOnFile("elevation", elevationcounter);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlElevationInformation();
-        } catch (MalformedURLException ex)
+        } catch (MalformedURLException | NullPointerException ex)
         {
 
-            JOptionPane.showMessageDialog(null, "Fehler beim herausfiltern der Höhe");
+            
+            return 0;
         }
 
         l.setHoehe(response);
@@ -196,11 +206,11 @@ public class GeocodingAPI
 //            return parser.LegtoLocation(response);
             return response;
 
-        } catch (MalformedURLException ex)
+        } catch (MalformedURLException | NullPointerException | ArrayIndexOutOfBoundsException ex)
         {
-            JOptionPane.showMessageDialog(null, "Fehler beim herausfiltern der Waypoints");
+            return response;
         }
-        return null;
+        
     }
 
     /**
@@ -245,9 +255,11 @@ public class GeocodingAPI
             xmlp = new XMLParse(xml);
             response = xmlp.xmlFromRoadsAPI();
 
-        } catch (MalformedURLException | JSONException ex)
+        } catch (MalformedURLException | JSONException |NullPointerException ex)
         {
+            
             JOptionPane.showMessageDialog(null, "Fehler beim Herausholen der Waypoints mit der RoadsAPI");
+            return response;
         }
         return response;
     }
