@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import static org.jxmapviewer.JXMapKit.DefaultProviders.OpenStreetMaps;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.Painter;
@@ -49,7 +50,7 @@ import org.xmlpull.v1.XmlPullParserException;
  *
  * @author Veronika, Dominik
  */
-public class EingabeGUI extends javax.swing.JFrame {
+public class EingabeGUI extends javax.swing.JFrame{
 
     /**
      * Creates new form EingabeGUI
@@ -73,6 +74,7 @@ public class EingabeGUI extends javax.swing.JFrame {
         rbgroup.add(rb_2D);
         rbgroup.add(rb_3D);
         EingabeGUI.updateStatus("Warten auf Eingabe..");
+          this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -516,7 +518,8 @@ public class EingabeGUI extends javax.swing.JFrame {
 
     private boolean getLocationsfromTextfields() {
        boolean correctlyfilled=true;
-        if (!this.tf_OrtsnameA.getText().equals("")) {
+       String ortsnameA=this.tf_OrtsnameA.getText();
+        if (!ortsnameA.equals("")) {
             if (startloc == null) {
                  if((startloc = geo.OrtToKoord(this.tf_OrtsnameA.getText()))==null)
                         {
@@ -525,7 +528,7 @@ public class EingabeGUI extends javax.swing.JFrame {
                         }
             }
 
-        } else if (!this.tf_XKoordA.getText().isEmpty() && !this.tf_YKoordA.getText().isEmpty()) {
+        } else if (!(this.tf_XKoordA.getText()).equals("") && !this.tf_YKoordA.getText().equals("")) {
             String xS = this.tf_XKoordA.getText();
             String yS = this.tf_YKoordA.getText();
             double x = Double.parseDouble(xS);
@@ -576,7 +579,7 @@ public class EingabeGUI extends javax.swing.JFrame {
     }
 
     private void fillTextfields() {
-        // Prüfen ob alle Felder richtig ausgefüllt wurden ~ Veronika
+        // Füllt alle Textfelder aus ~ Veronika
 
         this.tf_XKoordA.setText(startloc.getxKoord() + "");
         this.tf_YKoordA.setText(startloc.getyKoord() + "");
@@ -609,25 +612,33 @@ public class EingabeGUI extends javax.swing.JFrame {
         // Will der Benutzer eine neue Abfrage machen wird die Alte Frage verworfen und 
         // alles auf Anfangszustand zurückgestellt 
         //~Veronika
-        initComponents();
-        this.setLocationRelativeTo(null);
-        geo = new GeocodingAPI();
-        this.rb_2D.setSelected(true);
-        this.MainMap.setDefaultProvider(OpenStreetMaps);
-        MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
-        ButtonGroup rbgroup = new ButtonGroup();
-        rbgroup.add(rb_2D);
-        rbgroup.add(rb_3D);
-        locations = new LinkedList<>();
-        this.tf_OrtsnameA.setText("");
-        this.tf_OrtsnameB.setText("");
-        this.tf_XKoordA.setText("");
-        this.tf_XKoordB.setText("");
-        this.tf_YKoordA.setText("");
-        this.tf_YKoordB.setText("");
-        this.lab_Distance.setText("");
-        this.lab_Duration.setText("");
-
+        EingabeGUI gui = new EingabeGUI();
+        gui.setVisible(true);
+//        initComponents();
+//        this.setLocationRelativeTo(null);
+//        geo = new GeocodingAPI();
+//        this.rb_2D.setSelected(true);
+//        this.MainMap.setDefaultProvider(OpenStreetMaps);
+//        csvhandler = new CSVHandler();
+//        MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
+//        ButtonGroup rbgroup = new ButtonGroup();
+//        rbgroup.add(rb_2D);
+//        rbgroup.add(rb_3D);
+//        EingabeGUI.updateStatus("Warten auf Eingabe..");
+//        locations = new LinkedList<>();
+//        legs = new LinkedList<>();
+////        this.tf_OrtsnameA.setText("");
+////        this.tf_OrtsnameB.setText("");
+////        this.tf_XKoordA.setText("");
+////        this.tf_XKoordB.setText("");
+////        this.tf_YKoordA.setText("");
+////        this.tf_YKoordB.setText("");
+////        this.lab_Distance.setText("");
+////        this.lab_Duration.setText("");
+//        this.startloc=null;
+//        this.zielloc=null;
+//        this.panhoehe= new JPanel();
+//        EingabeGUI.updateStatus("Warten auf Eingabe..");
     }//GEN-LAST:event_mi_NeuActionPerformed
     /**
      * Author: Dominik Beim Klick auf den Menüpunkt Daten -> von Datei einlesen

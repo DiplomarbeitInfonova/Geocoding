@@ -10,13 +10,15 @@ import bl.GeocodingAPI;
 import bl.GraphingData_big;
 import bl.StringUtils;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.LinkedList;
 
 /**
  *
  * @author Veronika
  */
-public class HoehenPanel extends javax.swing.JFrame {
+public class HoehenPanel extends javax.swing.JFrame{
 
     /**
      * GUI Klasse für das genaue HöhenPanel Greift auf die Java-Klasse
@@ -41,6 +43,7 @@ public class HoehenPanel extends javax.swing.JFrame {
         diagramm.setHoehen(ll);
         this.pan_hoehe.add(diagramm);
         pan_hoehe.paintAll(this.getGraphics());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -127,4 +130,5 @@ public class HoehenPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pan_hoehe;
     // End of variables declaration//GEN-END:variables
+
 }
