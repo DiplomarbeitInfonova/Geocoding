@@ -84,10 +84,6 @@ public class GraphingData_small extends JPanel
         g2.setPaint(Color.RED.brighter());
         for (int i = 0; i < daten.size() - 1; i++)
         {
-            // Sollte keine höhe zurückgegeben worden sein, wird die Höhe des vorherigen Punkes verwendet
-            double hoehe=daten.get(i);
-            if(daten.get(i)==0)
-                hoehe=daten.get(i-1);
             double x1 = PAD + i * xInc;
             double y1 = h - PAD - scale * daten.get(i);
             double x2 = PAD + (i + 1) * xInc;

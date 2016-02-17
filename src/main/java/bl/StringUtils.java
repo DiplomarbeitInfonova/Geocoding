@@ -46,6 +46,9 @@ public class StringUtils
         correctName = correctName.replaceAll("Ã–", "Ö");
         correctName = correctName.replaceAll("ÃŸ", "ß");
         correctName = correctName.replaceAll("Ã¼", "ü");
+        
+        if(correctName.length()>30)
+            correctName=correctName.substring(0, 30)+".";
         return correctName;
     }
 
