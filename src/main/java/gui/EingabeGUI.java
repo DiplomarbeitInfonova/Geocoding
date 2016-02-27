@@ -435,7 +435,7 @@ public class EingabeGUI extends javax.swing.JFrame{
                     if (legs.get(l).getPolyline() != null || legs.get(l).getPolyline() != "") 
                     {
                         System.out.println("Polyline: "+legs.get(l).getPolyline());
-                        helplocation = decodePoly(legs.get(l).getPolyline(),7);
+                        helplocation = decodePoly(legs.get(l).getPolyline());
                         //helplocation = decode(legs.get(l).getPolyline(),7,true);
                         
                         for (int i = 0; i < helplocation.size(); i++) {
@@ -879,7 +879,7 @@ public class EingabeGUI extends javax.swing.JFrame{
 //        return poly;
 //    }
 
-    public static LinkedList<Location> decodePoly(String encodedString, int precision) {
+    public static LinkedList<Location> decodePoly(String encodedString) {
         LinkedList<Location> polyline = new LinkedList<>();
         int index = 0;
         int len = encodedString.length();
