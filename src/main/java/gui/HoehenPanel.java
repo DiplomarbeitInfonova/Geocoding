@@ -100,32 +100,7 @@ public class HoehenPanel extends javax.swing.JFrame{
         });
     }
 
-//    private LinkedList<Location> bereiteListeVor() {
-//        aufbereitete_Liste = new LinkedList<Location>();
-//        StringUtils su = new StringUtils();
-//        String name;
-//        int i = 0;
-//
-//        for (Location loc : ll) {
-//            try {
-//                if (loc.getHoehe() != 0) {
-//                    name = geo_api.KoordToOrt(loc.getKoordArray()).getName();
-//
-//                    name = su.correctLettersFromAPI(name);
-//                    //System.out.println("Name geholt: " + name);
-//                    loc.setName(name);
-//
-//                    aufbereitete_Liste.add(loc);
-//                    i++;
-//                }
-//            } catch (java.lang.NullPointerException ex) {
-//                System.out.println("Es wurde bei einem Namen Null zurückgegeben!");
-//                
-//            }
-//        }
-//
-//        return aufbereitete_Liste;
-//    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pan_hoehe;
