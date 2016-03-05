@@ -63,6 +63,7 @@ public class EingabeGUI extends javax.swing.JFrame{
     private CSVHandler csvhandler;
 
     public EingabeGUI() {
+        // Design und Erstellung der GUI: Veronika
         initComponents();
         this.setLocationRelativeTo(null);
         geo = new GeocodingAPI();
@@ -614,31 +615,7 @@ public class EingabeGUI extends javax.swing.JFrame{
         //~Veronika
         EingabeGUI gui = new EingabeGUI();
         gui.setVisible(true);
-//        initComponents();
-//        this.setLocationRelativeTo(null);
-//        geo = new GeocodingAPI();
-//        this.rb_2D.setSelected(true);
-//        this.MainMap.setDefaultProvider(OpenStreetMaps);
-//        csvhandler = new CSVHandler();
-//        MainMap.setAddressLocation(new GeoPosition(47.066667, 15.433333));
-//        ButtonGroup rbgroup = new ButtonGroup();
-//        rbgroup.add(rb_2D);
-//        rbgroup.add(rb_3D);
-//        EingabeGUI.updateStatus("Warten auf Eingabe..");
-//        locations = new LinkedList<>();
-//        legs = new LinkedList<>();
-////        this.tf_OrtsnameA.setText("");
-////        this.tf_OrtsnameB.setText("");
-////        this.tf_XKoordA.setText("");
-////        this.tf_XKoordB.setText("");
-////        this.tf_YKoordA.setText("");
-////        this.tf_YKoordB.setText("");
-////        this.lab_Distance.setText("");
-////        this.lab_Duration.setText("");
-//        this.startloc=null;
-//        this.zielloc=null;
-//        this.panhoehe= new JPanel();
-//        EingabeGUI.updateStatus("Warten auf Eingabe..");
+
     }//GEN-LAST:event_mi_NeuActionPerformed
     /**
      * Author: Dominik Beim Klick auf den Menüpunkt Daten -> von Datei einlesen

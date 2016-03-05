@@ -37,6 +37,8 @@ public class GeocodingAPI {
      double-Feld zurück
      Beispiel-Link: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY    
      Key: AIzaSyDI6ex1fUOJKjomDnoe97atKcWyxDotOEo   
+    
+    Author David und Veronika
      */
 
     public Location OrtToKoord(String name) {
@@ -74,6 +76,7 @@ public class GeocodingAPI {
      *
      * @param koordinaten
      * @return
+     * Author David und Veronika
      */
     public Location KoordToOrt(double[] koordinaten) {
 
