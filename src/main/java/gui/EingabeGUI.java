@@ -415,12 +415,8 @@ public class EingabeGUI extends javax.swing.JFrame{
 
                 this.lab_Distance.setText(durationarray[1]);
                 this.lab_Duration.setText(durationarray[0]);
-                //locations = geo.getWaypoints(a.getName(), b.getName());
-                // ~Patrizia
-                //locations = geo.getWaypoints(startloc.getName(), zielloc.getName());
-                
-                legs = geo.getWaypoints(startloc.getName(), zielloc.getName());
-                // ~Patrizia
+
+                // ~Patrizia               
                 /*
                 * Dieser Abschnitt ist für das Aufrufen des Polyline-Algos
                 */
@@ -437,38 +433,31 @@ public class EingabeGUI extends javax.swing.JFrame{
                     {
                         System.out.println("Polyline: "+legs.get(l).getPolyline());
                         helplocation = decodePoly(legs.get(l).getPolyline());
-                        //helplocation = decode(legs.get(l).getPolyline(),7,true);
                         
                         for (int i = 0; i < helplocation.size(); i++) {
-                            //System.out.println(helplocation.get(i).getxKoord()+" "+helplocation.get(i).getyKoord());
                             locations.add(helplocation.get(i));
                         }
                     }
                 }
                 System.out.println("Location-Size: " + locations.size());
                 
+                // ~Patrizia 
+                // In diesem auskommentierten Codeabschnitt wird mit der Roads API gearbeitet.
+                // Da wir uns zum Schluss für das Entschlüsseln der Polyline entschieden haben, 
+                // wird dies nun nicht benötigt.
                 /*
-                locations = geo.getWaypointsMitRoadsAPI(locations);
-                //System.out.println("Länge der Liste: " + locations.size());
+                locations = geo.getWaypointsMitRoadsAPI(locations);            
                 locations = geo.loescheDoppelteWerte(locations);
-                //System.out.println("Länge der Liste nach Löschen: " + locations.size());
                 SnapToRoadsAPI snap = new SnapToRoadsAPI(locations);
-*/
-//            GeoApiContext apicontext = new GeoApiContext();
-//            apicontext.setApiKey(geo.apiKey);
-//            apicontext.setQueryRateLimit(100,0);
-//
-//            List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
-//            LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
-//            Map<String, SpeedLimit> speedlimitMap = snap.getSpeedLimits(apicontext, snappedList);
-//
-//            for (String key : speedlimitMap.keySet()) {
-//                System.out.print("Key: " + key + " - ");
-//                System.out.print("Value: " + speedlimitMap.get(key) + "\n");
-//            }
-                //locations.add(a);
-                //locations.add(b);
-                //this.addWaypoint(locations);
+                
+                GeoApiContext apicontext = new GeoApiContext();
+                apicontext.setApiKey(geo.apiKey);
+                apicontext.setQueryRateLimit(100,0);
+
+                List<SnappedPoint> snappedList = snap.snapToRoads(new GeoApiContext().setApiKey(geo.apiKey));
+                LinkedList<Location> list = snap.convertFromLatLngToLocation(snappedList);
+                Map<String, SpeedLimit> speedlimitMap = snap.getSpeedLimits(apicontext, snappedList);
+                */
                 
                 // Die Höhen werden von der ElevationAPI geholt
                 holeHoehen();
@@ -485,7 +474,6 @@ public class EingabeGUI extends javax.swing.JFrame{
                 paintRoute(locations);
                 EingabeGUI.updateStatus("Zeichnen abgeschlossen");
                 this.printCounters();
-               // this.addWaypoint(locations);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Ein Fehler ist aufgetreten!");
@@ -810,52 +798,17 @@ public class EingabeGUI extends javax.swing.JFrame{
 
         for (int i = 0; i < locations.size(); i++) {
             double akthoehe=locations.get(i).getHoehe();
-//            if(akthoehe==0){
-//               geo.getElevationInformation(locations.get(i));
-//               akthoehe=locations.get(i).getHoehe();
-//            }
             dlist.add(locations.get(i).getHoehe());
         }
         return dlist;
     }
-    
-//    private LinkedList<Location> decodePoly(String encoded) {
-//
-//        LinkedList<Location> poly = new LinkedList<>();
-//        int index = 0, len = encoded.length();
-//        int lat = 0, lng = 0;
-//
-//        while (index < len) {
-//            int b, shift = 0, result = 0;
-//            do {
-//                b = encoded.charAt(index++) - 63;
-//                result |= (b & 0x1f) << shift;
-//                shift += 5;
-//            } while (b >= 0x20);
-//            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-//            lat += dlat;
-//
-//            shift = 0;
-//            result = 0;
-//            do {
-//                b = encoded.charAt(index++) - 63;
-//                result |= (b & 0x1f) << shift;
-//                shift += 5;
-//            } while (b >= 0x20);
-//            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-//            lng += dlng;
-//            
-//            double [] feld = new double[2];
-//            feld[0] = (int)(((double) lat / 1E5) * 1E6);
-//            feld[1] = (int)(((double) lng / 1E5) * 1E6);
-//            System.out.println(feld[0]+" "+feld[1]);
-//           
-//            Location l = new Location("a",feld[0],feld[1],200);
-//            poly.add(l);    
-//        }
-//        return poly;
-//    }
-
+ 
+    /**
+     * 
+     * In dieser Methode findet das Entschlüsseln jeder Polyline statt.
+     * @param encodedString
+     * @return LinkedList<Location>
+     */
     public static LinkedList<Location> decodePoly(String encodedString) {
         LinkedList<Location> polyline = new LinkedList<>();
         int index = 0;
@@ -889,55 +842,7 @@ public class EingabeGUI extends javax.swing.JFrame{
 
         return polyline;
     }
-    
-    // mit Höhe
-    public static LinkedList<Location> decode(String encodedString, int precision, boolean hasAltitude) {
-        int index = 0;
-        int len = encodedString.length();
-        int lat = 0, lng = 0, alt = 0;
-        LinkedList<Location> polyline = new LinkedList<>();
-        	//capacity estimate: polyline size is roughly 1/3 of string length for a 5digits encoding, 1/5 for 10digits. 
-
-        while (index < len) {
-            int b, shift, result;
-            shift = result = 0;
-            do {
-                b = encodedString.charAt(index++) - 63;
-                result |= (b & 0x1f) << shift;
-                shift += 5;
-            } while (b >= 0x20);
-            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-            lat += dlat;
-
-            shift = result = 0;
-            do {
-                b = encodedString.charAt(index++) - 63;
-                result |= (b & 0x1f) << shift;
-                shift += 5;
-            } while (b >= 0x20);
-            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-            lng += dlng;
-
-            if (hasAltitude){
-                shift = result = 0;
-                do {
-                    b = encodedString.charAt(index++) - 63;
-                    result |= (b & 0x1f) << shift;
-                    shift += 5;
-                } while (b >= 0x20);
-                int dalt = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
-                alt += dalt;
-            }
-            
-            Location p = new Location("",lat*precision, lng*precision, alt/100);
-            polyline.add(p);
-        }
-        
-        //Log.d("BONUSPACK", "decode:string="+len+" points="+polyline.size());
-
-        return polyline;
-    }
-
+   
     private void holeHoehen() {
        int intervall = locations.size()/100;
         for (int i = 0; i < locations.size(); i++) {
