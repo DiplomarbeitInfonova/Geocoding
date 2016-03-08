@@ -6,11 +6,7 @@ import gui.EingabeGUI;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -186,8 +182,6 @@ public class GeocodingAPI {
             EingabeGUI.updateStatus("Anfrage an Google gesendet");
             xmlp = new XMLParse(answer);
             response = xmlp.xmlFromDistanceAPItoLocations();
-//            LocationParser parser = new LocationParser();
-//            return parser.LegtoLocation(response);
             return response;
 
         } catch (MalformedURLException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
@@ -209,7 +203,6 @@ public class GeocodingAPI {
         EingabeGUI.updateStatus("Wegpunkte werden mittels RoadsAPI erweitert");
         String request = "https://roads.googleapis.com/v1/snapToRoads?path=";
 
-        //System.out.println("Roads API request: " + request);
         LinkedList<Location> response = new LinkedList<Location>();
         try {
             for (int i = 0; i < waypoints.size(); i++) {
@@ -234,8 +227,6 @@ public class GeocodingAPI {
             response = xmlp.xmlFromRoadsAPI();
 
         } catch (MalformedURLException | JSONException | NullPointerException ex) {
-
-            //JOptionPane.showMessageDialog(null, "Fehler beim Herausholen der Waypoints mit der RoadsAPI");
             return response;
         }
         return response;
