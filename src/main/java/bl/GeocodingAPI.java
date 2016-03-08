@@ -52,7 +52,6 @@ public class GeocodingAPI {
         try {
             SendToMapsAPI sendObject = new SendToMapsAPI(requestUrl);
             answer = sendObject.read();
-            System.out.println(answer);
             xmlp = new XMLParse(answer);
             ort = xmlp.xmlToLocation();
             ort.setName(name);
@@ -69,7 +68,7 @@ public class GeocodingAPI {
     }
 
     /**
-     * dominik Diese Methode parsed ein übergebenes Feld mit double-
+     * Diese Methode parsed ein übergebenes Feld mit double-
      * Koordinaten(Longitude, Latitude) in ein Location- Objekt. Dadurch wird
      * ein Request an die Google geocoding API geschickt, welche auf Übergabe
      * der Koordinaten Namen und genaue Adresse zurück.
@@ -88,11 +87,9 @@ public class GeocodingAPI {
             String answer = sendObject.read();
             GeocodingAPI.geocodingcounter += 1;
             zaehler.writeOnFile("geo", geocodingcounter);
-//            System.out.println(answer);
             xmlp = new XMLParse(answer);
 
             ort = xmlp.xmlToLocation();
-//            System.out.println("koordtoOrt\n"+ort.toString());
         } catch (NullPointerException ex) {
 
             return ort;
@@ -104,7 +101,7 @@ public class GeocodingAPI {
     }
 
     /**
-     * dominik Diese Methode gibt die Distanz zwischen zwei Orten zurück.
+     * Diese Methode gibt die Distanz zwischen zwei Orten zurück.
      * Wiederum werden die 4 Koordinaten zu Google geschickt und die Distanz und
      * Fahrtdauer der Strecke zwischen diesen Locations zurückgegeben.
      *
@@ -122,7 +119,6 @@ public class GeocodingAPI {
             String answer = sendObject.read();
             GeocodingAPI.distancematrixcounter += 1;
             zaehler.writeOnFile("distance", distancematrixcounter);
-//            System.out.println(answer);
             xmlp = new XMLParse(answer);
             response = xmlp.xmlToDistanceAndDuration();
 
@@ -271,54 +267,5 @@ public class GeocodingAPI {
         return list;
     }
 
-    public static void main(String[] args) throws XmlPullParserException, IOException {
-
-        GeocodingAPI api = new GeocodingAPI();
-//        LinkedList<Location> test = api.getWaypoints("Mureck", "Ligist");
-//        for (int i = 0; i < test.size(); i++)
-//        {
-//            System.out.println("ag: "+test.get(i).toString() + "\n");
-//        }
-
-        //String s = api.getElevationInformation(api.OrtToKoord("Mureck"));
-        //System.out.println("help: "+s);
-        //System.out.println("Test: "+test);
-        //System.out.println(api.OrtToKoord("Ligist").toString());
-//        double[] k
-//                 =
-//                {
-//                    47.066667, 15.433333
-//                };
-//        Location l = api.KoordToOrt(k);
-//        System.out.println(l.toString());
-//        for(int i = 0; i < test.size(); i++)
-//        {
-//            System.out.println(test.get(i).getxKoord()+" "+test.get(i).getyKoord());
-//        }
-//        
-//        api.loescheDoppelteWerte(test);
-//        System.out.println("nach dem Löschen: ");
-//        for(int i = 0; i < test.size(); i++)
-//        {
-//            System.out.println(test.get(i).getxKoord()+" "+test.get(i).getyKoord());
-//        }
-//        LinkedList<Location> list = api.getWaypointsMitRoadsAPI(test);
-//
-//        for (int i = 0; i < list.size(); i++)
-//        {
-//            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
-//        }
-//
-//        api.loescheDoppelteWerte(list);
-//        System.out.println("nach dem Löschen: ");
-//        for (int i = 0; i < list.size(); i++)
-//        {
-//            System.out.println(list.get(i).getxKoord() + " " + list.get(i).getyKoord());
-//        }
-        EingabeGUI gui = new EingabeGUI();
-        Location l = api.OrtToKoord("Ligist");
-        double result = api.getElevationInformation(l);
-
-        System.out.println(result);
-    }
+    
 }

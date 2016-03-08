@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Veronika, David
+ * @author Veronika
  */
 public class GraphingData_big extends JPanel {
 
